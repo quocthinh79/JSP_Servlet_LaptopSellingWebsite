@@ -587,6 +587,7 @@ body, html {
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
+    margin-bottom: 15px;
 }
 
 #main #content .bestseller .product-name {
@@ -1318,6 +1319,7 @@ body, html {
 #main #content1 .price-all-product-item {
     margin: 8px 0;
     font-weight: 800;
+    color: #d42333;
 }
 
 #main #content1 .sale-all-product-item {

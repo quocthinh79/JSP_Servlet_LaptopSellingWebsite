@@ -6,6 +6,12 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    request.setCharacterEncoding("UTF-8");
+    response.setCharacterEncoding("UTF-8");
+%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:url value="/" var="root" />
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,7 +19,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Metaverse Laptop</title>
-    <link rel="icon" href="../image/logo-re.png">
+    <link rel="icon" href="${root}image/logo-re.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"
           integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
@@ -21,23 +27,29 @@
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/fontawesome.min.css"
           integrity="sha512-Rcr1oG0XvqZI1yv1HIg9LgZVDEhf2AHjv+9AuD1JXWGLzlkoKDVvE925qySLcEywpMAYA/rkg296MkvqBF07Yw=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
-    <link rel="stylesheet" href="../css/cart.css">
-    <link href="../css/responsiveIndex.css" rel="stylesheet">
-    <link href="../fonts/themify-icons/themify-icons.css" rel="stylesheet">
-    <link href="../fonts/font-awesome-4.7.0/css/font-awesome.css" rel="stylesheet">
-    <link href="../fonts/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../css/cartResponsive.css">
+    <link rel="stylesheet" href="${root}css/cart.css">
+    <link href="${root}css/responsiveIndex.css" rel="stylesheet">
+    <link href="${root}fonts/themify-icons/themify-icons.css" rel="stylesheet">
+    <link href="${root}fonts/font-awesome-4.7.0/css/font-awesome.css" rel="stylesheet">
+    <link href="${root}fonts/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="${root}css/cartResponsive.css">
 </head>
 <body>
 <div id="cart-main">
 
-    <%@include file="../layout/header.jsp" %>
+    <jsp:include page="../layout/header.jsp">
+        <jsp:param name="productPage" value="product-page.jsp"/>
+        <jsp:param name="tutorialPage" value="tutorial-page.jsp"/>
+        <jsp:param name="aboutUs" value="about-us.jsp"/>
+        <jsp:param name="cartPage" value="cart.jsp"/>
+        <jsp:param name="indexPage" value="${root}index.jsp"/>
+    </jsp:include>
     <div class="cart" class="bg-gray">
         <div class="container padding padding-top-60">
             <div class="address-menu">
                 <div class="sub-container">
                     <div class="home-btn sub-container-content">
-                        <a role="button" class="btn-circle white-bg" href="../index.jsp">
+                        <a role="button" class="btn-circle white-bg" href="${root}index.jsp">
                             <i class="fas fa-home"></i>
                         </a>
                     </div>
@@ -79,7 +91,7 @@
                                         </div>
                                         <div class="provider-padding-left provider-info">
                                             <div class="provider-icon">
-                                                <img class="provider-logo" src="../image/asus-logo.png" alt="Asus">
+                                                <img class="provider-logo" src="${root}image/asus-logo.png" alt="Asus">
                                             </div>
                                         </div>
                                         <div class="provider-padding provider-name">
@@ -102,7 +114,7 @@
                                                 <input type="checkbox" name="checkItem" value="">
                                             </div>
                                             <div class="item-thumbnail item-padding">
-                                                <img class="item-logo-thumbnail" src="../image/man-hinh-asus.jpg">
+                                                <img class="item-logo-thumbnail" src="${root}image/man-hinh-asus.jpg">
                                             </div>
                                             <div class="item-info-container item-padding">
                                                 <span class="item-info-name smaller-text">Màn hình LCD ASUS VL249HE (1920 x 1080/IPS/75Hz/5 ms)</span>
@@ -135,7 +147,7 @@
                                                 <input type="checkbox" name="checkItem" value="">
                                             </div>
                                             <div class="item-thumbnail item-padding">
-                                                <img class="item-logo-thumbnail" src="../image/man-hinh-asus.jpg">
+                                                <img class="item-logo-thumbnail" src="${root}image/man-hinh-asus.jpg">
                                             </div>
                                             <div class="item-info-container item-padding">
                                                 <span class="item-info-name smaller-text">Màn hình LCD ASUS VL249HE (1920 x 1080/IPS/75Hz/5 ms)</span>
@@ -168,7 +180,7 @@
                                                 <input type="checkbox" name="checkItem" value="">
                                             </div>
                                             <div class="item-thumbnail item-padding">
-                                                <img class="item-logo-thumbnail" src="../image/man-hinh-asus.jpg">
+                                                <img class="item-logo-thumbnail" src="${root}image/man-hinh-asus.jpg">
                                             </div>
                                             <div class="item-info-container item-padding">
                                                 <span class="item-info-name smaller-text">Màn hình LCD ASUS VL249HE (1920 x 1080/IPS/75Hz/5 ms)</span>
@@ -207,7 +219,7 @@
                                         </div>
                                         <div class="provider-padding-left provider-info">
                                             <div class="provider-icon">
-                                                <img class="provider-logo" src="../image/asus-logo.png" alt="Asus">
+                                                <img class="provider-logo" src="${root}image/asus-logo.png" alt="Asus">
                                             </div>
                                         </div>
                                         <div class="provider-padding provider-name">
@@ -230,7 +242,7 @@
                                                 <input type="checkbox" name="checkItem" value="">
                                             </div>
                                             <div class="item-thumbnail item-padding">
-                                                <img class="item-logo-thumbnail" src="../image/man-hinh-asus.jpg">
+                                                <img class="item-logo-thumbnail" src="${root}image/man-hinh-asus.jpg">
                                             </div>
                                             <div class="item-info-container item-padding">
                                                 <span class="item-info-name smaller-text">Màn hình LCD ASUS VL249HE (1920 x 1080/IPS/75Hz/5 ms)</span>
@@ -263,7 +275,7 @@
                                                 <input type="checkbox" name="checkItem" value="">
                                             </div>
                                             <div class="item-thumbnail item-padding">
-                                                <img class="item-logo-thumbnail" src="../image/man-hinh-asus.jpg">
+                                                <img class="item-logo-thumbnail" src="${root}image/man-hinh-asus.jpg">
                                             </div>
                                             <div class="item-info-container item-padding">
                                                 <span class="item-info-name smaller-text">Màn hình LCD ASUS VL249HE (1920 x 1080/IPS/75Hz/5 ms)</span>
@@ -296,7 +308,7 @@
                                                 <input type="checkbox" name="checkItem" value="">
                                             </div>
                                             <div class="item-thumbnail item-padding">
-                                                <img class="item-logo-thumbnail" src="../image/man-hinh-asus.jpg">
+                                                <img class="item-logo-thumbnail" src="${root}image/man-hinh-asus.jpg">
                                             </div>
                                             <div class="item-info-container item-padding">
                                                 <span class="item-info-name smaller-text">Màn hình LCD ASUS VL249HE (1920 x 1080/IPS/75Hz/5 ms)</span>
@@ -422,14 +434,14 @@
 <!--Back to top-->
 <%@include file="../layout/back-to-top.jsp" %>
 </body>
-<script src="../js/register.js"></script>
+<script src="${root}js/register.js"></script>
 <script crossorigin="anonymous" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
         src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script crossorigin="anonymous"
         integrity="sha512-XtmMtDEcNz2j7ekrtHvOVR4iwwaD6o/FUJe6+Zq+HgcCsk3kj4uSQQR8weQ2QVj1o0Pk6PwYLohm206ZzNfubg=="
         referrerpolicy="no-referrer"
         src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
-<script src="../js/nav-responsive.js"></script>
-<script src="../js/BackToTop.js"></script>
-<script src="../js/Scroll-Indicator.js"></script>
+<script src="${root}js/nav-responsive.js"></script>
+<script src="${root}js/BackToTop.js"></script>
+<script src="${root}js/Scroll-Indicator.js"></script>
 </html>

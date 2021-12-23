@@ -6,6 +6,12 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    request.setCharacterEncoding("UTF-8");
+    response.setCharacterEncoding("UTF-8");
+%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:url value="/" var="root" />
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,26 +19,32 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Metaverse Laptop</title>
-    <link rel="icon" href="../image/logo-re.png">
-    <link rel="stylesheet" href="../css/about.css">
-    <link rel="stylesheet" href="../css/style.css">
-    <link href="../css/responsiveIndex.css" rel="stylesheet">
-    <link href="../fonts/themify-icons/themify-icons.css" rel="stylesheet">
-    <link href="../fonts/font-awesome-4.7.0/css/font-awesome.css" rel="stylesheet">
-    <link href="../fonts/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="icon" href="${root}image/logo-re.png">
+    <link rel="stylesheet" href="${root}css/about.css">
+    <link rel="stylesheet" href="${root}css/style.css">
+    <link href="${root}css/responsiveIndex.css" rel="stylesheet">
+    <link href="${root}fonts/themify-icons/themify-icons.css" rel="stylesheet">
+    <link href="${root}fonts/font-awesome-4.7.0/css/font-awesome.css" rel="stylesheet">
+    <link href="${root}fonts/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"
           integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
 </head>
 <body>
 <div id="about-us">
-    <%@include file="../layout/header.jsp"%>
+    <jsp:include page="../layout/header.jsp">
+        <jsp:param name="productPage" value="product-page.jsp"/>
+        <jsp:param name="tutorialPage" value="tutorial-page.jsp"/>
+        <jsp:param name="aboutUs" value="about-us.jsp"/>
+        <jsp:param name="cartPage" value="cart.jsp"/>
+        <jsp:param name="indexPage" value="${root}index.jsp"/>
+    </jsp:include>
     <%@include file="../layout/cart-hover.jsp"%>
     <div id="content">
         <div class="member">
             <div class="member-items">
                 <div class="image-member">
-                    <img src="../image/member/quocthinh.jpg" alt="" class="img">
+                    <img src="${root}image/member/quocthinh.jpg" alt="" class="img">
                 </div>
                 <div class="name-member">
                     <h1 class="name">Lê Quốc Thịnh</h1>
@@ -51,7 +63,7 @@
             </div>
             <div class="member-items">
                 <div class="image-member">
-                    <img src="../image/member/tanloc.jpg" alt="" class="img">
+                    <img src="${root}image/member/tanloc.jpg" alt="" class="img">
                 </div>
                 <div class="name-member">
                     <h1 class="name">Cao Huy Tấn Lộc</h1>
@@ -70,7 +82,7 @@
             </div>
             <div class="member-items">
                 <div class="image-member">
-                    <img src="../image/member/minhquan.jpg" alt="" class="img">
+                    <img src="${root}image/member/minhquan.jpg" alt="" class="img">
                 </div>
                 <div class="name-member">
                     <h1 class="name">Phạm Hữu Minh Quân</h1>
@@ -97,15 +109,15 @@
 <!--Back to top-->
 <%@include file="../layout/back-to-top.jsp"%>
 </body>
-<script src="../js/register.js"></script>
+<script src="${root}js/register.js"></script>
 <script crossorigin="anonymous" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
         src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script crossorigin="anonymous"
         integrity="sha512-XtmMtDEcNz2j7ekrtHvOVR4iwwaD6o/FUJe6+Zq+HgcCsk3kj4uSQQR8weQ2QVj1o0Pk6PwYLohm206ZzNfubg=="
         referrerpolicy="no-referrer"
         src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
-<script src="../js/nav-responsive.js"></script>
-<script src="../js/BackToTop.js"></script>
-<script src="../js/Scroll-Indicator.js"></script>
-<script src="../js/visibleCart.js"></script>
+<script src="${root}js/nav-responsive.js"></script>
+<script src="${root}js/BackToTop.js"></script>
+<script src="${root}js/Scroll-Indicator.js"></script>
+<script src="${root}js/visibleCart.js"></script>
 </html>

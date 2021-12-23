@@ -1,4 +1,20 @@
+<%@ page import="java.text.NumberFormat" %>
+<%@ page import="java.util.Locale" %>
+<%@ page import="java.text.DecimalFormat" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%
+    request.setCharacterEncoding("UTF-8");
+    response.setCharacterEncoding("UTF-8");
+%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:url value="/" var="root"/>
+<%--<%--%>
+<%--    Locale loc = Locale.getDefault();--%>
+<%--    NumberFormat nf = NumberFormat.getCurrencyInstance(loc);--%>
+<%--%>--%>
+<%--<% DecimalFormat formatter = new DecimalFormat("###.###.###"); %>--%>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,8 +38,15 @@
 </head>
 <body>
 <div id="main">
-    <%@include file="layout/header.jsp"%>
-    <%@include file="layout/cart-hover.jsp"%>
+    <%--    <%@include file="layout/header-index.jsp" %>--%>
+    <jsp:include page="layout/header.jsp">
+        <jsp:param name="productPage" value="jsp/product-page.jsp"/>
+        <jsp:param name="tutorialPage" value="jsp/tutorial-page.jsp"/>
+        <jsp:param name="aboutUs" value="jsp/about-us.jsp"/>
+        <jsp:param name="cartPage" value="jsp/cart.jsp"/>
+        <jsp:param name="indexPage" value="index.jsp"/>
+    </jsp:include>
+    <%@include file="layout/cart-hover.jsp" %>
     <div id="slider">
         <div class="slider-image" style="background-image: url('image/slider/Slider-image1.jpg')"></div>
         <div class="slider-image" style="background-image: url('image/slider/Slider-image2.jpg')"></div>
@@ -79,439 +102,68 @@
             </div>
         </div>
         <div class="product">
-            <div class="product-biggest">
-                <div class="product-item-big">
-                    <div class="title-product">
-                        <div class="border-product"></div>
-                        <div class="title-main-product">DELL (Don't go there. Go to Dell.)</div>
-                        <a class="view-all" href="jsp/all-product.jsp">Xem tất cả <i
-                                class="fas fa-angle-right"></i></a>
-                    </div>
-                    <div class="product-cover">
-                        <div style="overflow: hidden; border-radius: 0 0 0 10px">
-                            <a class="product-hover-selling" href="">
-                                <div class="product-selling"
-                                     style="background-image: url('image/poster/dell/dell.png')"></div>
-                            </a></div>
-                        <div class="product-item-cover">
-                            <a class="product-hover-items" href="jsp/product-page.jsp">
-                                <div class="product-items  border-item-top1">
-                                    <div class="title-product-item">
-                                        DELL VOSTRO 14 3405
-                                    </div>
-                                    <div class="slogan-item">
-                                        15.000.000 VND
-                                    </div>
-                                    <div class="img-product-item"
-                                         style="background-image: url('image/dell/dell1/dell1.png')">
+            <jsp:useBean id="productsTop4" scope="request" type="java.util.List"/>
+            <c:forEach var="y" items="${productsTop4}">
+                <div class="product-biggest">
+                    <div class="product-item-big">
+                        <div class="title-product">
+                            <div class="border-product"></div>
+                            <div class="title-main-product">${y.tenHang} (${y.slogan})</div>
+                            <a class="view-all" href="jsp/all-product.jsp">Xem tất cả <i
+                                    class="fas fa-angle-right"></i></a>
+                        </div>
+                        <div class="product-cover">
+                            <div style="overflow: hidden; border-radius: 0 0 0 10px">
+                                <a class="product-hover-selling" href="">
+                                    <div class="product-selling"
+                                         style="background-image: url('${y.poster}')"></div>
+                                </a></div>
+                            <div class="product-item-cover">
+                                <jsp:useBean id="productsTop" scope="request" type="java.util.List"/>
+                                <c:forEach var="z" items="${productsTop}">
+                                    <c:if test="${z.hangSX == y.tenHang}">
+                                        <a class="product-hover-items" href="jsp/product-page.jsp">
+                                            <div class="product-items  border-item-top1">
+                                                <div class="title-product-item">
+                                                        ${z.tenLaptop}
+                                                </div>
+                                                <div class="slogan-item">
+                                                        ${z.giaBan}
+                                                </div>
+                                                <div class="img-product-item"
+                                                     style="background-image: url('${z.linkHinh1}')">
 
-                                    </div>
-                                </div>
-                            </a>
-                            <a class="product-hover-items" href="jsp/product-page.jsp">
-                                <div class="product-items border-item-top2">
-                                    <div class="title-product-item">
-                                        DELL INSPIRON 15 3511
-                                    </div>
-                                    <div class="slogan-item">
-                                        16.500.000 VND
-                                    </div>
-                                    <div class="img-product-item"
-                                         style="background-image: url('image/dell/dell2/dell1.png')">
-
-                                    </div>
-                                </div>
-                            </a>
-                            <a class="product-hover-items" href="jsp/product-page.jsp">
-                                <div class="product-items border-item-bottom1">
-                                    <div class="title-product-item">
-                                        DELL INSPIRON 14 5410
-                                    </div>
-                                    <div class="slogan-item">
-                                        18.900.000 VND
-                                    </div>
-                                    <div class="img-product-item"
-                                         style="background-image: url('image/dell/dell3/dell1.png')">
-
-                                    </div>
-                                </div>
-                            </a>
-                            <a class="product-hover-items" href="jsp/product-page.jsp">
-                                <div class="product-items  border-item-bottom2">
-                                    <div class="title-product-item">
-                                        DELL ALIENWARE M15 R6
-                                    </div>
-                                    <div class="slogan-item">
-                                        23.960.000 VND
-                                    </div>
-                                    <div class="img-product-item"
-                                         style="background-image: url('image/dell/dell4/dell1.png')"></div>
-                                </div>
-                            </a>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </c:if>
+                                </c:forEach>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="product-biggest">
-                <div class="product-item-big">
-                    <div class="title-product">
-                        <div class="border-product"></div>
-                        <div class="title-main-product">DELL (Don't go there. Go to Dell.)</div>
-                        <a class="view-all" href="jsp/all-product.jsp">Xem tất cả <i
-                                class="fas fa-angle-right"></i></a>
-                    </div>
-                    <div class="product-cover">
-                        <div style="overflow: hidden; border-radius: 0 0 0 10px">
-                            <a class="product-hover-selling" href="">
-                                <div class="product-selling"
-                                     style="background-image: url('image/poster/dell/dell.png')"></div>
-                            </a></div>
-                        <div class="product-item-cover">
-                            <a class="product-hover-items" href="jsp/product-page.jsp">
-                                <div class="product-items  border-item-top1">
-                                    <div class="title-product-item">
-                                        DELL VOSTRO 14 3405
-                                    </div>
-                                    <div class="slogan-item">
-                                        15.000.000 VND
-                                    </div>
-                                    <div class="img-product-item"
-                                         style="background-image: url('image/dell/dell1/dell1.png')">
-
-                                    </div>
-                                </div>
-                            </a>
-                            <a class="product-hover-items" href="jsp/product-page.jsp">
-                                <div class="product-items border-item-top2">
-                                    <div class="title-product-item">
-                                        DELL INSPIRON 15 3511
-                                    </div>
-                                    <div class="slogan-item">
-                                        16.500.000 VND
-                                    </div>
-                                    <div class="img-product-item"
-                                         style="background-image: url('image/dell/dell2/dell1.png')">
-
-                                    </div>
-                                </div>
-                            </a>
-                            <a class="product-hover-items" href="jsp/product-page.jsp">
-                                <div class="product-items border-item-bottom1">
-                                    <div class="title-product-item">
-                                        DELL INSPIRON 14 5410
-                                    </div>
-                                    <div class="slogan-item">
-                                        18.900.000 VND
-                                    </div>
-                                    <div class="img-product-item"
-                                         style="background-image: url('image/dell/dell3/dell1.png')">
-
-                                    </div>
-                                </div>
-                            </a>
-                            <a class="product-hover-items" href="jsp/product-page.jsp">
-                                <div class="product-items  border-item-bottom2">
-                                    <div class="title-product-item">
-                                        DELL ALIENWARE M15 R6
-                                    </div>
-                                    <div class="slogan-item">
-                                        23.960.000 VND
-                                    </div>
-                                    <div class="img-product-item"
-                                         style="background-image: url('image/dell/dell4/dell1.png')"></div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="product-biggest">
-                <div class="product-item-big">
-                    <div class="title-product">
-                        <div class="border-product"></div>
-                        <div class="title-main-product">DELL (Don't go there. Go to Dell.)</div>
-                        <a class="view-all" href="jsp/all-product.jsp">Xem tất cả <i
-                                class="fas fa-angle-right"></i></a>
-                    </div>
-                    <div class="product-cover">
-                        <div style="overflow: hidden; border-radius: 0 0 0 10px">
-                            <a class="product-hover-selling" href="">
-                                <div class="product-selling"
-                                     style="background-image: url('image/poster/dell/dell.png')"></div>
-                            </a></div>
-                        <div class="product-item-cover">
-                            <a class="product-hover-items" href="jsp/product-page.jsp">
-                                <div class="product-items  border-item-top1">
-                                    <div class="title-product-item">
-                                        DELL VOSTRO 14 3405
-                                    </div>
-                                    <div class="slogan-item">
-                                        15.000.000 VND
-                                    </div>
-                                    <div class="img-product-item"
-                                         style="background-image: url('image/dell/dell1/dell1.png')">
-
-                                    </div>
-                                </div>
-                            </a>
-                            <a class="product-hover-items" href="jsp/product-page.jsp">
-                                <div class="product-items border-item-top2">
-                                    <div class="title-product-item">
-                                        DELL INSPIRON 15 3511
-                                    </div>
-                                    <div class="slogan-item">
-                                        16.500.000 VND
-                                    </div>
-                                    <div class="img-product-item"
-                                         style="background-image: url('image/dell/dell2/dell1.png')">
-
-                                    </div>
-                                </div>
-                            </a>
-                            <a class="product-hover-items" href="jsp/product-page.jsp">
-                                <div class="product-items border-item-bottom1">
-                                    <div class="title-product-item">
-                                        DELL INSPIRON 14 5410
-                                    </div>
-                                    <div class="slogan-item">
-                                        18.900.000 VND
-                                    </div>
-                                    <div class="img-product-item"
-                                         style="background-image: url('image/dell/dell3/dell1.png')">
-
-                                    </div>
-                                </div>
-                            </a>
-                            <a class="product-hover-items" href="jsp/product-page.jsp">
-                                <div class="product-items  border-item-bottom2">
-                                    <div class="title-product-item">
-                                        DELL ALIENWARE M15 R6
-                                    </div>
-                                    <div class="slogan-item">
-                                        23.960.000 VND
-                                    </div>
-                                    <div class="img-product-item"
-                                         style="background-image: url('image/dell/dell4/dell1.png')"></div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="product-biggest">
-                <div class="product-item-big">
-                    <div class="title-product">
-                        <div class="border-product"></div>
-                        <div class="title-main-product">DELL (Don't go there. Go to Dell.)</div>
-                        <a class="view-all" href="jsp/all-product.jsp">Xem tất cả <i
-                                class="fas fa-angle-right"></i></a>
-                    </div>
-                    <div class="product-cover">
-                        <div style="overflow: hidden; border-radius: 0 0 0 10px">
-                            <a class="product-hover-selling" href="">
-                                <div class="product-selling"
-                                     style="background-image: url('image/poster/dell/dell.png')"></div>
-                            </a></div>
-                        <div class="product-item-cover">
-                            <a class="product-hover-items" href="jsp/product-page.jsp">
-                                <div class="product-items  border-item-top1">
-                                    <div class="title-product-item">
-                                        DELL VOSTRO 14 3405
-                                    </div>
-                                    <div class="slogan-item">
-                                        15.000.000 VND
-                                    </div>
-                                    <div class="img-product-item"
-                                         style="background-image: url('image/dell/dell1/dell1.png')">
-
-                                    </div>
-                                </div>
-                            </a>
-                            <a class="product-hover-items" href="jsp/product-page.jsp">
-                                <div class="product-items border-item-top2">
-                                    <div class="title-product-item">
-                                        DELL INSPIRON 15 3511
-                                    </div>
-                                    <div class="slogan-item">
-                                        16.500.000 VND
-                                    </div>
-                                    <div class="img-product-item"
-                                         style="background-image: url('image/dell/dell2/dell1.png')">
-
-                                    </div>
-                                </div>
-                            </a>
-                            <a class="product-hover-items" href="jsp/product-page.jsp">
-                                <div class="product-items border-item-bottom1">
-                                    <div class="title-product-item">
-                                        DELL INSPIRON 14 5410
-                                    </div>
-                                    <div class="slogan-item">
-                                        18.900.000 VND
-                                    </div>
-                                    <div class="img-product-item"
-                                         style="background-image: url('image/dell/dell3/dell1.png')">
-
-                                    </div>
-                                </div>
-                            </a>
-                            <a class="product-hover-items" href="jsp/product-page.jsp">
-                                <div class="product-items  border-item-bottom2">
-                                    <div class="title-product-item">
-                                        DELL ALIENWARE M15 R6
-                                    </div>
-                                    <div class="slogan-item">
-                                        23.960.000 VND
-                                    </div>
-                                    <div class="img-product-item"
-                                         style="background-image: url('image/dell/dell4/dell1.png')"></div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            </c:forEach>
         </div>
-        <div class="bestseller">
-            <div class="bestseller-main">
-                <div class="title-bestseller">
-                    <div class="border-bestseller"></div>
-                    <div class="title-main-bestseller">Bán chạy nhất</div>
-                    <a class="view-all-bestseller" href="">Xem tất cả <i class="fas fa-angle-right"></i></a>
-                </div>
-                <div class="product-bestseller">
-                    <a class="click-action" href="">
-                        <div class="product-bestseller-items">
-                            <div class="img-product-bestseller" style="background-image: url('image/img_11.png')"></div>
-                            <div class="product-bestseller-name">
-                                <div class="product-name">Đế tản nhiệt Laptop DEEPCOOL Windpal Mini</div>
-                                <div class="product-status">Còn 1 sản phẩm</div>
-                            </div>
-                            <div class="product-price">228.000 ₫</div>
-                        </div>
-                    </a>
-                    <a class="click-action" href="">
-                        <div class="product-bestseller-items">
-                            <div class="img-product-bestseller" style="background-image: url('image/img_11.png')"></div>
-                            <div class="product-bestseller-name">
-                                <div class="product-name">Đế tản nhiệt Laptop DEEPCOOL Windpal Mini</div>
-                                <div class="product-status">Còn 1 sản phẩm</div>
-                            </div>
-                            <div class="product-price">228.000 ₫</div>
-                        </div>
-                    </a>
-                    <a class="click-action" href="">
-                        <div class="product-bestseller-items">
-                            <div class="img-product-bestseller" style="background-image: url('image/img_11.png')"></div>
-                            <div class="product-bestseller-name">
-                                <div class="product-name">Đế tản nhiệt Laptop DEEPCOOL Windpal Mini</div>
-                                <div class="product-status">Còn 1 sản phẩm</div>
-                            </div>
-                            <div class="product-price">228.000 ₫</div>
-                        </div>
-                    </a>
-                    <a class="click-action" href="">
-                        <div class="product-bestseller-items">
-                            <div class="img-product-bestseller" style="background-image: url('image/img_11.png')"></div>
-                            <div class="product-bestseller-name">
-                                <div class="product-name">Đế tản nhiệt Laptop DEEPCOOL Windpal Mini</div>
-                                <div class="product-status">Còn 1 sản phẩm</div>
-                            </div>
-                            <div class="product-price">228.000 ₫</div>
-                        </div>
-                    </a>
-                    <a class="click-action" href="">
-                        <div class="product-bestseller-items">
-                            <div class="img-product-bestseller" style="background-image: url('image/img_11.png')"></div>
-                            <div class="product-bestseller-name">
-                                <div class="product-name">Đế tản nhiệt Laptop DEEPCOOL Windpal Mini</div>
-                                <div class="product-status">Còn 1 sản phẩm</div>
-                            </div>
-                            <div class="product-price">228.000 ₫</div>
-                        </div>
-                    </a>
-                    <a class="click-action" href="">
-                        <div class="product-bestseller-items">
-                            <div class="img-product-bestseller" style="background-image: url('image/img_11.png')"></div>
-                            <div class="product-bestseller-name">
-                                <div class="product-name">Đế tản nhiệt Laptop DEEPCOOL Windpal Mini</div>
-                                <div class="product-status">Còn 1 sản phẩm</div>
-                            </div>
-                            <div class="product-price">228.000 ₫</div>
-                        </div>
-                    </a>
-                    <a class="click-action" href="">
-                        <div class="product-bestseller-items">
-                            <div class="img-product-bestseller" style="background-image: url('image/img_11.png')"></div>
-                            <div class="product-bestseller-name">
-                                <div class="product-name">Đế tản nhiệt Laptop DEEPCOOL Windpal Mini</div>
-                                <div class="product-status">Còn 1 sản phẩm</div>
-                            </div>
-                            <div class="product-price">228.000 ₫</div>
-                        </div>
-                    </a>
-                    <a class="click-action" href="">
-                        <div class="product-bestseller-items">
-                            <div class="img-product-bestseller" style="background-image: url('image/img_11.png')"></div>
-                            <div class="product-bestseller-name">
-                                <div class="product-name">Đế tản nhiệt Laptop DEEPCOOL Windpal Mini</div>
-                                <div class="product-status">Còn 1 sản phẩm</div>
-                            </div>
-                            <div class="product-price">228.000 ₫</div>
-                        </div>
-                    </a>
-                    <a class="click-action" href="">
-                        <div class="product-bestseller-items">
-                            <div class="img-product-bestseller" style="background-image: url('image/img_11.png')"></div>
-                            <div class="product-bestseller-name">
-                                <div class="product-name">Đế tản nhiệt Laptop DEEPCOOL Windpal Mini</div>
-                                <div class="product-status">Còn 1 sản phẩm</div>
-                            </div>
-                            <div class="product-price">228.000 ₫</div>
-                        </div>
-                    </a>
-                    <a class="click-action" href="">
-                        <div class="product-bestseller-items">
-                            <div class="img-product-bestseller" style="background-image: url('image/img_11.png')"></div>
-                            <div class="product-bestseller-name">
-                                <div class="product-name">Đế tản nhiệt Laptop DEEPCOOL Windpal Mini</div>
-                                <div class="product-status">Còn 1 sản phẩm</div>
-                            </div>
-                            <div class="product-price">228.000 ₫</div>
-                        </div>
-                    </a>
-                    <a class="click-action" href="">
-                        <div class="product-bestseller-items">
-                            <div class="img-product-bestseller" style="background-image: url('image/img_11.png')"></div>
-                            <div class="product-bestseller-name">
-                                <div class="product-name">Đế tản nhiệt Laptop DEEPCOOL Windpal Mini</div>
-                                <div class="product-status">Còn 1 sản phẩm</div>
-                            </div>
-                            <div class="product-price">228.000 ₫</div>
-                        </div>
-                    </a>
-                    <a class="click-action" href="">
-                        <div class="product-bestseller-items">
-                            <div class="img-product-bestseller" style="background-image: url('image/img_11.png')"></div>
-                            <div class="product-bestseller-name">
-                                <div class="product-name">Đế tản nhiệt Laptop DEEPCOOL Windpal Mini</div>
-                                <div class="product-status">Còn 1 sản phẩm</div>
-                            </div>
-                            <div class="product-price">228.000 ₫</div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </div>
+        <%@include file="layout/product-best-seller.jsp"%>
     </div>
-    <%@include file="layout/footer.jsp"%>
+    <%@include file="layout/footer.jsp" %>
 </div>
-<%@include file="layout/login.jsp"%>
-<%@include file="layout/fogot.jsp"%>
-<%@include file="layout/register.jsp"%>
+<%@include file="layout/login.jsp" %>
+<%@include file="layout/fogot.jsp" %>
+<%@include file="layout/register.jsp" %>
 <%--<!--Back to top-->--%>
-<%@include file="layout/back-to-top.jsp"%>
+<%@include file="layout/back-to-top.jsp" %>
 </body>
+<script>
+    let price = document.querySelectorAll('.slogan-item');
+    let price1 = document.querySelectorAll('.product-price');
+    for (let i = 0; i < price.length; i++){
+        price[i].innerHTML = parseInt(price[i].textContent).toLocaleString('it-IT', {style: 'currency', currency: 'VND'});
+    }
+    for (let i = 0; i < price1.length; i++){
+        price1[i].innerHTML = parseInt(price1[i].textContent).toLocaleString('it-IT', {style: 'currency', currency: 'VND'});
+    }
+</script>
 <script src="js/register.js"></script>
 <script src="js/register.js"></script>
 <script crossorigin="anonymous" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
