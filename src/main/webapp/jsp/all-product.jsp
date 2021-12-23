@@ -36,13 +36,7 @@
 </head>
 <body>
 <div id="main">
-    <jsp:include page="../layout/header.jsp">
-        <jsp:param name="productPage" value="product-page.jsp"/>
-        <jsp:param name="tutorialPage" value="tutorial-page.jsp"/>
-        <jsp:param name="aboutUs" value="about-us.jsp"/>
-        <jsp:param name="cartPage" value="cart.jsp"/>
-        <jsp:param name="indexPage" value="${root}index.jsp"/>
-    </jsp:include>
+    <%@include file="../layout/header.jsp"%>
     <%@include file="../layout/cart-hover.jsp" %>
     <div id="content1">
         <div id="title-pro-all" class="title-pro-all">
@@ -77,7 +71,7 @@
                     <jsp:useBean id="allProduct" scope="request" type="java.util.List"/>
                     <c:forEach var="x" items="${allProduct}">
                         <jsp:useBean id="list" class="java.util.ArrayList"/>
-                        <c:if test="${list.contains(x.mau) == false}">
+                        <c:if test="${!list.contains(x.mau)}">
                             <c:set var="noUse" value="${list.add(x.mau)}"/>
                         </c:if>
                     </c:forEach>
@@ -97,7 +91,7 @@
                         <c:set var="cpuParts" value="${fn:split(x.cpu, ' ')}"/>
                         <c:set var="string" value="${cpuParts[1]}${' '}${cpuParts[2]}"/>
                         <jsp:useBean id="listCPU" class="java.util.ArrayList"/>
-                        <c:if test="${listCPU.contains(string) == false}">
+                        <c:if test="${!listCPU.contains(string)}">
                             <c:set var="noUse" value="${listCPU.add(string)}"/>
                         </c:if>
                     </c:forEach>
@@ -115,7 +109,7 @@
                 <div class="filter-items">
                     <c:forEach var="x" items="${allProduct}">
                         <jsp:useBean id="listRAM" class="java.util.ArrayList"/>
-                        <c:if test="${listRAM.contains(x.ram) == false}">
+                        <c:if test="${!listRAM.contains(x.ram)}">
                             <c:set var="noUse" value="${listRAM.add(x.ram)}"/>
                         </c:if>
                     </c:forEach>
@@ -133,7 +127,7 @@
                 <div class="filter-items">
                     <c:forEach var="x" items="${allProduct}">
                         <jsp:useBean id="listSeries" class="java.util.ArrayList"/>
-                        <c:if test="${listSeries.contains(x.series) == false}">
+                        <c:if test="${!listSeries.contains(x.series)}">
                             <c:set var="noUse" value="${listSeries.add(x.series)}"/>
                         </c:if>
                     </c:forEach>
@@ -180,7 +174,7 @@
             <div class="all-product-cover">
                 <c:forEach var="x" items="${allProduct}">
                     <div class="hover-all-product">
-                        <a class="all-product-item" href="product-page.jsp">
+                        <a class="all-product-item" href="Product?id=${x.maLapTop}">
                             <div class="status-sale">-11%</div>
                             <div class="img-all-product-item"
                                  style="background-image: url('${root}${x.linkHinh1}')">

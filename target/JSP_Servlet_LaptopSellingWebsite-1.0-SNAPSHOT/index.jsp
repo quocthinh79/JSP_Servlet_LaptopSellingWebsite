@@ -38,14 +38,7 @@
 </head>
 <body>
 <div id="main">
-    <%--    <%@include file="layout/header-index.jsp" %>--%>
-    <jsp:include page="layout/header.jsp">
-        <jsp:param name="productPage" value="jsp/product-page.jsp"/>
-        <jsp:param name="tutorialPage" value="jsp/tutorial-page.jsp"/>
-        <jsp:param name="aboutUs" value="jsp/about-us.jsp"/>
-        <jsp:param name="cartPage" value="jsp/cart.jsp"/>
-        <jsp:param name="indexPage" value="index.jsp"/>
-    </jsp:include>
+    <%@include file="layout/header.jsp" %>
     <%@include file="layout/cart-hover.jsp" %>
     <div id="slider">
         <div class="slider-image" style="background-image: url('image/slider/Slider-image1.jpg')"></div>
@@ -69,35 +62,16 @@
                     <div class="title-main">Thương hiệu nổi bật</div>
                 </div>
                 <div class="outstand-product">
+<%--                    <jsp:useBean id="topProducer" scope="request" type="java.util.List"/>--%>
+                    <c:forEach var="x" items="${topProducer}">
                     <div class="outstand-product-items">
-                        <a class="click-css" href="">
-                            <div class="img-outstand outstand1">
+                        <a class="click-css" href="AllProduct?idHang=${x.tenHang}">
+                            <div class="img-outstand" style="background-image: url('${x.logoNgang}')">
                             </div>
                         </a>
-                        <div class="title-outstand">Lenovo</div>
+                        <div class="title-outstand">${x.tenHang}</div>
                     </div>
-                    <div class="outstand-product-items">
-                        <a class="click-css" href="">
-                            <div class="img-outstand outstand2">
-
-                            </div>
-                        </a>
-                        <div class="title-outstand">Asus</div>
-                    </div>
-                    <div class="outstand-product-items">
-                        <a class="click-css" href="">
-                            <div class="img-outstand outstand3">
-
-                            </div>
-                        </a>
-                        <div class="title-outstand">Msi</div>
-                    </div>
-                    <div class="outstand-product-items">
-                        <a class="click-css" href="">
-                            <div class="img-outstand outstand4"></div>
-                        </a>
-                        <div class="title-outstand">HP</div>
-                    </div>
+                    </c:forEach>
                 </div>
             </div>
         </div>
@@ -109,12 +83,12 @@
                         <div class="title-product">
                             <div class="border-product"></div>
                             <div class="title-main-product">${y.tenHang} (${y.slogan})</div>
-                            <a class="view-all" href="jsp/all-product.jsp">Xem tất cả <i
+                            <a class="view-all" href="AllProduct?idHang=${y.tenHang}">Xem tất cả <i
                                     class="fas fa-angle-right"></i></a>
                         </div>
                         <div class="product-cover">
                             <div style="overflow: hidden; border-radius: 0 0 0 10px">
-                                <a class="product-hover-selling" href="">
+                                <a class="product-hover-selling" href="AllProduct?idHang=${y.tenHang}">
                                     <div class="product-selling"
                                          style="background-image: url('${y.poster}')"></div>
                                 </a></div>
@@ -122,7 +96,7 @@
                                 <jsp:useBean id="productsTop" scope="request" type="java.util.List"/>
                                 <c:forEach var="z" items="${productsTop}">
                                     <c:if test="${z.hangSX == y.tenHang}">
-                                        <a class="product-hover-items" href="jsp/product-page.jsp">
+                                        <a class="product-hover-items" href="Product?id=${z.maLapTop}">
                                             <div class="product-items  border-item-top1">
                                                 <div class="title-product-item">
                                                         ${z.tenLaptop}
@@ -132,7 +106,6 @@
                                                 </div>
                                                 <div class="img-product-item"
                                                      style="background-image: url('${z.linkHinh1}')">
-
                                                 </div>
                                             </div>
                                         </a>
@@ -144,7 +117,7 @@
                 </div>
             </c:forEach>
         </div>
-        <%@include file="layout/product-best-seller.jsp"%>
+        <%@include file="layout/product-best-seller.jsp" %>
     </div>
     <%@include file="layout/footer.jsp" %>
 </div>
@@ -157,11 +130,17 @@
 <script>
     let price = document.querySelectorAll('.slogan-item');
     let price1 = document.querySelectorAll('.product-price');
-    for (let i = 0; i < price.length; i++){
-        price[i].innerHTML = parseInt(price[i].textContent).toLocaleString('it-IT', {style: 'currency', currency: 'VND'});
+    for (let i = 0; i < price.length; i++) {
+        price[i].innerHTML = parseInt(price[i].textContent).toLocaleString('it-IT', {
+            style: 'currency',
+            currency: 'VND'
+        });
     }
-    for (let i = 0; i < price1.length; i++){
-        price1[i].innerHTML = parseInt(price1[i].textContent).toLocaleString('it-IT', {style: 'currency', currency: 'VND'});
+    for (let i = 0; i < price1.length; i++) {
+        price1[i].innerHTML = parseInt(price1[i].textContent).toLocaleString('it-IT', {
+            style: 'currency',
+            currency: 'VND'
+        });
     }
 </script>
 <script src="js/register.js"></script>

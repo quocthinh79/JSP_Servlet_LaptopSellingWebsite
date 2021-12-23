@@ -19,6 +19,7 @@ public class IndexController extends HttpServlet {
         request.setAttribute("productsTop4", ProductService.getInstance().getAllProducer());
         request.setAttribute("productsTop", ProductService.getInstance().getTopProduct1(4));
         request.setAttribute("productsProductBS", ProductService.getInstance().getTopProductBestSeller(10));
+        request.setAttribute("topProducer", ProductService.getInstance().getTopProducer(4));
         request.getRequestDispatcher("index.jsp").forward(request, response);
     }
 }

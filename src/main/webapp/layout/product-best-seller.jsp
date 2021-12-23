@@ -15,12 +15,12 @@
         <div class="title-bestseller">
             <div class="border-bestseller"></div>
             <div class="title-main-bestseller">Bán chạy nhất</div>
-            <a class="view-all-bestseller" href="">Xem tất cả <i class="fas fa-angle-right"></i></a>
+<%--            <a class="view-all-bestseller" href="">Xem tất cả <i class="fas fa-angle-right"></i></a>--%>
         </div>
         <div class="product-bestseller">
             <jsp:useBean id="productsProductBS" scope="request" type="java.util.List"/>
             <c:forEach var="x" items="${productsProductBS}">
-                <a class="click-action" href="">
+                <a class="click-action" href="Product?id=${x.maLapTop}">
                     <div class="product-bestseller-items">
                         <div class="img-product-bestseller" style="background-image: url('${x.linkHinh1}')"></div>
                         <div class="product-bestseller-name">

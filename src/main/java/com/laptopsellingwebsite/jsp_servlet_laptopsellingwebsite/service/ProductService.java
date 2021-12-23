@@ -46,4 +46,11 @@ public class ProductService {
     public List getProductWithID(String ID){
         return ProductDao.getInstance().getProductWithID(ID);
     }
+
+    public List getProductWithProducer(String producer){
+        return ProductDao.getInstance().getProductWithProducer(producer);
+    }
+    public List getTopProducer(int num){
+        return ProductDao.getInstance().getTopProducer(num);
+    }
 }

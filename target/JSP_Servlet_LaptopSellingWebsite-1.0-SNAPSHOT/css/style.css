@@ -382,9 +382,10 @@ body, html {
     height: 160px;
     background-position: center;
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: contain;
     border-radius: 15px;
     transition: 0.3s;
+    border: 1px solid #cccccc;
 }
 
 #main #content .img-outstand:hover {
@@ -1304,16 +1305,22 @@ body, html {
 }
 
 #main #content1 .infor-all-product-item {
+    white-space: nowrap;
     word-wrap: break-word;
     overflow: hidden;
     -webkit-line-clamp: 2 !important;
-    display: -webkit-box;
+    /*display: -webkit-box;*/
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     font-size: 14px;
     margin: 8px 0;
     line-height: 1.8;
-    /*height: 30px;*/
+    /* height: 30px; */
+    text-overflow: ellipsis;
+}
+
+#main #content1 .infor-all-product-item:hover {
+    overflow: visible;
 }
 
 #main #content1 .price-all-product-item {
