@@ -6,6 +6,10 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page pageEncoding="UTF-8" %>
+<%
+    request.setCharacterEncoding("UTF-8");
+    response.setCharacterEncoding("UTF-8");
+%>
 <div class="js-forgot" id="forgot-main" style="z-index: 1000">
     <div class="forgot js-forgot-container">
         <div class="title-forgot">

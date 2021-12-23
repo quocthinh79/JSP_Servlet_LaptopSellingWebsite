@@ -6,6 +6,10 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page pageEncoding="UTF-8" %>
+<%
+  request.setCharacterEncoding("UTF-8");
+  response.setCharacterEncoding("UTF-8");
+%>
 <div class="js-register" id="register-main" style="z-index: 1000">
   <div class="register js-register-container">
     <div class="title-register">

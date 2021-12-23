@@ -31,6 +31,11 @@ body, html {
     z-index: 2;
 }
 
+.img-sale-policy{
+    width: 30px;
+    height: 30px;
+}
+
 #header .header_logo {
     width: 250px;
     height: 100%;
@@ -1032,69 +1037,69 @@ body, html {
     margin-bottom: 24px;
 }
 
-#product-page .product .img-product-item1 {
-    background-image: url("../image/img_10.png");
-}
+/*#product-page .product .img-product-item1 {*/
+/*    background-image: url("../image/img_10.png");*/
+/*}*/
 
-#product-page .product .img-product-item2 {
-    background-image: url("../image/img_20.png");
-}
+/*#product-page .product .img-product-item2 {*/
+/*    background-image: url("../image/img_20.png");*/
+/*}*/
 
-#product-page .product .img-product-item3 {
-    background-image: url("../image/img_21.png");
-}
+/*#product-page .product .img-product-item3 {*/
+/*    background-image: url("../image/img_21.png");*/
+/*}*/
 
-#product-page .product .img-product-item4 {
-    background-image: url("../image/img_22.png");
-}
+/*#product-page .product .img-product-item4 {*/
+/*    background-image: url("../image/img_22.png");*/
+/*}*/
 
-#product-page .product .img-product-item5 {
-    background-image: url("../image/img_23.png");
-}
+/*#product-page .product .img-product-item5 {*/
+/*    background-image: url("../image/img_23.png");*/
+/*}*/
 
-#product-page .product .img-product-item6 {
-    background-image: url("../image/img_24.png");
-}
+/*#product-page .product .img-product-item6 {*/
+/*    background-image: url("../image/img_24.png");*/
+/*}*/
 
-#product-page .product .img-product-item7 {
-    background-image: url("../image/img_25.png");
-}
+/*#product-page .product .img-product-item7 {*/
+/*    background-image: url("../image/img_25.png");*/
+/*}*/
 
-#product-page .product .img-product-item8 {
-    background-image: url("../image/img_35.png");
-}
+/*#product-page .product .img-product-item8 {*/
+/*    background-image: url("../image/img_35.png");*/
+/*}*/
 
-#product-page .product .img-product-item9 {
-    background-image: url("../image/img_26.png");
-}
+/*#product-page .product .img-product-item9 {*/
+/*    background-image: url("../image/img_26.png");*/
+/*}*/
 
-#product-page .product .img-product-item10 {
-    background-image: url("../image/img_36.png");
-}
+/*#product-page .product .img-product-item10 {*/
+/*    background-image: url("../image/img_36.png");*/
+/*}*/
 
-#product-page .product .img-product-item11 {
-    background-image: url("../image/img_29.png");
-}
+/*#product-page .product .img-product-item11 {*/
+/*    background-image: url("../image/img_29.png");*/
+/*}*/
 
-#product-page .product .img-product-item12 {
-    background-image: url("../image/img_37.png");
-}
+/*#product-page .product .img-product-item12 {*/
+/*    background-image: url("../image/img_37.png");*/
+/*}*/
 
-#product-page .product .img-product-item13 {
-    background-image: url("../image/img_30.png");
-}
+/*#product-page .product .img-product-item13 {*/
+/*    background-image: url("../image/img_30.png");*/
+/*}*/
 
-#product-page .product .img-product-item14 {
-    background-image: url("../image/img_31.png");
-}
+/*#product-page .product .img-product-item14 {*/
+/*    background-image: url("../image/img_31.png");*/
+/*}*/
 
-#product-page .product .img-product-item15 {
-    background-image: url("../image/img_34.png");
-}
+/*#product-page .product .img-product-item15 {*/
+/*    background-image: url("../image/img_34.png");*/
+/*}*/
 
-#product-page .product .img-product-item16 {
-    background-image: url("../image/img_33.png");
-}
+/*#product-page .product .img-product-item16 {*/
+/*    background-image: url("../image/img_33.png");*/
+/*}*/
 
 #product-page .product .img-product-item {
     height: 94px;
@@ -1106,21 +1111,21 @@ body, html {
     transition: 0.3s;
 }
 
-#product-page .product .img-product-selling1 {
-    background-image: url("../image/img_16.png");
-}
+/*#product-page .product .img-product-selling1 {*/
+/*    background-image: url("../image/img_16.png");*/
+/*}*/
 
-#product-page .product .img-product-selling2 {
-    background-image: url("../image/img_17.png");
-}
+/*#product-page .product .img-product-selling2 {*/
+/*    background-image: url("../image/img_17.png");*/
+/*}*/
 
-#product-page .product .img-product-selling3 {
-    background-image: url("../image/img_18.png");
-}
+/*#product-page .product .img-product-selling3 {*/
+/*    background-image: url("../image/img_18.png");*/
+/*}*/
 
-#product-page .product .img-product-selling4 {
-    background-image: url("../image/img_19.png");
-}
+/*#product-page .product .img-product-selling4 {*/
+/*    background-image: url("../image/img_19.png");*/
+/*}*/
 
 #product-page .product .product-selling {
     border-radius: 0 0 0 10px;
@@ -1176,25 +1181,25 @@ body, html {
 /*    border-radius: 5px;*/
 /*}*/
 
-#product-page .product-bestseller .img-product-sell1 {
-    background-image: url("../image/img_11.png");
-}
+/*#product-page .product-bestseller .img-product-sell1 {*/
+/*    background-image: url("../image/img_11.png");*/
+/*}*/
 
-#product-page .product-bestseller .img-product-sell2 {
-    background-image: url("../image/img_12.png");
-}
+/*#product-page .product-bestseller .img-product-sell2 {*/
+/*    background-image: url("../image/img_12.png");*/
+/*}*/
 
-#product-page .product-bestseller .img-product-sell3 {
-    background-image: url("../image/img_13.png");
-}
+/*#product-page .product-bestseller .img-product-sell3 {*/
+/*    background-image: url("../image/img_13.png");*/
+/*}*/
 
-#product-page .product-bestseller .img-product-sell4 {
-    background-image: url("../image/img_14.png");
-}
+/*#product-page .product-bestseller .img-product-sell4 {*/
+/*    background-image: url("../image/img_14.png");*/
+/*}*/
 
-#product-page .product-bestseller .img-product-sell5 {
-    background-image: url("../image/img_15.png");
-}
+/*#product-page .product-bestseller .img-product-sell5 {*/
+/*    background-image: url("../image/img_15.png");*/
+/*}*/
 
 #product-page .product-bestseller .img-product-bestseller {
     /*width: 217px;*/
@@ -1204,6 +1209,7 @@ body, html {
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
+    margin-bottom: 15px;
 }
 
 #product-page .bestseller .product-name {

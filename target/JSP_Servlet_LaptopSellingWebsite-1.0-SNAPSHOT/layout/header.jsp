@@ -6,8 +6,12 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page pageEncoding="UTF-8" %>
+<%
+    request.setCharacterEncoding("UTF-8");
+    response.setCharacterEncoding("UTF-8");
+%>
 <div id="header">
-    <a href="../index.jsp">
+    <a href="${param.indexPage}">
         <div class="header_logo">
             <!--                <img src="../image/img_1.png" alt="" class="logo">-->
         </div>
@@ -23,22 +27,22 @@
     <div class="header_list" id="header-list-id">
         <ul class="header_list-item">
             <li class="header_sub-list">
-                <a class="font-14 hover-header" href="product-page.jsp">
+                <a class="font-14 hover-header" href="${param.productPage}">
                     <i class="hover-header1 fas fa-laptop"></i>Sản phẩm
                 </a>
             </li>
             <li class="header_sub-list">
-                <a class="font-14 hover-header" href="tutorial-page.jsp">
+                <a class="font-14 hover-header" href="${param.tutorialPage}">
                     <i class="hover-header1 fas fa-clipboard-check"></i>Hướng dẫn
                 </a>
             </li>
             <li class="header_sub-list">
-                <a class="font-14 hover-header" href="about-us.jsp">
+                <a class="font-14 hover-header" href="${param.aboutUs}">
                     <i class="hover-header1 fas fa-users"></i>Thông tin
                 </a>
             </li>
             <li id="li-cart" class="header_sub-list">
-                <a class="font-14 hover-header" href="cart.jsp">
+                <a class="font-14 hover-header" href="${param.cartPage}">
                     <i class="hover-header1 fas fa-shopping-cart"></i>Giỏ hàng
                 </a>
                 <div id="icon-cart" class="icon-cart"></div>
