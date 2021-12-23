@@ -209,10 +209,17 @@ body, html {
     /*border: 2px solid #e3e3e3;*/
 }
 
+.css-17aam1{
+    width: 100%;
+}
+
 #product-page table {
     border-spacing: 0;
     border-collapse: collapse;
     text-indent: initial;
+}
+#product-page .table-specs .sizeTD {
+    width: 200px!important;
 }
 
 #product-page .table-specs td, .table-specs th {

@@ -8,7 +8,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 public class ProductDao {
     private static ProductDao instance;
@@ -168,32 +167,32 @@ public class ProductDao {
         ArrayList<Product> listProductManufacturer = new ArrayList<>();
         try {
 //            for (Manufacturer x : listProducer) {
-                String query = "SELECT * FROM THONGTINLAPTOP WHERE HANG = ?";
-                PreparedStatement ps = DBConnect.getInstance().get(query);
-                ps.setString(1, manufacturer);
-                ResultSet resultSet = ps.executeQuery();
-                while (resultSet.next()) {
-                    Product product = new Product(resultSet.getString(1),
-                            resultSet.getString(2),
-                            resultSet.getString(3),
-                            resultSet.getInt(4),
-                            resultSet.getString(5),
-                            resultSet.getString(6),
-                            resultSet.getString(7),
-                            resultSet.getString(8),
-                            resultSet.getString(9),
-                            resultSet.getString(10),
-                            resultSet.getString(11),
-                            resultSet.getString(12),
-                            resultSet.getString(13),
-                            resultSet.getString(14),
-                            resultSet.getString(15),
-                            resultSet.getString(16),
-                            resultSet.getString(17),
-                            resultSet.getString(18),
-                            resultSet.getString(19));
-                    listProductManufacturer.add(product);
-                }
+            String query = "SELECT * FROM THONGTINLAPTOP WHERE HANG = ?";
+            PreparedStatement ps = DBConnect.getInstance().get(query);
+            ps.setString(1, manufacturer);
+            ResultSet resultSet = ps.executeQuery();
+            while (resultSet.next()) {
+                Product product = new Product(resultSet.getString(1),
+                        resultSet.getString(2),
+                        resultSet.getString(3),
+                        resultSet.getInt(4),
+                        resultSet.getString(5),
+                        resultSet.getString(6),
+                        resultSet.getString(7),
+                        resultSet.getString(8),
+                        resultSet.getString(9),
+                        resultSet.getString(10),
+                        resultSet.getString(11),
+                        resultSet.getString(12),
+                        resultSet.getString(13),
+                        resultSet.getString(14),
+                        resultSet.getString(15),
+                        resultSet.getString(16),
+                        resultSet.getString(17),
+                        resultSet.getString(18),
+                        resultSet.getString(19));
+                listProductManufacturer.add(product);
+            }
 //            }
             return listProductManufacturer;
         } catch (SQLException | ClassNotFoundException e) {
@@ -207,7 +206,7 @@ public class ProductDao {
         try {
             String query = "SELECT * FROM HANGSX WHERE TENHANG = ?";
             PreparedStatement ps = DBConnect.getInstance().get(query);
-            ps.setString(1,producer);
+            ps.setString(1, producer);
             ResultSet resultSet = ps.executeQuery();
             while (resultSet.next()) {
                 Manufacturer produccer = new Manufacturer(resultSet.getString(1),
@@ -227,12 +226,12 @@ public class ProductDao {
         return null;
     }
 
-    public ArrayList getProductWithID(String ID){
+    public ArrayList getProductWithID(String ID) {
         ArrayList<Product> listProductWithID = new ArrayList<>();
         try {
             String query = "SELECT * FROM THONGTINLAPTOP WHERE MALAPTOP = ?";
             PreparedStatement ps = DBConnect.getInstance().get(query);
-            ps.setString(1,ID);
+            ps.setString(1, ID);
             ResultSet resultSet = ps.executeQuery();
             while (resultSet.next()) {
                 Product product = new Product(resultSet.getString(1),
@@ -259,6 +258,69 @@ public class ProductDao {
             resultSet.close();
             ps.close();
             return listProductWithID;
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public ArrayList getProductWithProducer(String producer) {
+        ArrayList<Product> listProductWithID = new ArrayList<>();
+        try {
+            String query = "SELECT * FROM THONGTINLAPTOP WHERE HANG = ?";
+            PreparedStatement ps = DBConnect.getInstance().get(query);
+            ps.setString(1, producer);
+            ResultSet resultSet = ps.executeQuery();
+            while (resultSet.next()) {
+                Product product = new Product(resultSet.getString(1),
+                        resultSet.getString(2),
+                        resultSet.getString(3),
+                        resultSet.getInt(4),
+                        resultSet.getString(5),
+                        resultSet.getString(6),
+                        resultSet.getString(7),
+                        resultSet.getString(8),
+                        resultSet.getString(9),
+                        resultSet.getString(10),
+                        resultSet.getString(11),
+                        resultSet.getString(12),
+                        resultSet.getString(13),
+                        resultSet.getString(14),
+                        resultSet.getString(15),
+                        resultSet.getString(16),
+                        resultSet.getString(17),
+                        resultSet.getString(18),
+                        resultSet.getString(19));
+                listProductWithID.add(product);
+            }
+            resultSet.close();
+            ps.close();
+            return listProductWithID;
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public ArrayList getTopProducer(int num) {
+        ArrayList listTopProducer = new ArrayList<>();
+        try {
+            String query = "select * from hangsx limit ?";
+            PreparedStatement ps = DBConnect.getInstance().get(query);
+            ps.setInt(1, num);
+            ResultSet resultSet = ps.executeQuery();
+            while (resultSet.next()) {
+                Manufacturer produccer = new Manufacturer(resultSet.getString(1),
+                        resultSet.getString(2),
+                        resultSet.getString(3),
+                        resultSet.getString(4),
+                        resultSet.getString(5),
+                        resultSet.getString(6));
+                listTopProducer.add(produccer);
+            }
+            resultSet.close();
+            ps.close();
+            return listTopProducer;
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }

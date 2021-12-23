@@ -14,6 +14,7 @@ public class AdminController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setAttribute("products", ProductService.getInstance().getAllProduct());
+        request.setAttribute("productsDell", ProductService.getInstance().getProductWithProducer("DELL"));
         request.getRequestDispatcher("jsp/admin.jsp").forward(request, response);
     }
 

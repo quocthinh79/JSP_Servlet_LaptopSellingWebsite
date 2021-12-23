@@ -38,13 +38,7 @@
 </head>
 
 <body>
-<jsp:include page="../layout/header.jsp">
-    <jsp:param name="productPage" value="product-page.jsp"/>
-    <jsp:param name="tutorialPage" value="tutorial-page.jsp"/>
-    <jsp:param name="aboutUs" value="about-us.jsp"/>
-    <jsp:param name="cartPage" value="cart.jsp"/>
-    <jsp:param name="indexPage" value="${root}index.jsp"/>
-</jsp:include>
+<%@include file="../layout/header.jsp"%>
 <%@include file="../layout/cart-hover.jsp" %>
 <jsp:useBean id="productID" scope="request" type="java.util.List"/>
 <c:forEach var="x" items="${productID}">
@@ -83,16 +77,16 @@
                              style="background-image: url('${root}${x.linkHinh5}')"></div>
                     </div>
                     <div class="border-pro"></div>
-                    <div class="css-17aam1">- Kích thước: ${x.kichThuocManHinh}<br> - Tấm nền IPS, Góc nhìn:
-                        178
-                        (H) / 178 (V)<br> - Tần số quét: 60Hz , Thời gian phản hồi 5 ms<br>- HIển thị màu sắc: 16.7
-                        triệu
-                        màu<br> - Cổng hình ảnh: 1 x DisplayPort 1.2a, 1 x HDMI 1.4, 1 x VGA/D-sub
+                    <div class="css-17aam1">- Kích thước: ${x.kichThuocManHinh}<br>
+                        - RAM: ${x.ram}<br>
+                        - CPU: ${x.cpu}<br>
+                        - Bàn phím: ${x.banPhim}<br>
+                        - Ổ cứng: ${x.oCung}
                     </div>
                 </div>
                 <div class="product-sale">
                     <h1 class="title-pro">${x.tenLaptop}</h1>
-                    <div class="trademark">Thương hiệu: ${x.hangSX}</div>
+                    <div class="trademark">Thương hiệu: <a href="AllProduct?idHang=${x.hangSX}" style="color: black">${x.hangSX}</a></div>
                     <div class="price-product">${x.giaBan}</div>
                     <div class="border-pro"></div>
                     <div class="BOXKHUYENMAILIENQUAN">
@@ -189,50 +183,50 @@
                                 <table class="table-specs">
                                     <tbody>
                                     <tr>
-                                        <td> Mã laptop</td>
+                                        <td class="sizeTD"> Mã laptop</td>
                                         <td> ${x.maLapTop}
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td> Series</td>
+                                        <td class="sizeTD"> Series</td>
                                         <td> ${x.series}</td>
                                     </tr>
                                     <tr>
-                                        <td> Màu</td>
+                                        <td class="sizeTD"> Màu</td>
                                         <td> ${x.mau}</td>
                                     </tr>
                                     <tr>
-                                        <td> CPU</td>
+                                        <td class="sizeTD"> CPU</td>
                                         <td> ${x.cpu}</td>
                                     </tr>
                                     <tr>
-                                        <td> VGA</td>
+                                        <td class="sizeTD"> VGA</td>
                                         <td> ${x.vga}
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td> RAM</td>
+                                        <td class="sizeTD"> RAM</td>
                                         <td> ${x.ram}
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td> Kích thước màn hình</td>
+                                        <td class="sizeTD"> Kích thước màn hình</td>
                                         <td> ${x.kichThuocManHinh}</td>
                                     </tr>
                                     <tr>
-                                        <td> Ổ cứng</td>
+                                        <td class="sizeTD"> Ổ cứng</td>
                                         <td> ${x.oCung}</td>
                                     </tr>
                                     <tr>
-                                        <td> Bàn phím</td>
+                                        <td class="sizeTD"> Bàn phím</td>
                                         <td> ${x.banPhim}</td>
                                     </tr>
                                     <tr>
-                                        <td> Pin</td>
+                                        <td class="sizeTD"> Pin</td>
                                         <td> ${x.pin}</td>
                                     </tr>
                                     <tr>
-                                        <td> Khối lượng</td>
+                                        <td class="sizeTD"> Khối lượng</td>
                                         <td> ${x.khoiLuong}
                                         </td>
                                     </tr>

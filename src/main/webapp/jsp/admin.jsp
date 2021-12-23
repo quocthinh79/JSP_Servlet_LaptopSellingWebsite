@@ -33,7 +33,7 @@
     <h1 class="title"><strong>DASHBOARD</strong></h1>
     <div class="container">
         <div class="tab">
-            <button class="tablinks active">DELL</button>
+            <button class="tablinks">DELL</button>
             <button class="tablinks">MSI</button>
             <button class="tablinks">ASUS</button>
         </div>
@@ -407,8 +407,8 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <jsp:useBean id="products" scope="request" type="java.util.List"/>
-                    <c:forEach var="x" items="${products}">
+                    <jsp:useBean id="productsDell" scope="request" type="java.util.List"/>
+                    <c:forEach var="x" items="${productsDell}">
                         <tr>
                             <td>${x.maLapTop}</td>
                             <td>${x.tenLaptop}</td>

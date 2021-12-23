@@ -36,14 +36,7 @@
 </head>
 <body>
 <div id="cart-main">
-
-    <jsp:include page="../layout/header.jsp">
-        <jsp:param name="productPage" value="product-page.jsp"/>
-        <jsp:param name="tutorialPage" value="tutorial-page.jsp"/>
-        <jsp:param name="aboutUs" value="about-us.jsp"/>
-        <jsp:param name="cartPage" value="cart.jsp"/>
-        <jsp:param name="indexPage" value="${root}index.jsp"/>
-    </jsp:include>
+    <%@include file="../layout/header.jsp"%>
     <div class="cart" class="bg-gray">
         <div class="container padding padding-top-60">
             <div class="address-menu">

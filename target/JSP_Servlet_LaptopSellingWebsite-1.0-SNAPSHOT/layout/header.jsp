@@ -10,8 +10,10 @@
     request.setCharacterEncoding("UTF-8");
     response.setCharacterEncoding("UTF-8");
 %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:url value="/" var="root"/>
 <div id="header">
-    <a href="${param.indexPage}">
+    <a href="${root}">
         <div class="header_logo">
             <!--                <img src="../image/img_1.png" alt="" class="logo">-->
         </div>
@@ -27,22 +29,23 @@
     <div class="header_list" id="header-list-id">
         <ul class="header_list-item">
             <li class="header_sub-list">
-                <a class="font-14 hover-header" href="${param.productPage}">
+                <a class="font-14 hover-header" href="${root}AllProduct">
+<%--                    <a class="font-14 hover-header" href="${param.productPage}">--%>
                     <i class="hover-header1 fas fa-laptop"></i>Sản phẩm
                 </a>
             </li>
             <li class="header_sub-list">
-                <a class="font-14 hover-header" href="${param.tutorialPage}">
+                <a class="font-14 hover-header" href="${root}Tutorial">
                     <i class="hover-header1 fas fa-clipboard-check"></i>Hướng dẫn
                 </a>
             </li>
             <li class="header_sub-list">
-                <a class="font-14 hover-header" href="${param.aboutUs}">
+                <a class="font-14 hover-header" href="${root}AboutUs">
                     <i class="hover-header1 fas fa-users"></i>Thông tin
                 </a>
             </li>
             <li id="li-cart" class="header_sub-list">
-                <a class="font-14 hover-header" href="${param.cartPage}">
+                <a class="font-14 hover-header" href="${root}Cart">
                     <i class="hover-header1 fas fa-shopping-cart"></i>Giỏ hàng
                 </a>
                 <div id="icon-cart" class="icon-cart"></div>

@@ -35,13 +35,7 @@
 <body>
 
 <div id="main-tutorial">
-    <jsp:include page="../layout/header.jsp">
-        <jsp:param name="productPage" value="product-page.jsp"/>
-        <jsp:param name="tutorialPage" value="tutorial-page.jsp"/>
-        <jsp:param name="aboutUs" value="about-us.jsp"/>
-        <jsp:param name="cartPage" value="cart.jsp"/>
-        <jsp:param name="indexPage" value="${root}index.jsp"/>
-    </jsp:include>
+    <%@include file="../layout/header.jsp"%>
     <%@include file="../layout/cart-hover.jsp"%>
     <div id="container">
         <div class="title-tutorial">HƯỚNG DẪN MUA HÀNG</div>
