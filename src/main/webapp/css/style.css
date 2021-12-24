@@ -1200,6 +1200,7 @@ body, html {
     border: 1px solid #e0e0e0;
     margin: 4px 8px;
     cursor: pointer;
+    background-color: white;
     -moz-user-select: none; /* Firefox */
     -ms-user-select: none; /* Internet Explorer */
     -khtml-user-select: none; /* KHTML browsers (e.g. Konqueror) */

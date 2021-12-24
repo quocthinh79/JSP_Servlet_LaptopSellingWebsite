@@ -36,7 +36,7 @@
 </head>
 <body>
 <div id="main">
-    <%@include file="../layout/header.jsp"%>
+    <%@include file="../layout/header.jsp" %>
     <%@include file="../layout/cart-hover.jsp" %>
     <div id="content1">
         <div id="title-pro-all" class="title-pro-all">
@@ -50,6 +50,7 @@
             <div class="title-filter-product">
                 <div style="border-left: 3px solid #111111;padding-left: 8px">Bộ lọc</div>
             </div>
+<%--            <form id="sort1" action="Sort" method="post">--%>
             <div id="fiter-hangsx" class="filter">
                 <div class="title-filter">
                     Thương hiệu
@@ -57,9 +58,10 @@
                 <div class="filter-items">
                     <%--                    <jsp:useBean id="allProducer" scope="request" type="java.util.List"/>--%>
                     <c:forEach var="x" items="${allProducer}">
-                        <div class="filter-item fiter-hangsx">${x.tenHang}
+                        <button onclick="loadProduct()" type="submit" name="${x.tenHang}" class="filter-item fiter-hangsx">${x.tenHang}
                             <div class="tick"><i class="fas fa-check" style="position: absolute;  left: 7px"></i></div>
-                        </div>
+                        </button>
+
                     </c:forEach>
                 </div>
             </div>
@@ -76,9 +78,9 @@
                         </c:if>
                     </c:forEach>
                     <c:forEach var="z" items="${list}">
-                        <div class="filter-item">${z}
+                        <button name="${z}" class="filter-item">${z}
                             <div class="tick"><i class="fas fa-check" style="position: absolute;  left: 7px"></i></div>
-                        </div>
+                        </button>
                     </c:forEach>
                 </div>
             </div>
@@ -96,9 +98,9 @@
                         </c:if>
                     </c:forEach>
                     <c:forEach var="x" items="${listCPU}">
-                        <div class="filter-item">${x}
+                        <button name="${x}" class="filter-item">${x}
                             <div class="tick"><i class="fas fa-check" style="position: absolute;  left: 7px"></i></div>
-                        </div>
+                        </button>
                     </c:forEach>
                 </div>
             </div>
@@ -114,9 +116,9 @@
                         </c:if>
                     </c:forEach>
                     <c:forEach var="x" items="${listRAM}">
-                        <div class="filter-item">${x}
+                        <button name="${x}" class="filter-item">${x}
                             <div class="tick"><i class="fas fa-check" style="position: absolute;  left: 7px"></i></div>
-                        </div>
+                        </button>
                     </c:forEach>
                 </div>
             </div>
@@ -132,49 +134,53 @@
                         </c:if>
                     </c:forEach>
                     <c:forEach var="x" items="${listSeries}">
-                        <div class="filter-item">${x}
+                        <button name="${x}" class="filter-item">${x}
                             <div class="tick"><i class="fas fa-check" style="position: absolute;  left: 7px"></i></div>
-                        </div>
+                        </button>
                     </c:forEach>
                 </div>
             </div>
-
+<%--            </form>--%>
         </div>
         <div class="filter-another">
             <div class="title-filter">
                 Sắp xếp theo
             </div>
             <div class="filter-items">
-                <div class="filter-item-another">Bán chạy
+                <button name="btnFilterPrice" value="bestSeller" class="filter-item-another">Bán chạy
                     <div class="tick tick-another"><i class="fas fa-check" style="position: absolute;  left: 7px"></i>
                     </div>
-                </div>
-                <div class="filter-item-another">Giá giảm dần
+                </button>
+                <button name="btnFilterPrice" value="desc" class="filter-item-another">Giá giảm dần
                     <div class="tick tick-another"><i class="fas fa-check" style="position: absolute;  left: 7px"></i>
                     </div>
-                </div>
-                <div class="filter-item-another">Giá tăng dần
+                </button>
+                <button name="btnFilterPrice" value="asc" class="filter-item-another">Giá tăng dần
                     <div class="tick tick-another"><i class="fas fa-check" style="position: absolute;  left: 7px"></i>
                     </div>
-                </div>
-                <div class="price-filter">
-                    <div class="filter-item-another" style="cursor: auto">
-                        <input class="input-filter-product" placeholder="Giá thấp nhất">
-                    </div>
-                    <span style="line-height: 2; text-align: center">-</span>
-                    <div class="filter-item-another" style="cursor: auto">
-                        <input class="input-filter-product" placeholder="Giá cao nhất">
-                    </div>
-                </div>
-                <button class="btn-search-filter">Tìm</button>
-
+                </button>
+                <c:if test="${btnSortPrice != null}">
+                <form style="display: flex" action="SortByPrice?idHang=${btnSortPrice}" method="post"></c:if>
+                    <c:if test="${btnSortPrice == null}">
+                    <form style="display: flex" action="SortByPrice" method="post"></c:if>
+                        <div class="price-filter">
+                            <div class="filter-item-another" style="cursor: auto">
+                                <input name="lowestPrice" class="input-filter-product" placeholder="Giá thấp nhất">
+                            </div>
+                            <span style="line-height: 2; text-align: center">-</span>
+                            <div class="filter-item-another" style="cursor: auto">
+                                <input name="highPrice" class="input-filter-product" placeholder="Giá cao nhất">
+                            </div>
+                        </div>
+                        <button class="btn-search-filter" type="submit">Tìm</button>
+                    </form>
             </div>
         </div>
         <div class="cover-all-product">
-            <div class="all-product-cover">
+            <div id="product" class="all-product-cover">
                 <c:forEach var="x" items="${allProduct}">
                     <div class="hover-all-product">
-                        <a class="all-product-item" href="Product?id=${x.maLapTop}">
+                        <a class="all-product-item" href="${pageContext.request.contextPath}/Product?id=${x.maLapTop}">
                             <div class="status-sale">-11%</div>
                             <div class="img-all-product-item"
                                  style="background-image: url('${root}${x.linkHinh1}')">
@@ -223,6 +229,21 @@
     }
     if (hangSX.length <= 1) {
         filterHangSX.style.display = 'none';
+    }
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    function loadProduct() {
+        $.ajax({
+            url: '${pageContext.request.contextPath}/Sort',
+            type: 'GET',
+            success: function (response) {
+                let div = document.getElementById('product');
+                div.innerHTML += response;
+            },
+            error: function () {
+            }
+        });
     }
 </script>
 <script src="${root}js/register.js"></script>
