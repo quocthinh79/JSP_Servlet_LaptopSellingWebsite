@@ -58,7 +58,7 @@
                 <div class="filter-items">
                     <%--                    <jsp:useBean id="allProducer" scope="request" type="java.util.List"/>--%>
                     <c:forEach var="x" items="${allProducer}">
-                        <button onclick="loadProduct()" name="${x.tenHang}" class="filter-item fiter-hangsx">${x.tenHang}
+                        <button onclick="loadProduct(this)" name="hang" value="${x.tenHang}" class="filter-item fiter-hangsx">${x.tenHang}
                             <div class="tick"><i class="fas fa-check" style="position: absolute;  left: 7px"></i></div>
                         </button>
 
@@ -78,7 +78,7 @@
                         </c:if>
                     </c:forEach>
                     <c:forEach var="z" items="${list}">
-                        <button name="${z}" class="filter-item">${z}
+                        <button onclick="loadProduct(this)" name="mau" value="${z}" class="filter-item">${z}
                             <div class="tick"><i class="fas fa-check" style="position: absolute;  left: 7px"></i></div>
                         </button>
                     </c:forEach>
@@ -98,7 +98,7 @@
                         </c:if>
                     </c:forEach>
                     <c:forEach var="x" items="${listCPU}">
-                        <button name="${x}" class="filter-item">${x}
+                        <button onclick="loadProduct(this)" name="cpu" value="${x}" class="filter-item">${x}
                             <div class="tick"><i class="fas fa-check" style="position: absolute;  left: 7px"></i></div>
                         </button>
                     </c:forEach>
@@ -116,7 +116,7 @@
                         </c:if>
                     </c:forEach>
                     <c:forEach var="x" items="${listRAM}">
-                        <button name="${x}" class="filter-item">${x}
+                        <button onclick="loadProduct(this)" name="ram" value="${x}" class="filter-item">${x}
                             <div class="tick"><i class="fas fa-check" style="position: absolute;  left: 7px"></i></div>
                         </button>
                     </c:forEach>
@@ -134,7 +134,7 @@
                         </c:if>
                     </c:forEach>
                     <c:forEach var="x" items="${listSeries}">
-                        <button name="${x}" class="filter-item">${x}
+                        <button onclick="loadProduct(this)" name="series" value="${x}" class="filter-item">${x}
                             <div class="tick"><i class="fas fa-check" style="position: absolute;  left: 7px"></i></div>
                         </button>
                     </c:forEach>
@@ -147,33 +147,33 @@
                 Sắp xếp theo
             </div>
             <div class="filter-items">
-                <button name="btnFilterPrice" value="bestSeller" class="filter-item-another">Bán chạy
+<%--                <button name="btnFilterPrice" value="bestSeller" class="filter-item-another">Bán chạy--%>
+<%--                    <div class="tick tick-another"><i class="fas fa-check" style="position: absolute;  left: 7px"></i>--%>
+<%--                    </div>--%>
+<%--                </button>--%>
+                <button onclick="loadProduct(this)" id="desc" name="desc" value="desc" class="filter-item-another">Giá giảm dần
                     <div class="tick tick-another"><i class="fas fa-check" style="position: absolute;  left: 7px"></i>
                     </div>
                 </button>
-                <button name="btnFilterPrice" value="desc" class="filter-item-another">Giá giảm dần
+                <button onclick="loadProduct(this)" id="asc" name="asc" value="asc" class="filter-item-another">Giá tăng dần
                     <div class="tick tick-another"><i class="fas fa-check" style="position: absolute;  left: 7px"></i>
                     </div>
                 </button>
-                <button name="btnFilterPrice" value="asc" class="filter-item-another">Giá tăng dần
-                    <div class="tick tick-another"><i class="fas fa-check" style="position: absolute;  left: 7px"></i>
-                    </div>
-                </button>
-                <c:if test="${btnSortPrice != null}">
-                <form style="display: flex" action="SortByPrice?idHang=${btnSortPrice}" method="post"></c:if>
-                    <c:if test="${btnSortPrice == null}">
-                    <form style="display: flex" action="SortByPrice" method="post"></c:if>
+<%--                <c:if test="${btnSortPrice != null}">--%>
+<%--                <form style="display: flex" action="SortByPrice?idHang=${btnSortPrice}" method="post"></c:if>--%>
+<%--                    <c:if test="${btnSortPrice == null}">--%>
+<%--                    <form style="display: flex" action="SortByPrice" method="post"></c:if>--%>
                         <div class="price-filter">
                             <div class="filter-item-another" style="cursor: auto">
-                                <input name="lowestPrice" class="input-filter-product" placeholder="Giá thấp nhất">
+                                <input id="lowestPrice" name="lowestPrice" class="input-filter-product" placeholder="Giá thấp nhất">
                             </div>
                             <span style="line-height: 2; text-align: center">-</span>
                             <div class="filter-item-another" style="cursor: auto">
-                                <input name="highPrice" class="input-filter-product" placeholder="Giá cao nhất">
+                                <input id="highPrice" name="highPrice" class="input-filter-product" placeholder="Giá cao nhất">
                             </div>
                         </div>
-                        <button class="btn-search-filter" type="submit">Tìm</button>
-                    </form>
+                        <button onclick="loadProduct(this)" name="btn-filter-price" class="btn-search-filter" type="submit">Tìm</button>
+<%--                    </form>--%>
             </div>
         </div>
         <div class="cover-all-product">
@@ -233,13 +233,22 @@
 </script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
-    function loadProduct() {
+    function loadProduct(button) {
+        let value = $(button).val();
+        let name = $(button).attr("name");
+        let lowestPrice = document.getElementById('lowestPrice').value;
+        let highPrice = document.getElementById('highPrice').value;
         $.ajax({
             url: '${pageContext.request.contextPath}/Sort',
-            type: 'GET',
+            type: 'POST',
+            data: {
+                value : value,
+                name : name,
+                lowestPrice : lowestPrice,
+                highPrice: highPrice
+            },
             success: function (response) {
-                let div = document.getElementById('product');
-                div.innerHTML += response;
+                $('#product').html(response)
             },
             error: function () {
             }

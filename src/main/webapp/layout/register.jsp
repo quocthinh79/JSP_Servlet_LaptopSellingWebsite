@@ -24,6 +24,7 @@
         <input class="input-items" placeholder="Tên đăng nhập" required type="text">
         <input class="input-items" placeholder="Mật khẩu mới" required type="password">
         <input class="input-items" placeholder="Địa chỉ nhận hàng" required type="password">
+        <input class="input-items" placeholder="Email liên hệ" required type="password">
       </div>
       <div class="register-div">
         <a class="btn-register" role="button">Đăng kí</a>

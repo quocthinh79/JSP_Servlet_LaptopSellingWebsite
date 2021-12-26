@@ -10,11 +10,6 @@ public class DBConnect {
     private static final String USER = "root";
     private static final String PASSWORD = "";
     private static DBConnect dbConnect;
-
-    public static Connection getConnection() {
-        return connection;
-    }
-
     private static Connection connection;
 
     private DBConnect() {

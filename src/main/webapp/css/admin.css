@@ -16,6 +16,17 @@ body, html {
     align-content: space-around;
     flex-wrap: wrap;
     width: 100%;
+    position: relative;
+}
+
+#main .logout{
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 12px;
+    background-color: #d42333;
+    color: white;
+    border: none;
 }
 
 .title{
