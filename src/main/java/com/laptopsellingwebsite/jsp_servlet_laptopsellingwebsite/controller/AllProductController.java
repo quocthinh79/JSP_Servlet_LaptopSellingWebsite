@@ -7,6 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet(name = "AllProductController", value = "/AllProduct")
@@ -15,7 +16,9 @@ public class AllProductController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String idHang = request.getParameter("idHang");
         request.setAttribute("btnSortPrice", idHang);
-//        System.out.println(idHang);
+        HttpSession session = request.getSession();
+        session.setAttribute("idHang", idHang);
+
         if (idHang != null) {
             request.setAttribute("allProduct", ProductService.getInstance().getProductManufacturer(idHang));
             request.setAttribute("allProducer", ProductService.getInstance().getProducerWithID(idHang));

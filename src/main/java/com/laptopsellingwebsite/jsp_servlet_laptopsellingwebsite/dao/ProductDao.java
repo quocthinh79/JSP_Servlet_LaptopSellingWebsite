@@ -8,6 +8,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Map;
+
+import static java.util.stream.Collectors.joining;
 
 public class ProductDao {
     private static ProductDao instance;
@@ -32,6 +35,45 @@ public class ProductDao {
         ArrayList<Product> listResult = new ArrayList<>();
         try {
             String query = "select * from thongtinlaptop";
+            PreparedStatement ps = DBConnect.getInstance().get(query);
+            ResultSet resultSet = ps.executeQuery();
+            while (resultSet.next()) {
+                Product product = new Product(resultSet.getString(1),
+                        resultSet.getString(2),
+                        resultSet.getString(3),
+                        resultSet.getInt(4),
+                        resultSet.getString(5),
+                        resultSet.getString(6),
+                        resultSet.getString(7),
+                        resultSet.getString(8),
+                        resultSet.getString(9),
+                        resultSet.getString(10),
+                        resultSet.getString(11),
+                        resultSet.getString(12),
+                        resultSet.getString(13),
+                        resultSet.getString(14),
+                        resultSet.getString(15),
+                        resultSet.getString(16),
+                        resultSet.getString(17),
+                        resultSet.getString(18),
+                        resultSet.getString(19));
+                listResult.add(product);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return listResult;
+    }
+
+    public ArrayList getAllProduct(String temp) {
+        ArrayList<Product> listResult = new ArrayList<>();
+        try {
+            String query;
+            if (temp != null) {
+                query = "select * from thongtinlaptop" + " ORDER BY GIABAN " + temp;
+            } else {
+                query = "select * from thongtinlaptop";
+            }
             PreparedStatement ps = DBConnect.getInstance().get(query);
             ResultSet resultSet = ps.executeQuery();
             while (resultSet.next()) {
@@ -201,6 +243,48 @@ public class ProductDao {
         return null;
     }
 
+    public ArrayList getProductManufacturer(String manufacturer, String temp) {
+        ArrayList<Product> listProductManufacturer = new ArrayList<>();
+        try {
+            String query;
+            if (temp != null) {
+                query = "SELECT * FROM THONGTINLAPTOP WHERE HANG = ?" + " ORDER BY GIABAN " + temp;
+            } else {
+                query = "SELECT * FROM THONGTINLAPTOP WHERE HANG = ?";
+            }
+            PreparedStatement ps = DBConnect.getInstance().get(query);
+            ps.setString(1, manufacturer);
+            ResultSet resultSet = ps.executeQuery();
+            while (resultSet.next()) {
+                Product product = new Product(resultSet.getString(1),
+                        resultSet.getString(2),
+                        resultSet.getString(3),
+                        resultSet.getInt(4),
+                        resultSet.getString(5),
+                        resultSet.getString(6),
+                        resultSet.getString(7),
+                        resultSet.getString(8),
+                        resultSet.getString(9),
+                        resultSet.getString(10),
+                        resultSet.getString(11),
+                        resultSet.getString(12),
+                        resultSet.getString(13),
+                        resultSet.getString(14),
+                        resultSet.getString(15),
+                        resultSet.getString(16),
+                        resultSet.getString(17),
+                        resultSet.getString(18),
+                        resultSet.getString(19));
+                listProductManufacturer.add(product);
+            }
+//            }
+            return listProductManufacturer;
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public ArrayList getProducerWithID(String producer) {
         ArrayList<Manufacturer> listProducer = new ArrayList<>();
         try {
@@ -327,15 +411,15 @@ public class ProductDao {
         return null;
     }
 
-    public ArrayList sortWithPrice(int highPrice, int lowPrice){
+    public ArrayList sortWithPrice(int highPrice, int lowPrice) {
         ArrayList result = new ArrayList();
         try {
             String query = "select * from THONGTINLAPTOP WHERE GIABAN BETWEEN ? and ?";
             PreparedStatement ps = DBConnect.getInstance().get(query);
             ps.setInt(1, lowPrice);
-            ps.setInt(2,highPrice);
+            ps.setInt(2, highPrice);
             ResultSet rs = ps.executeQuery();
-            while (rs.next()){
+            while (rs.next()) {
                 Product product = new Product(rs.getString(1),
                         rs.getString(2),
                         rs.getString(3),
@@ -358,22 +442,22 @@ public class ProductDao {
                 result.add(product);
             }
             return result;
-        } catch (SQLException | ClassNotFoundException e){
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
             return null;
         }
     }
 
-    public ArrayList sortPriceWithProducer(int highPrice, int lowPrice, String hangSX){
+    public ArrayList sortPriceWithProducer(int highPrice, int lowPrice, String hangSX) {
         ArrayList result = new ArrayList();
         try {
             String query = "select * from THONGTINLAPTOP WHERE HANG = ? AND GIABAN BETWEEN ? and ?";
             PreparedStatement ps = DBConnect.getInstance().get(query);
             ps.setString(1, hangSX);
-            ps.setInt(2,lowPrice);
-            ps.setInt(3,highPrice);
+            ps.setInt(2, lowPrice);
+            ps.setInt(3, highPrice);
             ResultSet rs = ps.executeQuery();
-            while (rs.next()){
+            while (rs.next()) {
                 Product product = new Product(rs.getString(1),
                         rs.getString(2),
                         rs.getString(3),
@@ -396,47 +480,162 @@ public class ProductDao {
                 result.add(product);
             }
             return result;
-        } catch (SQLException | ClassNotFoundException e){
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
             return null;
         }
     }
 
-//    public ArrayList sortPriceWithProducer(int highPrice, int lowPrice, String hangSX){
-//        ArrayList result = new ArrayList();
-//        try {
-//            String query = "select * from THONGTINLAPTOP WHERE HANG = ? AND GIABAN BETWEEN ? and ?";
-//            PreparedStatement ps = DBConnect.getInstance().get(query);
-//            ps.setString(1, hangSX);
-//            ps.setInt(2,lowPrice);
-//            ps.setInt(3,highPrice);
-//            ResultSet rs = ps.executeQuery();
-//            while (rs.next()){
-//                Product product = new Product(rs.getString(1),
-//                        rs.getString(2),
-//                        rs.getString(3),
-//                        rs.getInt(4),
-//                        rs.getString(5),
-//                        rs.getString(6),
-//                        rs.getString(7),
-//                        rs.getString(8),
-//                        rs.getString(9),
-//                        rs.getString(10),
-//                        rs.getString(11),
-//                        rs.getString(12),
-//                        rs.getString(13),
-//                        rs.getString(14),
-//                        rs.getString(15),
-//                        rs.getString(16),
-//                        rs.getString(17),
-//                        rs.getString(18),
-//                        rs.getString(19));
-//                result.add(product);
+    public ArrayList<Product> sortProduct(Map<String, String> map, String temp) {
+        ArrayList<Product> result = new ArrayList();
+        try {
+            String joinString = map.entrySet().stream()
+                    .map(e -> (!e.getKey().equalsIgnoreCase("GIABAN")) ?
+                            (e.getKey() + " IN " + "(" + e.getValue() + ")") :
+                            (e.getKey() + " BETWEEN " + e.getValue()))
+                    .collect(joining(" AND "));
+            String query = "";
+            if (!joinString.equals("")) {
+                query = "select * from THONGTINLAPTOP " + "WHERE" + " %s " + " ORDER BY GIABAN " + temp;
+            } else {
+                query = "select * from THONGTINLAPTOP " + " ORDER BY GIABAN " + temp;
+            }
+            String sqlQuery = String.format(query, joinString);
+            PreparedStatement ps = DBConnect.getInstance().get(sqlQuery);
+            System.out.println(ps.toString());
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Product product = new Product(rs.getString(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getInt(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getString(7),
+                        rs.getString(8),
+                        rs.getString(9),
+                        rs.getString(10),
+                        rs.getString(11),
+                        rs.getString(12),
+                        rs.getString(13),
+                        rs.getString(14),
+                        rs.getString(15),
+                        rs.getString(16),
+                        rs.getString(17),
+                        rs.getString(18),
+                        rs.getString(19));
+                result.add(product);
+            }
+            return result;
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public ArrayList<Product> sortProductWithProducer(Map<String, String> map, String hangsx) {
+        ArrayList<Product> result = new ArrayList();
+        try {
+            hangsx = "'" + hangsx + "'";
+            String query = "";
+            String joinString = map.entrySet().stream()
+                    .map(e -> (!e.getKey().equalsIgnoreCase("GIABAN")) ?
+                            (e.getKey() + " IN " + "(" + e.getValue() + ")") :
+                            (e.getKey() + " BETWEEN " + e.getValue()))
+                    .collect(joining(" AND "));
+            if (!joinString.equals("")) {
+                query = "select * from THONGTINLAPTOP " + "WHERE HANG = " + hangsx + " AND %s " + " ORDER BY GIABAN ";
+            } else {
+                query = "select * from THONGTINLAPTOP " + "WHERE HANG = " + hangsx + " ORDER BY GIABAN ";
+            }
+            String sqlQuery = String.format(query, joinString);
+            PreparedStatement ps = DBConnect.getInstance().get(sqlQuery);
+            System.out.println(ps.toString());
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Product product = new Product(rs.getString(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getInt(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getString(7),
+                        rs.getString(8),
+                        rs.getString(9),
+                        rs.getString(10),
+                        rs.getString(11),
+                        rs.getString(12),
+                        rs.getString(13),
+                        rs.getString(14),
+                        rs.getString(15),
+                        rs.getString(16),
+                        rs.getString(17),
+                        rs.getString(18),
+                        rs.getString(19));
+                result.add(product);
+            }
+            return result;
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public ArrayList<Product> sortProductWithProducer(Map<String, String> map, String hangsx, String temp) {
+        ArrayList<Product> result = new ArrayList();
+        try {
+//            hangsx = "'" + hangsx + "'";
+//            String query;
+//            if (temp != null) {
+//                query = "select * from THONGTINLAPTOP WHERE HANG = " + hangsx + " AND %s " + " ORDER BY GIABAN " + temp;
+//            } else {
+//                query = "select * from THONGTINLAPTOP WHERE HANG = " + hangsx + " AND %s";
 //            }
-//            return result;
-//        } catch (SQLException | ClassNotFoundException e){
-//            e.printStackTrace();
-//            return null;
-//        }
-//    }
+//            String joinString;
+//            joinString = map.entrySet().stream().map(e -> e.getKey() + " IN " + "(" + e.getValue() + ")").collect(joining(" AND "));
+
+            hangsx = "'" + hangsx + "'";
+            String query = "";
+            String joinString = map.entrySet().stream()
+                    .map(e -> (!e.getKey().equalsIgnoreCase("GIABAN")) ?
+                            (e.getKey() + " IN " + "(" + e.getValue() + ")") :
+                            (e.getKey() + " BETWEEN " + e.getValue()))
+                    .collect(joining(" AND "));
+            if (!joinString.equals("")) {
+                query = "select * from THONGTINLAPTOP " + "WHERE HANG = " + hangsx + " AND %s " + " ORDER BY GIABAN " + temp;
+            } else {
+                query = "select * from THONGTINLAPTOP " + "WHERE HANG = " + hangsx + " ORDER BY GIABAN " + temp;
+            }
+            String sqlQuery = String.format(query, joinString);
+            PreparedStatement ps = DBConnect.getInstance().get(sqlQuery);
+            System.out.println(ps.toString());
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Product product = new Product(rs.getString(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getInt(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getString(7),
+                        rs.getString(8),
+                        rs.getString(9),
+                        rs.getString(10),
+                        rs.getString(11),
+                        rs.getString(12),
+                        rs.getString(13),
+                        rs.getString(14),
+                        rs.getString(15),
+                        rs.getString(16),
+                        rs.getString(17),
+                        rs.getString(18),
+                        rs.getString(19));
+                result.add(product);
+            }
+            return result;
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }
