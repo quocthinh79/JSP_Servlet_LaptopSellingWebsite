@@ -455,6 +455,19 @@
         </div>
     </div>
 </div>
+<div id="thongbao" style="z-index: 1000">
+    <div class="register js-register-container">
+        <form class="register-form">
+            <div class="input-register">
+                Bạn chắc chứ?
+            </div>
+            <div class="register-div">
+                <button type="button" id="yes" class="btn-register" >Có</button>
+                <button type="button" id="no" class="btn-register">Không</button>
+            </div>
+        </form>
+    </div>
+</div>
 <!--Back to top-->
 <%@include file="../layout/back-to-top.jsp" %>
 </body>

@@ -27,10 +27,17 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="${root}css/admin.css" class="css">
+    <link href="fonts/themify-icons/themify-icons.css" rel="stylesheet">
+    <link href="fonts/font-awesome-4.7.0/css/font-awesome.css" rel="stylesheet">
+    <link href="fonts/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"
+          integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA=="
+          referrerpolicy="no-referrer" rel="stylesheet"/>
 </head>
 <body>
 <div id="main">
     <h1 class="title"><strong>DASHBOARD</strong></h1>
+    <button class="logout">LOGOUT <i class="fas fa-sign-out-alt"></i></button>
     <div class="container">
         <div class="tab">
             <button class="tablinks">DELL</button>
@@ -446,6 +453,19 @@
                 </div>
             </div>
         </div>
+    </div>
+</div>
+<div id="thongbao" style="z-index: 1000">
+    <div class="register js-register-container">
+        <form class="register-form">
+            <div class="input-register">
+                Bạn chắc chứ?
+            </div>
+            <div class="register-div">
+                <button type="button" id="yes" class="btn-register" >Có</button>
+                <button type="button" id="no" class="btn-register">Không</button>
+            </div>
+        </form>
     </div>
 </div>
 <!--Back to top-->

@@ -50,7 +50,7 @@
             <div class="title-filter-product">
                 <div style="border-left: 3px solid #111111;padding-left: 8px">Bộ lọc</div>
             </div>
-<%--            <form id="sort1" action="Sort" method="post">--%>
+            <%--            <form id="sort1" action="Sort" method="post">--%>
             <div id="fiter-hangsx" class="filter">
                 <div class="title-filter">
                     Thương hiệu
@@ -140,17 +140,17 @@
                     </c:forEach>
                 </div>
             </div>
-<%--            </form>--%>
+            <%--            </form>--%>
         </div>
         <div class="filter-another">
             <div class="title-filter">
                 Sắp xếp theo
             </div>
             <div class="filter-items">
-<%--                <button name="btnFilterPrice" value="bestSeller" class="filter-item-another">Bán chạy--%>
-<%--                    <div class="tick tick-another"><i class="fas fa-check" style="position: absolute;  left: 7px"></i>--%>
-<%--                    </div>--%>
-<%--                </button>--%>
+                <%--                <button name="btnFilterPrice" value="bestSeller" class="filter-item-another">Bán chạy--%>
+                <%--                    <div class="tick tick-another"><i class="fas fa-check" style="position: absolute;  left: 7px"></i>--%>
+                <%--                    </div>--%>
+                <%--                </button>--%>
                 <button onclick="loadProduct(this)" id="desc" name="desc" value="desc" class="filter-item-another">Giá giảm dần
                     <div class="tick tick-another"><i class="fas fa-check" style="position: absolute;  left: 7px"></i>
                     </div>
@@ -159,25 +159,25 @@
                     <div class="tick tick-another"><i class="fas fa-check" style="position: absolute;  left: 7px"></i>
                     </div>
                 </button>
-<%--                <c:if test="${btnSortPrice != null}">--%>
-<%--                <form style="display: flex" action="SortByPrice?idHang=${btnSortPrice}" method="post"></c:if>--%>
-<%--                    <c:if test="${btnSortPrice == null}">--%>
-<%--                    <form style="display: flex" action="SortByPrice" method="post"></c:if>--%>
-                        <div class="price-filter">
-                            <div class="filter-item-another" style="cursor: auto">
-                                <input id="lowestPrice" name="lowestPrice" class="input-filter-product" placeholder="Giá thấp nhất">
-                            </div>
-                            <span style="line-height: 2; text-align: center">-</span>
-                            <div class="filter-item-another" style="cursor: auto">
-                                <input id="highPrice" name="highPrice" class="input-filter-product" placeholder="Giá cao nhất">
-                            </div>
-                        </div>
-                        <button onclick="loadProduct(this)" name="btn-filter-price" class="btn-search-filter" type="submit">Tìm</button>
-<%--                    </form>--%>
+                <%--                <c:if test="${btnSortPrice != null}">--%>
+                <%--                <form style="display: flex" action="SortByPrice?idHang=${btnSortPrice}" method="post"></c:if>--%>
+                <%--                    <c:if test="${btnSortPrice == null}">--%>
+                <%--                    <form style="display: flex" action="SortByPrice" method="post"></c:if>--%>
+                <div class="price-filter">
+                    <div class="filter-item-another" style="cursor: auto">
+                        <input id="lowestPrice" name="lowestPrice" class="input-filter-product" placeholder="Giá thấp nhất">
+                    </div>
+                    <span style="line-height: 2; text-align: center">-</span>
+                    <div class="filter-item-another" style="cursor: auto">
+                        <input id="highPrice" name="highPrice" class="input-filter-product" placeholder="Giá cao nhất">
+                    </div>
+                </div>
+                <button onclick="loadProduct(this)" name="btn-filter-price" class="btn-search-filter" type="submit">Tìm</button>
+                <%--                    </form>--%>
             </div>
         </div>
         <div class="cover-all-product">
-            <div id="product" class="all-product-cover">
+            <div id="product"  class="all-product-cover">
                 <c:forEach var="x" items="${allProduct}">
                     <div class="hover-all-product">
                         <a class="all-product-item" href="${pageContext.request.contextPath}/Product?id=${x.maLapTop}">
@@ -200,7 +200,19 @@
                 </c:forEach>
             </div>
         </div>
-        <div class="dots-slick"></div>
+        <div class="pagination p1">
+            <ul>
+                <c:forEach var="i" begin="1" end="${totalPage}">
+                    <c:if test="${i == page}">
+                        <a value="${i}" class="paging is-active"  ><li>${i}</li></a>
+                    </c:if>
+                    <c:if test="${i != page}">
+                        <a value="${i}" class="paging"  ><li>${i}</li></a>
+                    </c:if>
+                </c:forEach>
+            </ul>
+        </div>
+        <%--        <div class="dots-slick"></div>--%>
     </div>
     <%@include file="../layout/footer.jsp" %>
 </div>
@@ -210,6 +222,32 @@
 <!--Back to top-->
 <%@include file="../layout/back-to-top.jsp" %>
 </body>
+<script>
+    let paging = document.querySelectorAll('.paging');
+    let searchParams = new URLSearchParams(window.location.search)
+    let param = searchParams.get('idHang')
+    for (let i = 0; i < paging.length; i++) {
+        paging[i].addEventListener('click', function () {
+            $.ajax({
+                url: '${pageContext.request.contextPath}/AllProduct',
+                type: 'POST',
+                data: {
+                    page : paging[i].getAttribute('value'),
+                    idHang: param
+                },
+                success: function (response) {
+                    $('#product').html(response)
+                },
+                error: function () {
+                }
+            });
+            for (let i = 0; i < paging.length; i++) {
+                paging[i].classList.remove('is-active')
+            }
+            paging[i].classList.add('is-active');
+        });
+    }
+</script>
 <script>
     let price = document.querySelectorAll('.price-all-product-item');
     for (let i = 0; i < price.length; i++) {
@@ -254,6 +292,28 @@
             }
         });
     }
+    <%--function loadProduct(button) {--%>
+    <%--    let value = $(button).val();--%>
+    <%--    let name = $(button).attr("name");--%>
+    <%--    let lowestPrice = document.getElementById('lowestPrice').value;--%>
+    <%--    let highPrice = document.getElementById('highPrice').value;--%>
+    <%--    $.ajax({--%>
+    <%--        url: '${pageContext.request.contextPath}/Sort',--%>
+    <%--        type: 'POST',--%>
+    <%--        dataType: "json",--%>
+    <%--        data: {--%>
+    <%--            value : value,--%>
+    <%--            name : name,--%>
+    <%--            lowestPrice : lowestPrice,--%>
+    <%--            highPrice: highPrice--%>
+    <%--        },--%>
+    <%--        success: function (response) {--%>
+    <%--            // $('#product').append(response);--%>
+    <%--        },--%>
+    <%--        error: function () {--%>
+    <%--        }--%>
+    <%--    });--%>
+    <%--}--%>
 </script>
 <script src="${root}js/register.js"></script>
 <script src="${root}js/register.js"></script>
@@ -267,6 +327,6 @@
 <script src="${root}js/BackToTop.js"></script>
 <script src="${root}js/Scroll-Indicator.js"></script>
 <script src="${root}js/visibleCart.js"></script>
-<script src="${root}js/slick-all-product.js"></script>
+<%--<script src="${root}js/slick-all-product.js"></script>--%>
 <script src="${root}js/click-filter.js"></script>
 </html>

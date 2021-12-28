@@ -428,3 +428,115 @@ div.tab button.active {
     transition: 0.3s;
     opacity: 0.8;
 }
+
+#thongbao .register {
+    width: 432px;
+    height: auto;
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 16px;
+    animation: downAnimation ease 0.3s;
+}
+
+#thongbao .register .border {
+    align-items: center;
+    width: 100%;
+    border-bottom: 1px solid #dadde1;
+    margin: 12px 0;
+    text-align: center;
+}
+
+#thongbao .register-form .input-item-haft {
+    width: 48%;
+    padding: 14px 16px;
+    margin: 6px 0;
+    font-size: 16px;
+    float: left;
+}
+
+#thongbao .input-item-haft.left {
+    margin-right: 8px;
+}
+
+#thongbao .input-item-haft.right {
+    margin-left: 8px;
+}
+
+#thongbao .register-form .input-items {
+    width: 100%;
+    padding: 14px 16px;
+    margin: 6px 0;
+    font-size: 16px;
+}
+
+#thongbao .register-form .register-div {
+    margin-top: 24px;
+}
+
+#thongbao .register .title-register {
+    position: relative;
+}
+
+#thongbao .title-register .close-register {
+    padding: 2px 2px;
+    position: absolute;
+    right: 0;
+    z-index: 1;
+    font-size: 30px;
+    color: #111111;
+    cursor: pointer;
+}
+
+/*#thongbao.js-register.open {*/
+/*    display: flex;*/
+/*}*/
+
+#thongbao
+{
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+#thongbao .register-div {
+    display: flex;
+    width: 100%;
+    height: auto;
+    margin-top: 6px;
+    text-align: center;
+}
+
+#thongbao .input-register{
+    font-size: 33px;
+    text-align: center;
+}
+
+#thongbao .register-div .btn-register {
+    margin: 0 16px;
+    flex: 1;
+    text-decoration: none;
+    color: #ffffff;
+    padding: 15px 26px;
+    background-color: #42b72a;
+    border-radius: 8px;
+    cursor: pointer;
+    border: none;
+}
+
+#thongbao .register-div #yes:hover{
+    background-color: #28a745;
+}
+#thongbao .register-div #no{
+    background-color: #b30000;
+}
+
+#thongbao .register-div #no:hover{
+    background-color: #e60000;
+}
