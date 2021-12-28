@@ -572,7 +572,7 @@ public class ProductDao {
         }
     }
 
-    public ArrayList<Product> sortProduct(Map<String, String> map, String temp) {
+        public ArrayList<Product> sortProduct(Map<String, String> map, String temp) {
         ArrayList<Product> result = new ArrayList();
         try {
             String joinString = map.entrySet().stream()
@@ -616,6 +616,74 @@ public class ProductDao {
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
             return null;
+        }
+    }
+    public ArrayList<Product> sortProduct(Map<String, String> map, String temp, int limit, int page) {
+        ArrayList<Product> result = new ArrayList();
+        try {
+            int offset = (page - 1) * limit;
+            String joinString = map.entrySet().stream()
+                    .map(e -> (!e.getKey().equalsIgnoreCase("GIABAN")) ?
+                            (e.getKey() + " IN " + "(" + e.getValue() + ")") :
+                            (e.getKey() + " BETWEEN " + e.getValue()))
+                    .collect(joining(" AND "));
+            String query = "";
+            if (!joinString.equals("")) {
+                query = "select * from THONGTINLAPTOP " + "WHERE" + " %s " + " ORDER BY GIABAN " + temp + " LIMIT " + limit + " OFFSET " + offset;
+            } else {
+                query = "select * from THONGTINLAPTOP " + " ORDER BY GIABAN " + temp + " LIMIT " + limit + " OFFSET " + offset;
+            }
+            String sqlQuery = String.format(query, joinString);
+            PreparedStatement ps = DBConnect.getInstance().get(sqlQuery);
+            System.out.println(ps.toString());
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Product product = new Product(rs.getString(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getInt(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getString(7),
+                        rs.getString(8),
+                        rs.getString(9),
+                        rs.getString(10),
+                        rs.getString(11),
+                        rs.getString(12),
+                        rs.getString(13),
+                        rs.getString(14),
+                        rs.getString(15),
+                        rs.getString(16),
+                        rs.getString(17),
+                        rs.getString(18),
+                        rs.getString(19));
+                result.add(product);
+            }
+            return result;
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public int sortProductTotalPage(Map<String, String> map) {
+        try {
+            String joinString = map.entrySet().stream()
+                    .map(e -> (!e.getKey().equalsIgnoreCase("GIABAN")) ?
+                            (e.getKey() + " IN " + "(" + e.getValue() + ")") :
+                            (e.getKey() + " BETWEEN " + e.getValue()))
+                    .collect(joining(" AND "));
+            String query = "";
+            query = "select count(*) as total from THONGTINLAPTOP " + "WHERE" + " %s ";
+            String sqlQuery = String.format(query, joinString);
+            PreparedStatement ps = DBConnect.getInstance().get(sqlQuery);
+            System.out.println(ps.toString());
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+            return rs.getInt("total");
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+            return 0;
         }
     }
 
@@ -725,7 +793,7 @@ public class ProductDao {
         }
     }
 
-        public int getTotalPageByProducer(String producer) {
+    public int getTotalPageByProducer(String producer) {
         try {
             String query = "select count(*) as total from thongtinlaptop where hang = ?";
             PreparedStatement ps = DBConnect.getInstance().get(query);

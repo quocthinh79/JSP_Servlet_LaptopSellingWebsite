@@ -85,6 +85,14 @@ public class ProductService {
         return ProductDao.getInstance().sortProduct(map, temp);
     }
 
+    public List sortProduct(Map<String, String> map, String temp, int limit, int page) {
+        return ProductDao.getInstance().sortProduct(map, temp, limit, page);
+    }
+
+    public int sortProductTotalPage(Map<String, String> map) {
+        return ProductDao.getInstance().sortProductTotalPage(map);
+    }
+
     public List sortProductWithProducer(Map<String, String> map, String hangsx) {
         return ProductDao.getInstance().sortProductWithProducer(map, hangsx);
     }

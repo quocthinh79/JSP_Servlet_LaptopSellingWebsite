@@ -202,12 +202,13 @@
         </div>
         <div class="pagination p1">
             <ul>
+<%--                <p id="test" data-pid="${totalPage}" ></p>--%>
                 <c:forEach var="i" begin="1" end="${totalPage}">
                     <c:if test="${i == page}">
-                        <a value="${i}" class="paging is-active"  ><li>${i}</li></a>
+                        <a value="${i}" class="paging is-active" href="${pageContext.request.contextPath}/Pagination?page=${i}" ><li>${i}</li></a>
                     </c:if>
                     <c:if test="${i != page}">
-                        <a value="${i}" class="paging"  ><li>${i}</li></a>
+                        <a value="${i}" class="paging"  href="${pageContext.request.contextPath}/Pagination?page=${i}"  ><li>${i}</li></a>
                     </c:if>
                 </c:forEach>
             </ul>
@@ -223,30 +224,32 @@
 <%@include file="../layout/back-to-top.jsp" %>
 </body>
 <script>
-    let paging = document.querySelectorAll('.paging');
-    let searchParams = new URLSearchParams(window.location.search)
-    let param = searchParams.get('idHang')
-    for (let i = 0; i < paging.length; i++) {
-        paging[i].addEventListener('click', function () {
-            $.ajax({
-                url: '${pageContext.request.contextPath}/AllProduct',
-                type: 'POST',
-                data: {
-                    page : paging[i].getAttribute('value'),
-                    idHang: param
-                },
-                success: function (response) {
-                    $('#product').html(response)
-                },
-                error: function () {
-                }
-            });
-            for (let i = 0; i < paging.length; i++) {
-                paging[i].classList.remove('is-active')
-            }
-            paging[i].classList.add('is-active');
-        });
-    }
+    <%--let paging = document.querySelectorAll('.paging');--%>
+    <%--let searchParams = new URLSearchParams(window.location.search)--%>
+    <%--let param = searchParams.get('idHang')--%>
+    <%--for (let i = 0; i < paging.length; i++) {--%>
+    <%--    paging[i].addEventListener('click', function () {--%>
+    <%--        $.ajax({--%>
+    <%--            url: '${pageContext.request.contextPath}/Pagination',--%>
+    <%--            type: 'POST',--%>
+    <%--            data: {--%>
+    <%--                page : paging[i].getAttribute('value'),--%>
+    <%--                idHang: param--%>
+    <%--            },--%>
+    <%--            success: function (response) {--%>
+    <%--                let text = response.split('*total page* ')--%>
+    <%--                console.log(text[1])--%>
+    <%--                $('#product').html(text[0])--%>
+    <%--            },--%>
+    <%--            error: function () {--%>
+    <%--            }--%>
+    <%--        });--%>
+    <%--        for (let i = 0; i < paging.length; i++) {--%>
+    <%--            paging[i].classList.remove('is-active')--%>
+    <%--        }--%>
+    <%--        paging[i].classList.add('is-active');--%>
+    <%--    });--%>
+    <%--}--%>
 </script>
 <script>
     let price = document.querySelectorAll('.price-all-product-item');
@@ -292,28 +295,6 @@
             }
         });
     }
-    <%--function loadProduct(button) {--%>
-    <%--    let value = $(button).val();--%>
-    <%--    let name = $(button).attr("name");--%>
-    <%--    let lowestPrice = document.getElementById('lowestPrice').value;--%>
-    <%--    let highPrice = document.getElementById('highPrice').value;--%>
-    <%--    $.ajax({--%>
-    <%--        url: '${pageContext.request.contextPath}/Sort',--%>
-    <%--        type: 'POST',--%>
-    <%--        dataType: "json",--%>
-    <%--        data: {--%>
-    <%--            value : value,--%>
-    <%--            name : name,--%>
-    <%--            lowestPrice : lowestPrice,--%>
-    <%--            highPrice: highPrice--%>
-    <%--        },--%>
-    <%--        success: function (response) {--%>
-    <%--            // $('#product').append(response);--%>
-    <%--        },--%>
-    <%--        error: function () {--%>
-    <%--        }--%>
-    <%--    });--%>
-    <%--}--%>
 </script>
 <script src="${root}js/register.js"></script>
 <script src="${root}js/register.js"></script>
