@@ -29,8 +29,8 @@ class BSTable {
       onDelete: function() {},        // Called after deletion
       onAdd: function() {},           // Called when added a new row
       advanced: {                     // Do not override advanced unless you know what youre doing
-          columnLabel: 'Actions',
-          buttonHTML: `<div class="btn-group pull-right">
+        columnLabel: 'Actions',
+        buttonHTML: `<div class="btn-group pull-right">
                 <button id="bEdit" type="button" class="btn btn-sm btn-default">
                     <span class="fa fa-edit" > </span>
                 </button>
@@ -67,7 +67,7 @@ class BSTable {
     //     });
     //     example1.init();
     // </script>mns: ", this.options.editableColumns);
-      
+
     //   //Extract felds
     //   this.options.editableColumns = this.options.editableColumns.split(',');
     // }
@@ -107,7 +107,7 @@ class BSTable {
   }
 
   /**
-   * Refreshes the editable table. 
+   * Refreshes the editable table.
    *
    * Literally just removes and initializes the editable table again, wrapped in one function.
    * @since 1.0.0
@@ -131,9 +131,9 @@ class BSTable {
   currentlyEditingRow($currentRow) {
     // Check if the row is currently being edited
     if ($currentRow.attr('data-status')=='editing') {
-        return true;
+      return true;
     } else {
-        return false;
+      return false;
     }
   }
 
@@ -162,8 +162,8 @@ class BSTable {
   // -- Private Event Functions
   // --------------------------------------------------
 
-  _rowEdit(button) {                  
-  // Indicate user is editing the row
+  _rowEdit(button) {
+    // Indicate user is editing the row
     let $currentRow = $(button).parents('tr');       // access the row
     console.log($currentRow);
     let $cols = $currentRow.find('td');              // read rows
@@ -179,20 +179,30 @@ class BSTable {
     });
     this._actionsModeEdit(button);
   }
-  _rowDelete(button) {                        
-  // Remove the row
+  _rowDelete(button) {
+    let thongbao = document.getElementById('thongbao');
+    let btnYes = document.getElementById('yes');
+    let btnNo = document.getElementById('no');
     let $currentRow = $(button).parents('tr');       // access the row
     this.options.onBeforeDelete($currentRow);
-    $currentRow.remove();
-    this.options.onDelete();
+    thongbao.style.display = 'flex';
+    btnYes.addEventListener('click', function () {
+      // Remove the row
+      thongbao.style.display = 'none';
+      $currentRow.remove();
+      this.options.onDelete();
+    });
+    btnNo.addEventListener('click', function () {
+      thongbao.style.display = 'none';
+    })
   }
   _rowAccept(button) {
-  // Accept the changes to the row
+    // Accept the changes to the row
     let $currentRow = $(button).parents('tr');    // access the row
     console.log($currentRow);
     let $cols = $currentRow.find('td');              // read fields
     if (!this.currentlyEditingRow($currentRow)) return;   // not currently editing, return
-    
+
     // Finish editing the row & save edits
     this._modifyEachColumn(this.options.editableColumns, $cols, function($td) {  // modify each column
       let cont = $td.find('input').val();     // read through each input
@@ -202,15 +212,15 @@ class BSTable {
     this.options.onEdit($currentRow[0]);
   }
   _rowCancel(button) {
-  // Reject the changes
+    // Reject the changes
     let $currentRow = $(button).parents('tr');       // access the row
     let $cols = $currentRow.find('td');              // read fields
     if (!this.currentlyEditingRow($currentRow)) return;   // not currently editing, return
 
     // Finish editing the row & delete changes
     this._modifyEachColumn(this.options.editableColumns, $cols, function($td) {  // modify each column
-        let cont = $td.find('div').html();    // read div content
-        $td.html(cont);                       // set the content and remove the input fields
+      let cont = $td.find('div').html();    // read div content
+      $td.html(cont);                       // set the content and remove the input fields
     });
     this._actionsModeNormal(button);
   }
@@ -234,7 +244,7 @@ class BSTable {
       this.table.find('tbody').append('<tr>'+newColumnHTML+'</tr>');
     } else { // there are rows in the table. We will clone the last row
       let $lastRow = this.table.find('tr:last');
-      $lastRow.clone().appendTo($lastRow.parent());  
+      $lastRow.clone().appendTo($lastRow.parent());
       $lastRow = this.table.find('tr:last');
       let $cols = $lastRow.find('td');  //lee campos
       $cols.each(function() {
@@ -255,7 +265,7 @@ class BSTable {
   // --------------------------------------------------
 
   _modifyEachColumn($editableColumns, $cols, howToModify) {
-  // Go through each editable field and perform the howToModifyFunction function
+    // Go through each editable field and perform the howToModifyFunction function
     let n = 0;
     $cols.each(function() {
       n++;
@@ -264,19 +274,19 @@ class BSTable {
       howToModify($(this));                                   // If editable, call the provided function
     });
     // console.log("Number of modified columns: " + n); // debug log
-    
+
 
     function isEditableColumn(columnIndex) {
-    // Indicates if the column is editable, based on configuration
-        if ($editableColumns==null) {                           // option not defined
-            return true;                                        // all columns are editable
-        } else {                                                // option is defined
-            //console.log('isEditableColumn: ' + columnIndex);  // DEBUG
-            for (let i = 0; i < $editableColumns.length; i++) {
-              if (columnIndex == $editableColumns[i]) return true;
-            }
-            return false;  // column not found
+      // Indicates if the column is editable, based on configuration
+      if ($editableColumns==null) {                           // option not defined
+        return true;                                        // all columns are editable
+      } else {                                                // option is defined
+        //console.log('isEditableColumn: ' + columnIndex);  // DEBUG
+        for (let i = 0; i < $editableColumns.length; i++) {
+          if (columnIndex == $editableColumns[i]) return true;
         }
+        return false;  // column not found
+      }
     }
   }
 

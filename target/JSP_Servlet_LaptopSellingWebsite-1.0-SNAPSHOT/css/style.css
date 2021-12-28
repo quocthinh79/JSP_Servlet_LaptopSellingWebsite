@@ -1424,3 +1424,47 @@ li.slick-active button {
 
 
 /*End all product*/
+
+
+/* GENERAL STYLES */
+
+#main #content1 .pagination{
+    padding: 30px 0;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+#main #content1 .pagination ul{
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    cursor: pointer;
+}
+
+#main #content1 .pagination a{
+    display: inline-block;
+    padding: 10px 18px;
+    color: #222;
+    cursor: pointer;
+}
+
+/* ONE */
+
+#main #content1 .p1 a{
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    padding: 0;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#main #content1 .p1 .is-active{
+    background-color: #1435c3;
+    border-radius: 100%;
+    color: #fff;
+}
