@@ -1,5 +1,6 @@
 package com.laptopsellingwebsite.jsp_servlet_laptopsellingwebsite.controller;
 
+import com.google.common.collect.Multimap;
 import com.laptopsellingwebsite.jsp_servlet_laptopsellingwebsite.service.ProductService;
 
 import javax.servlet.ServletException;
@@ -17,7 +18,10 @@ public class AllProductController extends HttpServlet {
         String idHang = request.getParameter("idHang");
         HttpSession session = request.getSession();
         session.setAttribute("idHang", idHang);
-
+        Multimap<String, String> map = (Multimap<String, String>) session.getAttribute("map");
+        if (map != null){
+            map.clear();
+        }
         int page = 1;
         if (request.getParameter("page") != null && request.getParameter("page") != ""){
             page = Integer.parseInt(request.getParameter("page"));

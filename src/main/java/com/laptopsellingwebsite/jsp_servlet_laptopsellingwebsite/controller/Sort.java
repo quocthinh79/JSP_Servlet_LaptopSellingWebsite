@@ -1,5 +1,7 @@
 package com.laptopsellingwebsite.jsp_servlet_laptopsellingwebsite.controller;
 
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Multimap;
 import com.laptopsellingwebsite.jsp_servlet_laptopsellingwebsite.beans.Product;
 import com.laptopsellingwebsite.jsp_servlet_laptopsellingwebsite.service.ProductService;
 
@@ -12,27 +14,16 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.NumberFormat;
-import java.util.*;
+import java.util.Currency;
+import java.util.List;
+import java.util.Locale;
 
 @WebServlet(name = "Sort", value = "/Sort")
 public class Sort extends HttpServlet {
-    private static final ArrayList listProduct = new ArrayList<>();
-    private static final ArrayList listColor = new ArrayList<>();
-    private static final ArrayList listCPU = new ArrayList<>();
-    private static final ArrayList listRAM = new ArrayList<>();
-    private static final ArrayList listSERIES = new ArrayList<>();
-    private static final ArrayList listPrice = new ArrayList<>();
-    private static final Map<String, String> map = new HashMap();
+    private static final Multimap<String, String> map = HashMultimap.create();
+    private static final int count = 0;
 
-    private static final ArrayList listProduct1 = new ArrayList<>();
-    private static final ArrayList listColor1 = new ArrayList<>();
-    private static final ArrayList listCPU1 = new ArrayList<>();
-    private static final ArrayList listRAM1 = new ArrayList<>();
-    private static final ArrayList listSERIES1 = new ArrayList<>();
-    private static final ArrayList listPrice1 = new ArrayList<>();
-    private static final Map<String, String> map1 = new HashMap();
-
-    private static void sortFuction(Map<String, String> map, HttpServletResponse response, HttpServletRequest request) throws IOException, ServletException {
+    private static void sortFuction(Multimap<String, String> map, HttpServletResponse response, HttpServletRequest request) throws IOException, ServletException {
 //        map = new HashMap<>();
         HttpSession session = request.getSession();
         String hangsx = (String) session.getAttribute("idHang");
@@ -43,23 +34,36 @@ public class Sort extends HttpServlet {
 
         String orderBy = request.getParameter("value");
         session.setAttribute("orderBy", orderBy);
+        int page = 1;
+        if (request.getParameter("page") != null && request.getParameter("page") != "") {
+            page = Integer.parseInt(request.getParameter("page"));
+        }
+        request.setAttribute("page", page);
+        int limit = 24;
+        int totalPage;
+        int total = 0;
         if (map.isEmpty()) {
-            if (hangsx == null) {
-                if (orderBy.equalsIgnoreCase("desc"))
-                    list = ProductService.getInstance().getAllProduct("desc");
-                else if (orderBy.equalsIgnoreCase("asc"))
-                    list = ProductService.getInstance().getAllProduct("asc");
+            if (hangsx != null && hangsx != "") {
+                totalPage = ProductService.getInstance().getTotalPageByProducer(hangsx);
+                total = (int) Math.ceil((double) totalPage / (double) limit);
+                request.setAttribute("totalPage", total);
+                list = ProductService.getInstance().getProductManufacturer(hangsx, limit, page);
+                request.setAttribute("allProducer", ProductService.getInstance().getProducerWithID(hangsx));
             } else {
-                if (orderBy.equalsIgnoreCase("desc"))
-                    list = ProductService.getInstance().getProductManufacturer(hangsx, "desc");
-                else if (orderBy.equalsIgnoreCase("asc"))
-                    list = ProductService.getInstance().getProductManufacturer(hangsx, "asc");
+                totalPage = ProductService.getInstance().getTotalPage();
+                total = (int) Math.ceil((double) totalPage / (double) limit);
+                request.setAttribute("totalPage", total);
+                list = ProductService.getInstance().getAllProduct(limit, page);
+                request.setAttribute("allProducer", ProductService.getInstance().getAllProducer());
             }
         } else if (hangsx == null) {
+            totalPage = ProductService.getInstance().sortProductTotalPage(map);
+            total = (int) Math.ceil((double) totalPage / (double) limit);
+            request.setAttribute("totalPage", total);
             if (orderBy.equalsIgnoreCase("desc")) {
-                list = ProductService.getInstance().sortProduct(map, "desc");
+                list = ProductService.getInstance().sortProduct(map, "desc", limit, page);
             } else {
-                list = ProductService.getInstance().sortProduct(map, "asc");
+                list = ProductService.getInstance().sortProduct(map, "asc", limit, page);
             }
         } else {
             if (orderBy.equalsIgnoreCase("desc")) {
@@ -92,91 +96,60 @@ public class Sort extends HttpServlet {
         }
     }
 
-    private static List addList(List list, String value) {
-        if (!list.contains(value)) {
-            list.add(value);
-        } else {
-            list.remove(value);
-        }
-        return list;
-    }
-
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String value = request.getParameter("value");
-        value = "'" + value + "'";
         String name = request.getParameter("name");
 
-        HttpSession session = request.getSession(true);
         switch (name) {
             case "hang":
-                if (session.getAttribute("idHang") == null) {
-                    String hangsx = String.join(", ", addList(listProduct, value));
-                    map.put("hang", hangsx);
+                if (map.values().contains(value)) {
+                    map.remove("hang", value);
                 } else {
-                    String hangsx = String.join(", ", addList(listProduct1, value));
-                    map1.put("hang", hangsx);
+                    map.put("hang", value);
                 }
                 break;
             case "mau":
-                if (session.getAttribute("idHang") == null) {
-                    String mau = String.join(", ", addList(listColor, value));
-                    map.put("mau", mau);
+                if (map.values().contains(value)) {
+                    map.remove("mau", value);
                 } else {
-                    String mau = String.join(", ", addList(listColor1, value));
-                    map1.put("mau", mau);
+                    map.put("mau", value);
                 }
                 break;
             case "cpu":
-                if (session.getAttribute("idHang") == null) {
-                    String cpu = String.join(", ", addList(listCPU, value));
-                    map.put("SUBSTRING_INDEX(SUBSTRING_INDEX(CPU, ' ', 3), ' ', -2)", cpu);
+                if (map.values().contains(value)) {
+                    map.remove("SUBSTRING_INDEX(SUBSTRING_INDEX(cpu, ' ', 3), ' ', -2)", value);
                 } else {
-                    String cpu = String.join(", ", addList(listCPU1, value));
-                    map1.put("SUBSTRING_INDEX(SUBSTRING_INDEX(CPU, ' ', 3), ' ', -2)", cpu);
+                    map.put("SUBSTRING_INDEX(SUBSTRING_INDEX(cpu, ' ', 3), ' ', -2)", value);
                 }
                 break;
             case "ram":
-                if (session.getAttribute("idHang") == null) {
-                    String ram = String.join(", ", addList(listRAM, value));
-                    map.put("ram", ram);
+                if (map.values().contains(value)) {
+                    map.remove("ram", value);
                 } else {
-                    String ram = String.join(", ", addList(listRAM1, value));
-                    map1.put("ram", ram);
+                    map.put("ram", value);
                 }
                 break;
             case "series":
-                if (session.getAttribute("idHang") == null) {
-                    String series = String.join(", ", addList(listSERIES, value));
-                    map.put("series", series);
+                if (map.values().contains(value)) {
+                    map.remove("series", value);
                 } else {
-                    String series = String.join(", ", addList(listSERIES1, value));
-                    map1.put("series", series);
+                    map.put("series", value);
                 }
                 break;
             case "btn-filter-price":
+                map.get("GIABAN").clear();
                 String strLow = request.getParameter("lowestPrice").replaceAll(",", "");
                 String strHigh = request.getParameter("highPrice").replaceAll(",", "");
-                String priceSQL = strLow + " AND " + strHigh;
-
-                if (session.getAttribute("idHang") == null) {
-                    String price = String.join(", ", addList(listPrice, priceSQL));
-                    map.put("GIABAN", price);
-                } else {
-                    String price = String.join(", ", addList(listPrice1, priceSQL));
-                    map1.put("GIABAN", price);
+                if (!strLow.equals("") && !strHigh.equals("")) {
+                    map.put("GIABAN", strLow);
+                    map.put("GIABAN", strHigh);
                 }
                 break;
         }
-        System.out.println(map.entrySet());
-        map.entrySet().removeIf(e -> e.getValue().isEmpty());
-        map1.entrySet().removeIf(e -> e.getValue().isEmpty());
-        if (session.getAttribute("idHang") == null) {
-            sortFuction(map, response, request);
-        } else {
-            sortFuction(map1, response, request);
-        }
+        map.entries().removeIf(e -> e.getValue() == null);
+        sortFuction(map, response, request);
     }
 
     @Override

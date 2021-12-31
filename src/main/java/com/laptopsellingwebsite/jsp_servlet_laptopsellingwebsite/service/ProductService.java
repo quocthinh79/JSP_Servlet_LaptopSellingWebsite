@@ -1,5 +1,6 @@
 package com.laptopsellingwebsite.jsp_servlet_laptopsellingwebsite.service;
 
+import com.google.common.collect.Multimap;
 import com.laptopsellingwebsite.jsp_servlet_laptopsellingwebsite.beans.Product;
 import com.laptopsellingwebsite.jsp_servlet_laptopsellingwebsite.dao.ProductDao;
 
@@ -85,11 +86,11 @@ public class ProductService {
         return ProductDao.getInstance().sortProduct(map, temp);
     }
 
-    public List sortProduct(Map<String, String> map, String temp, int limit, int page) {
+    public List sortProduct(Multimap<String, String> map, String temp, int limit, int page) {
         return ProductDao.getInstance().sortProduct(map, temp, limit, page);
     }
 
-    public int sortProductTotalPage(Map<String, String> map) {
+    public int sortProductTotalPage(Multimap<String, String> map) {
         return ProductDao.getInstance().sortProductTotalPage(map);
     }
 
@@ -97,7 +98,7 @@ public class ProductService {
         return ProductDao.getInstance().sortProductWithProducer(map, hangsx);
     }
 
-    public List sortProductWithProducer(Map<String, String> map, String hangsx, String temp) {
+    public List sortProductWithProducer(Multimap<String, String> map, String hangsx, String temp) {
         return ProductDao.getInstance().sortProductWithProducer(map, hangsx, temp);
     }
     public int getTotalPageByProducer(String producer) {
