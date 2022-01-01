@@ -1,7 +1,7 @@
 package com.laptopsellingwebsite.jsp_servlet_laptopsellingwebsite.controller;
 
-import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
+import com.google.common.collect.TreeMultimap;
 import com.laptopsellingwebsite.jsp_servlet_laptopsellingwebsite.beans.Product;
 import com.laptopsellingwebsite.jsp_servlet_laptopsellingwebsite.service.ProductService;
 
@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.text.NumberFormat;
 import java.util.Currency;
 import java.util.List;
@@ -20,7 +19,7 @@ import java.util.Locale;
 
 @WebServlet(name = "Sort", value = "/Sort")
 public class Sort extends HttpServlet {
-    private static final Multimap<String, String> map = HashMultimap.create();
+    private static final Multimap<String, String> map = TreeMultimap.create();
     private static final int count = 0;
 
     private static void sortFuction(Multimap<String, String> map, HttpServletResponse response, HttpServletRequest request) throws IOException, ServletException {
@@ -32,8 +31,11 @@ public class Sort extends HttpServlet {
         NumberFormat currencyVN = NumberFormat.getCurrencyInstance(localeVN);
         currencyVN.setCurrency(Currency.getInstance("VND"));
 
-        String orderBy = request.getParameter("value");
-        session.setAttribute("orderBy", orderBy);
+//        String orderBy = request.getParameter("value");
+//        session.setAttribute("orderBy", orderBy);
+
+        String orderBy = (String) session.getAttribute("orderBy");
+        request.setAttribute("orderBy", orderBy);
         int page = 1;
         if (request.getParameter("page") != null && request.getParameter("page") != "") {
             page = Integer.parseInt(request.getParameter("page"));
@@ -47,53 +49,45 @@ public class Sort extends HttpServlet {
                 totalPage = ProductService.getInstance().getTotalPageByProducer(hangsx);
                 total = (int) Math.ceil((double) totalPage / (double) limit);
                 request.setAttribute("totalPage", total);
-                list = ProductService.getInstance().getProductManufacturer(hangsx, limit, page);
+                list = ProductService.getInstance().getProductManufacturer(hangsx, orderBy, limit, page);
                 request.setAttribute("allProducer", ProductService.getInstance().getProducerWithID(hangsx));
+                request.setAttribute("filter", ProductService.getInstance().getProductManufacturer(hangsx));
             } else {
                 totalPage = ProductService.getInstance().getTotalPage();
                 total = (int) Math.ceil((double) totalPage / (double) limit);
                 request.setAttribute("totalPage", total);
-                list = ProductService.getInstance().getAllProduct(limit, page);
+                list = ProductService.getInstance().getAllProduct(orderBy,limit, page);
                 request.setAttribute("allProducer", ProductService.getInstance().getAllProducer());
+                request.setAttribute("filter", ProductService.getInstance().getAllProduct());
             }
         } else if (hangsx == null) {
             totalPage = ProductService.getInstance().sortProductTotalPage(map);
             total = (int) Math.ceil((double) totalPage / (double) limit);
             request.setAttribute("totalPage", total);
-            if (orderBy.equalsIgnoreCase("desc")) {
-                list = ProductService.getInstance().sortProduct(map, "desc", limit, page);
-            } else {
-                list = ProductService.getInstance().sortProduct(map, "asc", limit, page);
-            }
+            request.setAttribute("allProducer", ProductService.getInstance().getAllProducer());
+            request.setAttribute("filter", ProductService.getInstance().getAllProduct());
+            list = ProductService.getInstance().sortProduct(map, orderBy, limit, page);
         } else {
-            if (orderBy.equalsIgnoreCase("desc")) {
-                list = ProductService.getInstance().sortProductWithProducer(map, hangsx, "desc");
-            } else {
-                list = ProductService.getInstance().sortProductWithProducer(map, hangsx, "asc");
-            }
+            totalPage = ProductService.getInstance().sortProductTotalPageByProducer(map, hangsx);
+            total = (int) Math.ceil((double) totalPage / (double) limit);
+            request.setAttribute("totalPage", total);
+            request.setAttribute("allProducer", ProductService.getInstance().getProducerWithID(hangsx));
+            request.setAttribute("filter", ProductService.getInstance().getProductManufacturer(hangsx));
+            list = ProductService.getInstance().sortProductWithProducer(map, hangsx, orderBy, limit, page);
+
         }
         session.setAttribute("map", map);
-        PrintWriter out = response.getWriter();
-        for (Product x : list) {
-            out.println("<div class=\"hover-all-product\">\n" +
-                    "                        <a class=\"all-product-item\" href=\"" + request.getContextPath() + "/Product?id=" + x.getMaLapTop() + "\">\n" +
-                    "                            <div class=\"status-sale\">-11%</div>\n" +
-                    "                            <div class=\"img-all-product-item\"\n" +
-                    "                                 style=\"background-image: url('" + x.getLinkHinh1() + "')\">\n" +
-                    "                            </div>\n" +
-                    "                            <div class=\"status\">HẾT HÀNG</div>\n" +
-                    "                            <div class=\"infor-all-product-item\">\n" +
-                    "                                    " + x.getTenLaptop() + "\n" +
-                    "                            </div>\n" +
-                    "                            <div class=\"price-all-product-item\">\n" +
-                    "                                    " + currencyVN.format(x.getGiaBan()) + "\n" +
-                    "                            </div>\n" +
-                    "                            <div class=\"sale-all-product-item\">\n" +
-                    "                                <span class=\"origin-price\">33.999.000đ</span> <span>11%</span>\n" +
-                    "                            </div>\n" +
-                    "                        </a>\n" +
-                    "                    </div>");
+        request.setAttribute("valuesMap", map.values());
+        request.setAttribute("allProduct", list);
+
+        request.setAttribute("lowestPrice", session.getAttribute("lowestPrice"));
+        request.setAttribute("highPrice", session.getAttribute("highPrice"));
+
+        if (session.getAttribute("lowestPrice") != null && session.getAttribute("highPrice") != null){
+            request.setAttribute("display", "block");
         }
+
+        request.getRequestDispatcher("jsp/all-product.jsp").forward(request, response);
     }
 
     @Override
@@ -101,7 +95,7 @@ public class Sort extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String value = request.getParameter("value");
         String name = request.getParameter("name");
-
+        HttpSession session = request.getSession();
         switch (name) {
             case "hang":
                 if (map.values().contains(value)) {
@@ -140,11 +134,13 @@ public class Sort extends HttpServlet {
                 break;
             case "btn-filter-price":
                 map.get("GIABAN").clear();
-                String strLow = request.getParameter("lowestPrice").replaceAll(",", "");
-                String strHigh = request.getParameter("highPrice").replaceAll(",", "");
+                String strLow = request.getParameter("lowestPrice");
+                String strHigh = request.getParameter("highPrice");
+                session.setAttribute("lowestPrice", strLow);
+                session.setAttribute("highPrice", strHigh);
                 if (!strLow.equals("") && !strHigh.equals("")) {
-                    map.put("GIABAN", strLow);
-                    map.put("GIABAN", strHigh);
+                    map.put("GIABAN", strLow.replaceAll(",", ""));
+                    map.put("GIABAN", strHigh.replaceAll(",", ""));
                 }
                 break;
         }

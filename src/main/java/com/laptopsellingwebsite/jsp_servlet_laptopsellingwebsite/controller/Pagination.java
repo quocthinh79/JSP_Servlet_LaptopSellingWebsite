@@ -25,46 +25,26 @@ public class Pagination extends HttpServlet {
         String idHang = (String) session.getAttribute("idHang");
         List<Product> listProduct = null;
         Multimap<String, String> map = (Multimap<String, String>) session.getAttribute("map");
-        String orderBy = (String) session.getAttribute("orderBy");
+//        String orderBy = (String) session.getAttribute("orderBy");
+        String orderBy = request.getParameter("value");
+        session.setAttribute("orderBy", orderBy);
         int page = 1;
-        if (request.getParameter("page") != null && request.getParameter("page") != ""){
+        if (request.getParameter("page") != null && request.getParameter("page") != "") {
             page = Integer.parseInt(request.getParameter("page"));
         }
         request.setAttribute("page", page);
         int limit = 24;
-        int totalPage;
-        int total = 0;
-        if (map == null){
+        if (map == null) {
             if (idHang != null && idHang != "") {
-                totalPage = ProductService.getInstance().getTotalPageByProducer(idHang);
-                total = (int) Math.ceil((double) totalPage / (double) limit);
-                request.setAttribute("totalPage", total);
-                listProduct = ProductService.getInstance().getProductManufacturer(idHang, limit, page);
-                request.setAttribute("allProducer", ProductService.getInstance().getProducerWithID(idHang));
+                listProduct = ProductService.getInstance().getProductManufacturer(idHang, orderBy, limit, page);
             } else {
-                totalPage = ProductService.getInstance().getTotalPage();
-                total = (int) Math.ceil((double) totalPage / (double) limit);
-                request.setAttribute("totalPage", total);
-                listProduct = ProductService.getInstance().getAllProduct(limit, page);
-                request.setAttribute("allProducer", ProductService.getInstance().getAllProducer());
+                listProduct = ProductService.getInstance().getAllProduct(orderBy,limit, page);
             }
         } else if (idHang == null) {
-            totalPage = ProductService.getInstance().sortProductTotalPage(map);
-            total = (int) Math.ceil((double) totalPage / (double) limit);
-            request.setAttribute("totalPage", total);
-            if (orderBy.equalsIgnoreCase("desc")) {
-                listProduct = ProductService.getInstance().sortProduct(map, "desc", limit, page);
-            } else {
-                listProduct = ProductService.getInstance().sortProduct(map, "asc", limit, page);
-            }
+            listProduct = ProductService.getInstance().sortProduct(map, orderBy, limit, page);
+        } else {
+            listProduct = ProductService.getInstance().sortProductWithProducer(map, idHang, orderBy, limit, page);
         }
-//        else {
-//            if (orderBy.equalsIgnoreCase("desc")) {
-//                list = ProductService.getInstance().sortProductWithProducer(map, hangsx, "desc");
-//            } else {
-//                list = ProductService.getInstance().sortProductWithProducer(map, hangsx, "asc");
-//            }
-//        }
 
         Locale localeVN = new Locale("vi", "VN");
         NumberFormat currencyVN = NumberFormat.getCurrencyInstance(localeVN);

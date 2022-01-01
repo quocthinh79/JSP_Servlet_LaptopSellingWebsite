@@ -37,8 +37,8 @@ public class ProductService {
         return ProductDao.getInstance().getAllProducer();
     }
 
-    public List getAllProduct(String temp) {
-        return ProductDao.getInstance().getAllProduct(temp);
+    public List getAllProduct(String temp, int limit, int page) {
+        return ProductDao.getInstance().getAllProduct(temp, limit, page);
     }
 
 
@@ -54,8 +54,8 @@ public class ProductService {
         return ProductDao.getInstance().getProductManufacturer(manufacturer);
     }
 
-    public List getProductManufacturer(String manufacturer, String temp) {
-        return ProductDao.getInstance().getProductManufacturer(manufacturer, temp);
+    public List getProductManufacturer(String manufacturer, String temp, int limit, int page) {
+        return ProductDao.getInstance().getProductManufacturer(manufacturer, temp, limit, page);
     }
 
     public List getProducerWithID(String producer) {
@@ -82,7 +82,7 @@ public class ProductService {
         return ProductDao.getInstance().sortPriceWithProducer(highPrice, lowPrice, hangSX);
     }
 
-    public List sortProduct(Map<String, String> map, String temp) {
+    public List sortProduct(Multimap<String, String> map, String temp) {
         return ProductDao.getInstance().sortProduct(map, temp);
     }
 
@@ -94,6 +94,10 @@ public class ProductService {
         return ProductDao.getInstance().sortProductTotalPage(map);
     }
 
+    public int sortProductTotalPageByProducer(Multimap<String, String> map, String hangsx) {
+        return ProductDao.getInstance().sortProductTotalPageByProducer(map, hangsx);
+    }
+
     public List sortProductWithProducer(Map<String, String> map, String hangsx) {
         return ProductDao.getInstance().sortProductWithProducer(map, hangsx);
     }
@@ -101,6 +105,11 @@ public class ProductService {
     public List sortProductWithProducer(Multimap<String, String> map, String hangsx, String temp) {
         return ProductDao.getInstance().sortProductWithProducer(map, hangsx, temp);
     }
+
+    public List sortProductWithProducer(Multimap<String, String> map, String hangsx, String temp, int limit, int page) {
+        return ProductDao.getInstance().sortProductWithProducer(map, hangsx, temp, limit, page);
+    }
+
     public int getTotalPageByProducer(String producer) {
         return ProductDao.getInstance().getTotalPageByProducer(producer);
     }

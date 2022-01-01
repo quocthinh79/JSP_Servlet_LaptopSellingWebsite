@@ -36,13 +36,19 @@ public class AllProductController extends HttpServlet {
             request.setAttribute("totalPage", totalProducer);
             request.setAttribute("allProduct", ProductService.getInstance().getProductManufacturer(idHang, limit, page));
             request.setAttribute("allProducer", ProductService.getInstance().getProducerWithID(idHang));
+            request.setAttribute("filter", ProductService.getInstance().getProductManufacturer(idHang));
         } else {
             int totalPage = ProductService.getInstance().getTotalPage();
             int total = (int) Math.ceil((double) totalPage / (double) limit);
             request.setAttribute("totalPage", total);
             request.setAttribute("allProduct", ProductService.getInstance().getAllProduct(limit, page));
             request.setAttribute("allProducer", ProductService.getInstance().getAllProducer());
+            request.setAttribute("filter", ProductService.getInstance().getAllProduct());
         }
+
+        session.removeAttribute("lowestPrice");
+        session.removeAttribute("highPrice");
+//        request.setAttribute("filter", ProductService.getInstance().getAllProduct());
         request.getRequestDispatcher("jsp/all-product.jsp").forward(request, response);
     }
 

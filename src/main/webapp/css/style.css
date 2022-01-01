@@ -1469,3 +1469,13 @@ li.slick-active button {
     border-radius: 100%;
     color: #fff;
 }
+
+.not-found {
+    width: 100%;
+    height: auto;
+    display: none;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    flex-direction: column;
+}
