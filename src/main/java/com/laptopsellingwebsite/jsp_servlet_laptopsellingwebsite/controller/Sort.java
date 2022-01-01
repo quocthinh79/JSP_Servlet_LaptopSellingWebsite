@@ -1,5 +1,7 @@
 package com.laptopsellingwebsite.jsp_servlet_laptopsellingwebsite.controller;
 
+import com.google.common.collect.Multimap;
+import com.google.common.collect.TreeMultimap;
 import com.laptopsellingwebsite.jsp_servlet_laptopsellingwebsite.beans.Product;
 import com.laptopsellingwebsite.jsp_servlet_laptopsellingwebsite.service.ProductService;
 
@@ -10,29 +12,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.text.NumberFormat;
-import java.util.*;
+import java.util.Currency;
+import java.util.List;
+import java.util.Locale;
 
 @WebServlet(name = "Sort", value = "/Sort")
 public class Sort extends HttpServlet {
-    private static final ArrayList listProduct = new ArrayList<>();
-    private static final ArrayList listColor = new ArrayList<>();
-    private static final ArrayList listCPU = new ArrayList<>();
-    private static final ArrayList listRAM = new ArrayList<>();
-    private static final ArrayList listSERIES = new ArrayList<>();
-    private static final ArrayList listPrice = new ArrayList<>();
-    private static final Map<String, String> map = new HashMap();
+    private static final Multimap<String, String> map = TreeMultimap.create();
+    private static final int count = 0;
 
-    private static final ArrayList listProduct1 = new ArrayList<>();
-    private static final ArrayList listColor1 = new ArrayList<>();
-    private static final ArrayList listCPU1 = new ArrayList<>();
-    private static final ArrayList listRAM1 = new ArrayList<>();
-    private static final ArrayList listSERIES1 = new ArrayList<>();
-    private static final ArrayList listPrice1 = new ArrayList<>();
-    private static final Map<String, String> map1 = new HashMap();
-
-    private static void sortFuction(Map<String, String> map, HttpServletResponse response, HttpServletRequest request) throws IOException, ServletException {
+    private static void sortFuction(Multimap<String, String> map, HttpServletResponse response, HttpServletRequest request) throws IOException, ServletException {
+//        map = new HashMap<>();
         HttpSession session = request.getSession();
         String hangsx = (String) session.getAttribute("idHang");
         List<Product> list = null;
@@ -40,140 +31,121 @@ public class Sort extends HttpServlet {
         NumberFormat currencyVN = NumberFormat.getCurrencyInstance(localeVN);
         currencyVN.setCurrency(Currency.getInstance("VND"));
 
-        String orderBy = request.getParameter("value");
+//        String orderBy = request.getParameter("value");
+//        session.setAttribute("orderBy", orderBy);
+
+        String orderBy = (String) session.getAttribute("orderBy");
+        request.setAttribute("orderBy", orderBy);
+        int page = 1;
+        if (request.getParameter("page") != null && request.getParameter("page") != "") {
+            page = Integer.parseInt(request.getParameter("page"));
+        }
+        request.setAttribute("page", page);
+        int limit = 24;
+        int totalPage;
+        int total = 0;
         if (map.isEmpty()) {
-            if (hangsx == null) {
-                if (orderBy.equalsIgnoreCase("desc"))
-                    list = ProductService.getInstance().getAllProduct("desc");
-                else if (orderBy.equalsIgnoreCase("asc"))
-                    list = ProductService.getInstance().getAllProduct("asc");
+            if (hangsx != null && hangsx != "") {
+                totalPage = ProductService.getInstance().getTotalPageByProducer(hangsx);
+                total = (int) Math.ceil((double) totalPage / (double) limit);
+                request.setAttribute("totalPage", total);
+                list = ProductService.getInstance().getProductManufacturer(hangsx, orderBy, limit, page);
+                request.setAttribute("allProducer", ProductService.getInstance().getProducerWithID(hangsx));
+                request.setAttribute("filter", ProductService.getInstance().getProductManufacturer(hangsx));
             } else {
-                if (orderBy.equalsIgnoreCase("desc"))
-                    list = ProductService.getInstance().getProductManufacturer(hangsx, "desc");
-                else if (orderBy.equalsIgnoreCase("asc"))
-                    list = ProductService.getInstance().getProductManufacturer(hangsx, "asc");
+                totalPage = ProductService.getInstance().getTotalPage();
+                total = (int) Math.ceil((double) totalPage / (double) limit);
+                request.setAttribute("totalPage", total);
+                list = ProductService.getInstance().getAllProduct(orderBy,limit, page);
+                request.setAttribute("allProducer", ProductService.getInstance().getAllProducer());
+                request.setAttribute("filter", ProductService.getInstance().getAllProduct());
             }
         } else if (hangsx == null) {
-            if (orderBy.equalsIgnoreCase("desc")) {
-                list = ProductService.getInstance().sortProduct(map, "desc");
-            } else {
-                list = ProductService.getInstance().sortProduct(map, "asc");
-            }
+            totalPage = ProductService.getInstance().sortProductTotalPage(map);
+            total = (int) Math.ceil((double) totalPage / (double) limit);
+            request.setAttribute("totalPage", total);
+            request.setAttribute("allProducer", ProductService.getInstance().getAllProducer());
+            request.setAttribute("filter", ProductService.getInstance().getAllProduct());
+            list = ProductService.getInstance().sortProduct(map, orderBy, limit, page);
         } else {
-            if (orderBy.equalsIgnoreCase("desc")) {
-                list = ProductService.getInstance().sortProductWithProducer(map, hangsx, "desc");
-            } else {
-                list = ProductService.getInstance().sortProductWithProducer(map, hangsx, "asc");
-            }
-        }
-        PrintWriter out = response.getWriter();
-        for (Product x : list) {
-            out.println("<div class=\"hover-all-product\">\n" +
-                    "                        <a class=\"all-product-item\" href=\"" + request.getContextPath() + "/Product?id=" + x.getMaLapTop() + "\">\n" +
-                    "                            <div class=\"status-sale\">-11%</div>\n" +
-                    "                            <div class=\"img-all-product-item\"\n" +
-                    "                                 style=\"background-image: url('" + x.getLinkHinh1() + "')\">\n" +
-                    "                            </div>\n" +
-                    "                            <div class=\"status\">HẾT HÀNG</div>\n" +
-                    "                            <div class=\"infor-all-product-item\">\n" +
-                    "                                    " + x.getTenLaptop() + "\n" +
-                    "                            </div>\n" +
-                    "                            <div class=\"price-all-product-item\">\n" +
-                    "                                    " + currencyVN.format(x.getGiaBan()) + "\n" +
-                    "                            </div>\n" +
-                    "                            <div class=\"sale-all-product-item\">\n" +
-                    "                                <span class=\"origin-price\">33.999.000đ</span> <span>11%</span>\n" +
-                    "                            </div>\n" +
-                    "                        </a>\n" +
-                    "                    </div>");
-        }
-    }
+            totalPage = ProductService.getInstance().sortProductTotalPageByProducer(map, hangsx);
+            total = (int) Math.ceil((double) totalPage / (double) limit);
+            request.setAttribute("totalPage", total);
+            request.setAttribute("allProducer", ProductService.getInstance().getProducerWithID(hangsx));
+            request.setAttribute("filter", ProductService.getInstance().getProductManufacturer(hangsx));
+            list = ProductService.getInstance().sortProductWithProducer(map, hangsx, orderBy, limit, page);
 
-    private static List addList(List list, String value) {
-        if (!list.contains(value)) {
-            list.add(value);
-        } else {
-            list.remove(value);
         }
-        return list;
+        session.setAttribute("map", map);
+        request.setAttribute("valuesMap", map.values());
+        request.setAttribute("allProduct", list);
+
+        request.setAttribute("lowestPrice", session.getAttribute("lowestPrice"));
+        request.setAttribute("highPrice", session.getAttribute("highPrice"));
+
+        if (session.getAttribute("lowestPrice") != null && session.getAttribute("highPrice") != null){
+            request.setAttribute("display", "block");
+        }
+
+        request.getRequestDispatcher("jsp/all-product.jsp").forward(request, response);
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String value = request.getParameter("value");
-        value = "'" + value + "'";
         String name = request.getParameter("name");
-
-        HttpSession session = request.getSession(true);
+        HttpSession session = request.getSession();
         switch (name) {
             case "hang":
-                if (session.getAttribute("idHang") == null) {
-                    String hangsx = String.join(", ", addList(listProduct, value));
-                    map.put("hang", hangsx);
+                if (map.values().contains(value)) {
+                    map.remove("hang", value);
                 } else {
-                    String hangsx = String.join(", ", addList(listProduct1, value));
-                    map1.put("hang", hangsx);
+                    map.put("hang", value);
                 }
                 break;
             case "mau":
-                if (session.getAttribute("idHang") == null) {
-                    String mau = String.join(", ", addList(listColor, value));
-                    map.put("mau", mau);
+                if (map.values().contains(value)) {
+                    map.remove("mau", value);
                 } else {
-                    String mau = String.join(", ", addList(listColor1, value));
-                    map1.put("mau", mau);
+                    map.put("mau", value);
                 }
                 break;
             case "cpu":
-                if (session.getAttribute("idHang") == null) {
-                    String cpu = String.join(", ", addList(listCPU, value));
-                    map.put("SUBSTRING_INDEX(SUBSTRING_INDEX(CPU, ' ', 3), ' ', -2)", cpu);
+                if (map.values().contains(value)) {
+                    map.remove("SUBSTRING_INDEX(SUBSTRING_INDEX(cpu, ' ', 3), ' ', -2)", value);
                 } else {
-                    String cpu = String.join(", ", addList(listCPU1, value));
-                    map1.put("SUBSTRING_INDEX(SUBSTRING_INDEX(CPU, ' ', 3), ' ', -2)", cpu);
+                    map.put("SUBSTRING_INDEX(SUBSTRING_INDEX(cpu, ' ', 3), ' ', -2)", value);
                 }
                 break;
             case "ram":
-                if (session.getAttribute("idHang") == null) {
-                    String ram = String.join(", ", addList(listRAM, value));
-                    map.put("ram", ram);
+                if (map.values().contains(value)) {
+                    map.remove("ram", value);
                 } else {
-                    String ram = String.join(", ", addList(listRAM1, value));
-                    map1.put("ram", ram);
+                    map.put("ram", value);
                 }
                 break;
             case "series":
-                if (session.getAttribute("idHang") == null) {
-                    String series = String.join(", ", addList(listSERIES, value));
-                    map.put("series", series);
+                if (map.values().contains(value)) {
+                    map.remove("series", value);
                 } else {
-                    String series = String.join(", ", addList(listSERIES1, value));
-                    map1.put("series", series);
+                    map.put("series", value);
                 }
                 break;
             case "btn-filter-price":
-                String strLow = request.getParameter("lowestPrice").replaceAll(",", "");
-                String strHigh = request.getParameter("highPrice").replaceAll(",", "");
-                String priceSQL = strLow + " AND " + strHigh;
-
-                if (session.getAttribute("idHang") == null) {
-                    String price = String.join(", ", addList(listPrice, priceSQL));
-                    map.put("GIABAN", price);
-                } else {
-                    String price = String.join(", ", addList(listPrice1, priceSQL));
-                    map1.put("GIABAN", price);
+                map.get("GIABAN").clear();
+                String strLow = request.getParameter("lowestPrice");
+                String strHigh = request.getParameter("highPrice");
+                session.setAttribute("lowestPrice", strLow);
+                session.setAttribute("highPrice", strHigh);
+                if (!strLow.equals("") && !strHigh.equals("")) {
+                    map.put("GIABAN", strLow.replaceAll(",", ""));
+                    map.put("GIABAN", strHigh.replaceAll(",", ""));
                 }
                 break;
         }
-        System.out.println(map.entrySet());
-        map.entrySet().removeIf(e -> e.getValue().isEmpty());
-        map1.entrySet().removeIf(e -> e.getValue().isEmpty());
-        if (session.getAttribute("idHang") == null) {
-            sortFuction(map, response, request);
-        } else {
-            sortFuction(map1, response, request);
-        }
+        map.entries().removeIf(e -> e.getValue() == null);
+        sortFuction(map, response, request);
     }
 
     @Override
@@ -181,210 +153,3 @@ public class Sort extends HttpServlet {
         doGet(request, response);
     }
 }
-
-
-
-
-//package com.laptopsellingwebsite.jsp_servlet_laptopsellingwebsite.controller;
-//
-//import com.laptopsellingwebsite.jsp_servlet_laptopsellingwebsite.beans.Product;
-//import com.laptopsellingwebsite.jsp_servlet_laptopsellingwebsite.service.ProductService;
-//
-//import javax.servlet.ServletException;
-//import javax.servlet.annotation.WebServlet;
-//import javax.servlet.http.HttpServlet;
-//import javax.servlet.http.HttpServletRequest;
-//import javax.servlet.http.HttpServletResponse;
-//import javax.servlet.http.HttpSession;
-//import java.io.IOException;
-//import java.io.PrintWriter;
-//import java.text.NumberFormat;
-//import java.util.*;
-//
-//@WebServlet(name = "Sort", value = "/Sort")
-//public class Sort extends HttpServlet {
-//    private static final ArrayList listProduct = new ArrayList<>();
-//    private static final ArrayList listColor = new ArrayList<>();
-//    private static final ArrayList listCPU = new ArrayList<>();
-//    private static final ArrayList listRAM = new ArrayList<>();
-//    private static final ArrayList listSERIES = new ArrayList<>();
-//    private static final ArrayList listPrice = new ArrayList<>();
-//    private static final Map<String, String> map = new HashMap();
-//
-//    private static final ArrayList listProduct1 = new ArrayList<>();
-//    private static final ArrayList listColor1 = new ArrayList<>();
-//    private static final ArrayList listCPU1 = new ArrayList<>();
-//    private static final ArrayList listRAM1 = new ArrayList<>();
-//    private static final ArrayList listSERIES1 = new ArrayList<>();
-//    private static final ArrayList listPrice1 = new ArrayList<>();
-//    private static final Map<String, String> map1 = new HashMap();
-//
-//    private static void sortFuction(Map<String, String> map, HttpServletResponse response, HttpServletRequest request) throws IOException, ServletException {
-//        HttpSession session = request.getSession();
-//        String hangsx = (String) session.getAttribute("idHang");
-////        String hangsx = request.getParameter("value");
-//        List<Product> list = null;
-//        Locale localeVN = new Locale("vi", "VN");
-//        NumberFormat currencyVN = NumberFormat.getCurrencyInstance(localeVN);
-//        currencyVN.setCurrency(Currency.getInstance("VND"));
-//
-//        int page = 1;
-//        if (request.getParameter("page") != null && request.getParameter("page") != ""){
-//            page = Integer.parseInt(request.getParameter("page"));
-//        }
-//        request.setAttribute("page", page);
-//        int limit = 24;
-//
-//        String orderBy = request.getParameter("value");
-//        if (map.isEmpty()) {
-//            if (hangsx == null) {
-//                int totalPage = ProductService.getInstance().getTotalPage();
-//                int total = (int) Math.ceil((double) totalPage / (double) limit);
-//                request.setAttribute("totalPage", total);
-//                if (orderBy.equalsIgnoreCase("desc"))
-//                    list = ProductService.getInstance().getAllProduct("desc", limit, page);
-//                else if (orderBy.equalsIgnoreCase("asc"))
-//                    list = ProductService.getInstance().getAllProduct("asc", limit, page);
-//            } else {
-//                int totalPageProducer = ProductService.getInstance().getTotalPageByProducer(hangsx);
-//                int totalProducer = (int) Math.ceil((double) totalPageProducer / (double) limit);
-//                request.setAttribute("totalPage", totalProducer);
-//                if (orderBy.equalsIgnoreCase("desc"))
-//                    list = ProductService.getInstance().getProductManufacturer(hangsx, "desc", limit, page);
-//                else if (orderBy.equalsIgnoreCase("asc"))
-//                    list = ProductService.getInstance().getProductManufacturer(hangsx, "asc", limit, page);
-//            }
-//        } else if (hangsx == null) {
-//            int totalPage = ProductService.getInstance().totalPageSort(map);
-//            int total = (int) Math.ceil((double) totalPage / (double) limit);
-//            request.setAttribute("totalPage", total);
-//            if (orderBy.equalsIgnoreCase("desc")) {
-//                list = ProductService.getInstance().sortProduct(map, "desc", limit, page);
-//            } else {
-//                list = ProductService.getInstance().sortProduct(map, "asc", limit, page);
-//            }
-//        } else {
-//            int totalPageProducer = ProductService.getInstance().totalPageSortByProducer(map ,hangsx);
-//            int totalProducer = (int) Math.ceil((double) totalPageProducer / (double) limit);
-//            request.setAttribute("totalPage", totalProducer);
-//            if (orderBy.equalsIgnoreCase("desc")) {
-//                list = ProductService.getInstance().sortProductWithProducer(map, hangsx, "desc", limit, page);
-//            } else {
-//                list = ProductService.getInstance().sortProductWithProducer(map, hangsx, "asc", limit, page);
-//            }
-//        }
-//        PrintWriter out = response.getWriter();
-//        for (Product x : list) {
-//            out.println("<div class=\"hover-all-product\">\n" +
-//                    "                        <a class=\"all-product-item\" href=\"" + request.getContextPath() + "/Product?id=" + x.getMaLapTop() + "\">\n" +
-//                    "                            <div class=\"status-sale\">-11%</div>\n" +
-//                    "                            <div class=\"img-all-product-item\"\n" +
-//                    "                                 style=\"background-image: url('" + x.getLinkHinh1() + "')\">\n" +
-//                    "                            </div>\n" +
-//                    "                            <div class=\"status\">HẾT HÀNG</div>\n" +
-//                    "                            <div class=\"infor-all-product-item\">\n" +
-//                    "                                    " + x.getTenLaptop() + "\n" +
-//                    "                            </div>\n" +
-//                    "                            <div class=\"price-all-product-item\">\n" +
-//                    "                                    " + currencyVN.format(x.getGiaBan()) + "\n" +
-//                    "                            </div>\n" +
-//                    "                            <div class=\"sale-all-product-item\">\n" +
-//                    "                                <span class=\"origin-price\">33.999.000đ</span> <span>11%</span>\n" +
-//                    "                            </div>\n" +
-//                    "                        </a>\n" +
-//                    "                    </div>");
-//        }
-//    }
-//
-//    private static List addList(List list, String value) {
-//        if (!list.contains(value)) {
-//            list.add(value);
-//        } else {
-//            list.remove(value);
-//        }
-//        return list;
-//    }
-//
-//    @Override
-//    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//        response.setContentType("text/html;charset=UTF-8");
-//        String value = request.getParameter("value");
-//        value = "'" + value + "'";
-//        String name = request.getParameter("name");
-//
-//        HttpSession session = request.getSession(true);
-//        switch (name) {
-//            case "hang":
-//                if (session.getAttribute("idHang") == null) {
-//                    String hangsx = String.join(", ", addList(listProduct, value));
-//                    map.put("hang", hangsx);
-//                } else {
-//                    String hangsx = String.join(", ", addList(listProduct1, value));
-//                    map1.put("hang", hangsx);
-//                }
-//                break;
-//            case "mau":
-//                if (session.getAttribute("idHang") == null) {
-//                    String mau = String.join(", ", addList(listColor, value));
-//                    map.put("mau", mau);
-//                } else {
-//                    String mau = String.join(", ", addList(listColor1, value));
-//                    map1.put("mau", mau);
-//                }
-//                break;
-//            case "cpu":
-//                if (session.getAttribute("idHang") == null) {
-//                    String cpu = String.join(", ", addList(listCPU, value));
-//                    map.put("SUBSTRING_INDEX(SUBSTRING_INDEX(CPU, ' ', 3), ' ', -2)", cpu);
-//                } else {
-//                    String cpu = String.join(", ", addList(listCPU1, value));
-//                    map1.put("SUBSTRING_INDEX(SUBSTRING_INDEX(CPU, ' ', 3), ' ', -2)", cpu);
-//                }
-//                break;
-//            case "ram":
-//                if (session.getAttribute("idHang") == null) {
-//                    String ram = String.join(", ", addList(listRAM, value));
-//                    map.put("ram", ram);
-//                } else {
-//                    String ram = String.join(", ", addList(listRAM1, value));
-//                    map1.put("ram", ram);
-//                }
-//                break;
-//            case "series":
-//                if (session.getAttribute("idHang") == null) {
-//                    String series = String.join(", ", addList(listSERIES, value));
-//                    map.put("series", series);
-//                } else {
-//                    String series = String.join(", ", addList(listSERIES1, value));
-//                    map1.put("series", series);
-//                }
-//                break;
-//            case "btn-filter-price":
-//                String strLow = request.getParameter("lowestPrice").replaceAll(",", "");
-//                String strHigh = request.getParameter("highPrice").replaceAll(",", "");
-//                String priceSQL = strLow + " AND " + strHigh;
-//
-//                if (session.getAttribute("idHang") == null) {
-//                    String price = String.join(", ", addList(listPrice, priceSQL));
-//                    map.put("GIABAN", price);
-//                } else {
-//                    String price = String.join(", ", addList(listPrice1, priceSQL));
-//                    map1.put("GIABAN", price);
-//                }
-//                break;
-//        }
-//        System.out.println(map.entrySet());
-//        map.entrySet().removeIf(e -> e.getValue().isEmpty());
-//        map1.entrySet().removeIf(e -> e.getValue().isEmpty());
-//        if (session.getAttribute("idHang") == null) {
-//            sortFuction(map, response, request);
-//        } else {
-//            sortFuction(map1, response, request);
-//        }
-//    }
-//
-//    @Override
-//    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//        doGet(request, response);
-//    }
-//}

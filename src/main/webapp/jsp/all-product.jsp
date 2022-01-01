@@ -57,11 +57,40 @@
                 </div>
                 <div class="filter-items">
                     <%--                    <jsp:useBean id="allProducer" scope="request" type="java.util.List"/>--%>
-                    <c:forEach var="x" items="${allProducer}">
-                        <button onclick="loadProduct(this)" name="hang" value="${x.tenHang}" class="filter-item fiter-hangsx">${x.tenHang}
-                            <div class="tick"><i class="fas fa-check" style="position: absolute;  left: 7px"></i></div>
-                        </button>
-
+                    <c:forEach var="x" items="${filter}">
+                        <jsp:useBean id="listHangSX" class="java.util.ArrayList"/>
+                        <c:if test="${!listHangSX.contains(x.hangSX)}">
+                            <c:set var="noUse" value="${listHangSX.add(x.hangSX)}"/>
+                        </c:if>
+                    </c:forEach>
+                    <c:forEach var="x" items="${listHangSX}">
+                        <c:if test="${not empty requestScope.valuesMap}">
+                            <c:if test="${fn:contains(requestScope.valuesMap, x)}">
+                                <button
+                                        name="hang" value="${x}"
+                                        class="filter-item fiter-hangsx  filter-class-add">${x}
+                                    <div style="display:block;" class="tick"><i class="fas fa-check"
+                                                                                style="position: absolute;  left: 7px"></i>
+                                    </div>
+                                </button>
+                            </c:if>
+                            <c:if test="${not fn:contains(requestScope.valuesMap, x)}">
+                                <button
+                                        name="hang" value="${x}"
+                                        class="filter-item fiter-hangsx">${x}
+                                    <div class="tick"><i class="fas fa-check"
+                                                         style="position: absolute;  left: 7px"></i></div>
+                                </button>
+                            </c:if>
+                        </c:if>
+                        <c:if test="${empty requestScope.valuesMap}">
+                            <button
+                                    name="hang" value="${x}"
+                                    class="filter-item fiter-hangsx">${x}
+                                <div class="tick"><i class="fas fa-check"
+                                                     style="position: absolute;  left: 7px"></i></div>
+                            </button>
+                        </c:if>
                     </c:forEach>
                 </div>
             </div>
@@ -70,17 +99,40 @@
                     Màu sắc
                 </div>
                 <div class="filter-items">
-                    <jsp:useBean id="allProduct" scope="request" type="java.util.List"/>
-                    <c:forEach var="x" items="${allProduct}">
+                    <c:forEach var="x" items="${filter}">
                         <jsp:useBean id="list" class="java.util.ArrayList"/>
                         <c:if test="${!list.contains(x.mau)}">
                             <c:set var="noUse" value="${list.add(x.mau)}"/>
                         </c:if>
                     </c:forEach>
-                    <c:forEach var="z" items="${list}">
-                        <button onclick="loadProduct(this)" name="mau" value="${z}" class="filter-item">${z}
-                            <div class="tick"><i class="fas fa-check" style="position: absolute;  left: 7px"></i></div>
-                        </button>
+                    <c:forEach var="y" items="${list}">
+                        <c:if test="${not empty requestScope.valuesMap}">
+                            <c:if test="${fn:contains(requestScope.valuesMap, y)}">
+                                <button
+                                        name="mau" value="${y}"
+                                        class="filter-item  filter-class-add">${y}
+                                    <div style="display:block;" class="tick"><i class="fas fa-check"
+                                                                                style="position: absolute;  left: 7px"></i>
+                                    </div>
+                                </button>
+                            </c:if>
+                            <c:if test="${not fn:contains(requestScope.valuesMap, y)}">
+                                <button
+                                        name="mau" value="${y}"
+                                        class="filter-item ">${y}
+                                    <div class="tick"><i class="fas fa-check"
+                                                         style="position: absolute;  left: 7px"></i></div>
+                                </button>
+                            </c:if>
+                        </c:if>
+                        <c:if test="${empty requestScope.valuesMap}">
+                            <button
+                                    name="mau" value="${y}"
+                                    class="filter-item ">${y}
+                                <div class="tick"><i class="fas fa-check"
+                                                     style="position: absolute;  left: 7px"></i></div>
+                            </button>
+                        </c:if>
                     </c:forEach>
                 </div>
             </div>
@@ -89,7 +141,7 @@
                     Series CPU
                 </div>
                 <div class="filter-items">
-                    <c:forEach var="x" items="${allProduct}">
+                    <c:forEach var="x" items="${filter}">
                         <c:set var="cpuParts" value="${fn:split(x.cpu, ' ')}"/>
                         <c:set var="string" value="${cpuParts[1]}${' '}${cpuParts[2]}"/>
                         <jsp:useBean id="listCPU" class="java.util.ArrayList"/>
@@ -98,9 +150,33 @@
                         </c:if>
                     </c:forEach>
                     <c:forEach var="x" items="${listCPU}">
-                        <button onclick="loadProduct(this)" name="cpu" value="${x}" class="filter-item">${x}
-                            <div class="tick"><i class="fas fa-check" style="position: absolute;  left: 7px"></i></div>
-                        </button>
+                        <c:if test="${not empty requestScope.valuesMap}">
+                            <c:if test="${fn:contains(requestScope.valuesMap, x)}">
+                                <button
+                                        name="cpu" value="${x}"
+                                        class="filter-item filter-class-add">${x}
+                                    <div style="display:block;" class="tick"><i class="fas fa-check"
+                                                                                style="position: absolute;  left: 7px"></i>
+                                    </div>
+                                </button>
+                            </c:if>
+                            <c:if test="${not fn:contains(requestScope.valuesMap, x)}">
+                                <button
+                                        name="cpu" value="${x}"
+                                        class="filter-item">${x}
+                                    <div class="tick"><i class="fas fa-check"
+                                                         style="position: absolute;  left: 7px"></i></div>
+                                </button>
+                            </c:if>
+                        </c:if>
+                        <c:if test="${empty requestScope.valuesMap}">
+                            <button
+                                    name="cpu" value="${x}"
+                                    class="filter-item">${x}
+                                <div class="tick"><i class="fas fa-check"
+                                                     style="position: absolute;  left: 7px"></i></div>
+                            </button>
+                        </c:if>
                     </c:forEach>
                 </div>
             </div>
@@ -109,16 +185,40 @@
                     Dung lượng RAM
                 </div>
                 <div class="filter-items">
-                    <c:forEach var="x" items="${allProduct}">
+                    <c:forEach var="x" items="${filter}">
                         <jsp:useBean id="listRAM" class="java.util.ArrayList"/>
                         <c:if test="${!listRAM.contains(x.ram)}">
                             <c:set var="noUse" value="${listRAM.add(x.ram)}"/>
                         </c:if>
                     </c:forEach>
                     <c:forEach var="x" items="${listRAM}">
-                        <button onclick="loadProduct(this)" name="ram" value="${x}" class="filter-item">${x}
-                            <div class="tick"><i class="fas fa-check" style="position: absolute;  left: 7px"></i></div>
-                        </button>
+                        <c:if test="${not empty requestScope.valuesMap}">
+                            <c:if test="${fn:contains(requestScope.valuesMap, x)}">
+                                <button
+                                        name="ram" value="${x}"
+                                        class="filter-item filter-class-add">${x}
+                                    <div style="display:block;" class="tick"><i class="fas fa-check"
+                                                                                style="position: absolute;  left: 7px"></i>
+                                    </div>
+                                </button>
+                            </c:if>
+                            <c:if test="${not fn:contains(requestScope.valuesMap, x)}">
+                                <button
+                                        name="ram" value="${x}"
+                                        class="filter-item">${x}
+                                    <div class="tick"><i class="fas fa-check"
+                                                         style="position: absolute;  left: 7px"></i></div>
+                                </button>
+                            </c:if>
+                        </c:if>
+                        <c:if test="${empty requestScope.valuesMap}">
+                            <button
+                                    name="ram" value="${x}"
+                                    class="filter-item">${x}
+                                <div class="tick"><i class="fas fa-check"
+                                                     style="position: absolute;  left: 7px"></i></div>
+                            </button>
+                        </c:if>
                     </c:forEach>
                 </div>
             </div>
@@ -127,20 +227,43 @@
                     Series
                 </div>
                 <div class="filter-items">
-                    <c:forEach var="x" items="${allProduct}">
+                    <c:forEach var="x" items="${filter}">
                         <jsp:useBean id="listSeries" class="java.util.ArrayList"/>
                         <c:if test="${!listSeries.contains(x.series)}">
                             <c:set var="noUse" value="${listSeries.add(x.series)}"/>
                         </c:if>
                     </c:forEach>
                     <c:forEach var="x" items="${listSeries}">
-                        <button onclick="loadProduct(this)" name="series" value="${x}" class="filter-item">${x}
-                            <div class="tick"><i class="fas fa-check" style="position: absolute;  left: 7px"></i></div>
-                        </button>
+                        <c:if test="${not empty requestScope.valuesMap}">
+                            <c:if test="${fn:contains(requestScope.valuesMap, x)}">
+                                <button
+                                        name="series" value="${x}"
+                                        class="filter-item filter-class-add">${x}
+                                    <div style="display:block;" class="tick"><i class="fas fa-check"
+                                                                                style="position: absolute;  left: 7px"></i>
+                                    </div>
+                                </button>
+                            </c:if>
+                            <c:if test="${not fn:contains(requestScope.valuesMap, x)}">
+                                <button
+                                        name="series" value="${x}"
+                                        class="filter-item">${x}
+                                    <div class="tick"><i class="fas fa-check"
+                                                         style="position: absolute;  left: 7px"></i></div>
+                                </button>
+                            </c:if>
+                        </c:if>
+                        <c:if test="${empty requestScope.valuesMap}">
+                            <button
+                                    name="series" value="${x}"
+                                    class="filter-item">${x}
+                                <div class="tick"><i class="fas fa-check"
+                                                     style="position: absolute;  left: 7px"></i></div>
+                            </button>
+                        </c:if>
                     </c:forEach>
                 </div>
             </div>
-            <%--            </form>--%>
         </div>
         <div class="filter-another">
             <div class="title-filter">
@@ -151,33 +274,69 @@
                 <%--                    <div class="tick tick-another"><i class="fas fa-check" style="position: absolute;  left: 7px"></i>--%>
                 <%--                    </div>--%>
                 <%--                </button>--%>
-                <button onclick="loadProduct(this)" id="desc" name="desc" value="desc" class="filter-item-another">Giá giảm dần
-                    <div class="tick tick-another"><i class="fas fa-check" style="position: absolute;  left: 7px"></i>
-                    </div>
-                </button>
-                <button onclick="loadProduct(this)" id="asc" name="asc" value="asc" class="filter-item-another">Giá tăng dần
-                    <div class="tick tick-another"><i class="fas fa-check" style="position: absolute;  left: 7px"></i>
-                    </div>
-                </button>
-                <%--                <c:if test="${btnSortPrice != null}">--%>
-                <%--                <form style="display: flex" action="SortByPrice?idHang=${btnSortPrice}" method="post"></c:if>--%>
-                <%--                    <c:if test="${btnSortPrice == null}">--%>
-                <%--                    <form style="display: flex" action="SortByPrice" method="post"></c:if>--%>
+                <c:if test="${orderBy == 'desc'}">
+                    <button id="desc" name="desc" value="desc"
+                            class="filter-item-another click-filter  filter-class-add">Giá
+                        giảm dần
+                        <div style="display: block" class="tick tick-another"><i class="fas fa-check"
+                                                                                 style="position: absolute;  left: 7px"></i>
+                        </div>
+                    </button>
+                    <button id="asc" name="asc" value="asc" class="filter-item-another click-filter">Giá tăng
+                        dần
+                        <div class="tick tick-another"><i class="fas fa-check"
+                                                          style="position: absolute;  left: 7px"></i>
+                        </div>
+                    </button>
+                </c:if>
+                <c:if test="${orderBy == 'asc'}">
+                    <button id="desc" name="desc" value="desc" class="filter-item-another click-filter">Giá
+                        giảm dần
+                        <div class="tick tick-another"><i class="fas fa-check"
+                                                          style="position: absolute;  left: 7px"></i>
+                        </div>
+                    </button>
+                    <button id="asc" name="asc" value="asc" class="filter-item-another click-filter  filter-class-add">
+                        Giá tăng
+                        dần
+                        <div style="display: block" class="tick tick-another"><i class="fas fa-check"
+                                                                                 style="position: absolute;  left: 7px"></i>
+                        </div>
+                    </button>
+                </c:if>
+                <c:if test="${orderBy == '' || orderBy == null}">
+                    <button id="desc" name="desc" value="desc" class="filter-item-another click-filter">Giá
+                        giảm dần
+                        <div class="tick tick-another"><i class="fas fa-check"
+                                                          style="position: absolute;  left: 7px"></i>
+                        </div>
+                    </button>
+                    <button id="asc" name="asc" value="asc" class="filter-item-another click-filter">Giá tăng
+                        dần
+                        <div class="tick tick-another"><i class="fas fa-check"
+                                                          style="position: absolute;  left: 7px"></i>
+                        </div>
+                    </button>
+                </c:if>
                 <div class="price-filter">
                     <div class="filter-item-another" style="cursor: auto">
-                        <input id="lowestPrice" name="lowestPrice" class="input-filter-product" placeholder="Giá thấp nhất">
+                        <input value="${lowestPrice}" id="lowestPrice" name="lowestPrice" class="input-filter-product"
+                               placeholder="Giá thấp nhất">
                     </div>
                     <span style="line-height: 2; text-align: center">-</span>
                     <div class="filter-item-another" style="cursor: auto">
-                        <input id="highPrice" name="highPrice" class="input-filter-product" placeholder="Giá cao nhất">
+                        <input value="${highPrice}" id="highPrice" name="highPrice" class="input-filter-product"
+                               placeholder="Giá cao nhất">
                     </div>
                 </div>
-                <button onclick="loadProduct(this)" name="btn-filter-price" class="btn-search-filter" type="submit">Tìm</button>
-                <%--                    </form>--%>
+                <button style="display: ${display}" value="price" name="btn-filter-price" class="btn-search-filter"
+                        type="submit">
+                    Tìm
+                </button>
             </div>
         </div>
         <div class="cover-all-product">
-            <div id="product"  class="all-product-cover">
+            <div id="product" class="all-product-cover">
                 <c:forEach var="x" items="${allProduct}">
                     <div class="hover-all-product">
                         <a class="all-product-item" href="${pageContext.request.contextPath}/Product?id=${x.maLapTop}">
@@ -199,20 +358,28 @@
                     </div>
                 </c:forEach>
             </div>
+            <div id="not-found" class="not-found">
+                <img src="${root}image/not%20found/no-products-found.png">
+                <br>
+                <div>Không tìm thấy bất kì sản phẩm nào</div>
+            </div>
         </div>
         <div class="pagination p1">
             <ul>
                 <c:forEach var="i" begin="1" end="${totalPage}">
                     <c:if test="${i == page}">
-                        <a value="${i}" class="paging is-active"  ><li>${i}</li></a>
+                        <a value="${i}" class="paging is-active">
+                            <li>${i}</li>
+                        </a>
                     </c:if>
                     <c:if test="${i != page}">
-                        <a value="${i}" class="paging"  ><li>${i}</li></a>
+                        <a value="${i}" class="paging">
+                            <li>${i}</li>
+                        </a>
                     </c:if>
                 </c:forEach>
             </ul>
         </div>
-        <%--        <div class="dots-slick"></div>--%>
     </div>
     <%@include file="../layout/footer.jsp" %>
 </div>
@@ -223,17 +390,27 @@
 <%@include file="../layout/back-to-top.jsp" %>
 </body>
 <script>
-    let paging = document.querySelectorAll('.paging');
-    let searchParams = new URLSearchParams(window.location.search)
-    let param = searchParams.get('idHang')
-    for (let i = 0; i < paging.length; i++) {
-        paging[i].addEventListener('click', function () {
+    let notFound = document.getElementById('not-found');
+    let product = document.querySelectorAll('.hover-all-product');
+    if (product.length <= 0) {
+        notFound.style.display = 'flex';
+    }
+</script>
+<script>
+    var paging = document.querySelectorAll('.paging');
+    var searchParams = new URLSearchParams(window.location.search);
+    var param = searchParams.get('idHang');
+    var filterAnother = document.querySelectorAll('.click-filter');
+    let value;
+    var boolean = 0;
+    for (let i = 0; i < filterAnother.length; i++) {
+        filterAnother[i].addEventListener('click', function () {
+            value = $(this).val();
             $.ajax({
-                url: '${pageContext.request.contextPath}/AllProduct',
+                url: '${pageContext.request.contextPath}/Pagination',
                 type: 'POST',
                 data: {
-                    page : paging[i].getAttribute('value'),
-                    idHang: param
+                    value: value
                 },
                 success: function (response) {
                     $('#product').html(response)
@@ -241,16 +418,38 @@
                 error: function () {
                 }
             });
-            for (let i = 0; i < paging.length; i++) {
-                paging[i].classList.remove('is-active')
+            for (var i = 0; i < paging.length; i++) {
+                paging[i].classList.remove('is-active');
             }
-            paging[i].classList.add('is-active');
+            paging[0].classList.add('is-active');
+        })
+    }
+    for (var i = 0; i < paging.length; i++) {
+        paging[i].addEventListener('click', function () {
+            $.ajax({
+                url: '${pageContext.request.contextPath}/Pagination',
+                type: 'POST',
+                data: {
+                    page: this.getAttribute('value'),
+                    idHang: param,
+                    value: value
+                },
+                success: function (response) {
+                    $('#product').html(response)
+                },
+                error: function () {
+                }
+            });
+            for (var i = 0; i < paging.length; i++) {
+                paging[i].classList.remove('is-active');
+            }
+            this.classList.add('is-active');
         });
     }
 </script>
 <script>
-    let price = document.querySelectorAll('.price-all-product-item');
-    for (let i = 0; i < price.length; i++) {
+    var price = document.querySelectorAll('.price-all-product-item');
+    for (var i = 0; i < price.length; i++) {
         price[i].innerHTML = parseInt(price[i].textContent).toLocaleString('it-IT', {
             style: 'currency',
             currency: 'VND'
@@ -258,10 +457,10 @@
     }
 </script>
 <script>
-    let hangSX = document.querySelectorAll('.fiter-hangsx');
-    let filterHangSX = document.getElementById('fiter-hangsx');
-    let logoLap = document.querySelectorAll('.logo-lap');
-    let allProductLogo = document.getElementById('title-pro-all');
+    var hangSX = document.querySelectorAll('.fiter-hangsx');
+    var filterHangSX = document.getElementById('fiter-hangsx');
+    var logoLap = document.querySelectorAll('.logo-lap');
+    var allProductLogo = document.getElementById('title-pro-all');
     if (logoLap.length > 1) {
         allProductLogo.style.display = 'none';
     }
@@ -271,44 +470,42 @@
 </script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
-    function loadProduct(button) {
-        let value = $(button).val();
-        let name = $(button).attr("name");
-        let lowestPrice = document.getElementById('lowestPrice').value;
-        let highPrice = document.getElementById('highPrice').value;
-        $.ajax({
-            url: '${pageContext.request.contextPath}/Sort',
-            type: 'POST',
-            data: {
-                value : value,
-                name : name,
-                lowestPrice : lowestPrice,
-                highPrice: highPrice
-            },
-            success: function (response) {
-                $('#product').html(response)
-            },
-            error: function () {
-            }
-        });
+    filter()
+
+    function filter() {
+        var btnFilterAnother = document.querySelectorAll('.filter-item');
+        for (var i = 0; i < btnFilterAnother.length; i++) {
+            btnFilterAnother[i].addEventListener('click', function () {
+                var value = $(this).val();
+                var name = $(this).attr("name");
+                location.href = '${pageContext.request.contextPath}/Sort?name=' + name + '&value=' + value + ''
+            })
+        }
+        var btnFilterPrice = document.querySelector('.btn-search-filter');
+        btnFilterPrice.addEventListener('click', function () {
+            var name = $(this).attr("name");
+            let low = $('#lowestPrice').val();
+            let high = $('#highPrice').val();
+            location.href = '${pageContext.request.contextPath}/Sort?name=' + name + '&highPrice=' + high + '&lowestPrice=' + low + ''
+        })
     }
+
     <%--function loadProduct(button) {--%>
-    <%--    let value = $(button).val();--%>
-    <%--    let name = $(button).attr("name");--%>
-    <%--    let lowestPrice = document.getElementById('lowestPrice').value;--%>
-    <%--    let highPrice = document.getElementById('highPrice').value;--%>
+    <%--    var value = $(button).val();--%>
+    <%--    var name = $(button).attr("name");--%>
+    <%--    var lowestPrice = document.getElementById('lowestPrice').value;--%>
+    <%--    var highPrice = document.getElementById('highPrice').value;--%>
     <%--    $.ajax({--%>
-    <%--        url: '${pageContext.request.contextPath}/Sort',--%>
+    <%--        url: '${pageContext.request.contextPath}/SortByPrice',--%>
     <%--        type: 'POST',--%>
-    <%--        dataType: "json",--%>
     <%--        data: {--%>
-    <%--            value : value,--%>
-    <%--            name : name,--%>
-    <%--            lowestPrice : lowestPrice,--%>
+    <%--            value: value,--%>
+    <%--            name: name,--%>
+    <%--            lowestPrice: lowestPrice,--%>
     <%--            highPrice: highPrice--%>
     <%--        },--%>
     <%--        success: function (response) {--%>
-    <%--            // $('#product').append(response);--%>
+    <%--            $('#product').html(response)--%>
     <%--        },--%>
     <%--        error: function () {--%>
     <%--        }--%>

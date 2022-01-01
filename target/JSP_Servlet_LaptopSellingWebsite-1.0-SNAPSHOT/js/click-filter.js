@@ -1,8 +1,9 @@
-let btnFilter = document.querySelectorAll('.filter-item')
-let checked = document.querySelectorAll('.tick')
-clickFilter()
+
+clickFilter();
 
 function clickFilter() {
+    var btnFilter = document.querySelectorAll('.filter-item');
+    let checked = document.querySelectorAll('.tick');
     for (let i = 0; i < btnFilter.length; i++) {
         btnFilter[i].addEventListener('click', function () {
             if ($(checked[i]).css('display') === 'block') {
@@ -14,22 +15,23 @@ function clickFilter() {
             }
         })
     }
-}
+};
 
-let checkedAnother = document.querySelectorAll('.tick-another')
-let btnFilterAnother = document.querySelectorAll('.filter-item-another')
-let inputFilter = document.querySelectorAll('.input-filter-product')
+let checkedAnother = document.querySelectorAll('.tick-another');
+let btnFilterAnother = document.querySelectorAll('.filter-item-another');
+let inputFilter = document.querySelectorAll('.input-filter-product');
+
 for (let i = 0; i < inputFilter.length; i++) {
     // let value = inputFilter[i].value;
-    $(inputFilter[i]).bind('keyup paste', function () {
+    $(inputFilter[i]).bind('keyup paste change input', function () {
         // this.value = Number(this.value).toLocaleString('it-IT' )
         this.value = new Intl.NumberFormat().format(this.value.replaceAll(/[^0-9]/g, '')).replace(/^0+/, '')
-        if(isNaN(this.value))
-        document.querySelector('.btn-search-filter').style.display = 'block'
+        if (isNaN(this.value) || this.value != null || this.value != '')
+            document.querySelector('.btn-search-filter').style.display = 'block'
         // this.value = value.match(regex)
     });
-}
-clickFilterAnother()
+};
+clickFilterAnother();
 
 function clickFilterAnother() {
     for (let i = 0; i < btnFilterAnother.length; i++) {
@@ -43,10 +45,11 @@ function clickFilterAnother() {
                 }
                 btnFilterAnother[i].classList.add("filter-class-add");
                 checkedAnother[i].style.display = 'block';
-            } else {
-                btnFilterAnother[i].classList.remove("filter-class-add");
-                checkedAnother[i].style.display = 'none';
             }
+            // else {
+            //     btnFilterAnother[i].classList.remove("filter-class-add");
+            //     checkedAnother[i].style.display = 'none';
+            // }
         })
     }
-}
+};

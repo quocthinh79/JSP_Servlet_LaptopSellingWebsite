@@ -1429,6 +1429,7 @@ li.slick-active button {
 /* GENERAL STYLES */
 
 #main #content1 .pagination{
+    width: 100%;
     padding: 30px 0;
     display: flex;
     align-items: center;
@@ -1467,4 +1468,14 @@ li.slick-active button {
     background-color: #1435c3;
     border-radius: 100%;
     color: #fff;
+}
+
+.not-found {
+    width: 100%;
+    height: auto;
+    display: none;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    flex-direction: column;
 }

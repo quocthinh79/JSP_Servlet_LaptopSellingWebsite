@@ -76,13 +76,6 @@
                         <div class="details-image-item"
                              style="background-image: url('${root}${x.linkHinh5}')"></div>
                     </div>
-                    <div class="border-pro"></div>
-                    <div class="css-17aam1">- Kích thước: ${x.kichThuocManHinh}<br>
-                        - RAM: ${x.ram}<br>
-                        - CPU: ${x.cpu}<br>
-                        - Bàn phím: ${x.banPhim}<br>
-                        - Ổ cứng: ${x.oCung}
-                    </div>
                 </div>
                 <div class="product-sale">
                     <h1 class="title-pro">${x.tenLaptop}</h1>
@@ -90,23 +83,13 @@
                     <div class="price-product">${x.giaBan}</div>
                     <div class="border-pro"></div>
                     <div class="BOXKHUYENMAILIENQUAN">
-                        <div class="css-mz7xyg">Khuyến mãi liên quan</div>
+                        <div class="css-mz7xyg">Thông tin:</div>
                         <ul>
-                            <li>Nhập mã <strong>PV300</strong> giảm thêm 3% tối đa <span
-                                    class="css-1m8enhf">300.000<span
-                                    class="css-1ul6wk9">đ</span></span> khi thanh toán qua VNPAY-QR.
-                            </li>
-                            <li>Nhập mã <strong>APPLE800</strong> giảm thêm % tối đa <span
-                                    class="css-1m8enhf">800.000<span
-                                    class="css-1ul6wk9">đ</span></span>. Áp dụng cho một số sản phẩm Apple trên
-                                20.000.000đ
-                                khi thanh toán qua VNPAY-QR.
-                            </li>
-                            <li>Nhập mã <strong>APPLENEW</strong> giảm thêm 5% tối đa <span
-                                    class="css-1m8enhf">1.000.000<span class="css-1ul6wk9">đ</span></span>. Áp dụng cho
-                                các
-                                sản phẩm iPhone 13, Ipad 9th GEN &amp; Mini 6 khi thanh toán qua VNPAY-QR.
-                            </li>
+                            <li> Kích thước: 23.8" (1920 x 1080), Tỷ lệ 16:9</li>
+                            <li> Tấm nền IPS, Góc nhìn: 178 (H) / 178 (V)</li>
+                            <li> Tần số quét: 60Hz , Thời gian phản hồi 5 ms</li>
+                            <li> HIển thị màu sắc: 16.7 triệu màu</li>
+                            <li> Cổng hình ảnh: 1 x DisplayPort 1.2a, 1 x HDMI 1.4, 1 x VGA/D-sub</li>
                         </ul>
                     </div>
                     <div class="border-pro"></div>
