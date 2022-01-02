@@ -489,28 +489,6 @@
             location.href = '${pageContext.request.contextPath}/Sort?name=' + name + '&highPrice=' + high + '&lowestPrice=' + low + ''
         })
     }
-
-    <%--function loadProduct(button) {--%>
-    <%--    var value = $(button).val();--%>
-    <%--    var name = $(button).attr("name");--%>
-    <%--    var lowestPrice = document.getElementById('lowestPrice').value;--%>
-    <%--    var highPrice = document.getElementById('highPrice').value;--%>
-    <%--    $.ajax({--%>
-    <%--        url: '${pageContext.request.contextPath}/SortByPrice',--%>
-    <%--        type: 'POST',--%>
-    <%--        data: {--%>
-    <%--            value: value,--%>
-    <%--            name: name,--%>
-    <%--            lowestPrice: lowestPrice,--%>
-    <%--            highPrice: highPrice--%>
-    <%--        },--%>
-    <%--        success: function (response) {--%>
-    <%--            $('#product').html(response)--%>
-    <%--        },--%>
-    <%--        error: function () {--%>
-    <%--        }--%>
-    <%--    });--%>
-    <%--}--%>
 </script>
 <script src="${root}js/register.js"></script>
 <script src="${root}js/register.js"></script>
@@ -524,6 +502,5 @@
 <script src="${root}js/BackToTop.js"></script>
 <script src="${root}js/Scroll-Indicator.js"></script>
 <script src="${root}js/visibleCart.js"></script>
-<%--<script src="${root}js/slick-all-product.js"></script>--%>
 <script src="${root}js/click-filter.js"></script>
 </html>
