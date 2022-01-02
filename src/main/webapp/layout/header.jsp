@@ -18,10 +18,10 @@
             <!--                <img src="../image/img_1.png" alt="" class="logo">-->
         </div>
     </a>
-    <form action="" class="header_search">
+    <form action="${pageContext.request.contextPath}/SearchClick" method="GET" class="header_search">
         <div class="search">
-            <input class="header_input-search" placeholder="Nhập từ khóa cần tìm kiếm" required type="text">
-            <button class="header_btn-search" role="button">
+            <input name="txt" id="input_search" class="header_input-search" placeholder="Nhập từ khóa cần tìm kiếm" required type="text">
+            <button class="header_btn-search" type="submit">
                 <i class="fas fa-search"></i>
             </button>
         </div>

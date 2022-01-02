@@ -40,6 +40,12 @@
 <div id="main">
     <%@include file="layout/header.jsp" %>
     <%@include file="layout/cart-hover.jsp" %>
+    <div id="content1" class="search-product">
+        <div id="cover-all-product" class="cover-all-product">
+            <div id="product" class="all-product-cover">
+            </div>
+        </div>
+    </div>
     <div id="slider">
         <div class="slider-image" style="background-image: url('image/slider/Slider-image1.jpg')"></div>
         <div class="slider-image" style="background-image: url('image/slider/Slider-image2.jpg')"></div>
@@ -62,15 +68,15 @@
                     <div class="title-main">Thương hiệu nổi bật</div>
                 </div>
                 <div class="outstand-product">
-<%--                    <jsp:useBean id="topProducer" scope="request" type="java.util.List"/>--%>
+                    <%--                    <jsp:useBean id="topProducer" scope="request" type="java.util.List"/>--%>
                     <c:forEach var="x" items="${topProducer}">
-                    <div class="outstand-product-items">
-                        <a class="click-css" href="AllProduct?idHang=${x.tenHang}">
-                            <div class="img-outstand" style="background-image: url('${x.logoNgang}')">
-                            </div>
-                        </a>
-                        <div class="title-outstand">${x.tenHang}</div>
-                    </div>
+                        <div class="outstand-product-items">
+                            <a class="click-css" href="AllProduct?idHang=${x.tenHang}">
+                                <div class="img-outstand" style="background-image: url('${x.logoNgang}')">
+                                </div>
+                            </a>
+                            <div class="title-outstand">${x.tenHang}</div>
+                        </div>
                     </c:forEach>
                 </div>
             </div>
@@ -119,6 +125,7 @@
         </div>
         <%@include file="layout/product-best-seller.jsp" %>
     </div>
+
     <%@include file="layout/footer.jsp" %>
 </div>
 <%@include file="layout/login.jsp" %>
@@ -127,6 +134,33 @@
 <%--<!--Back to top-->--%>
 <%@include file="layout/back-to-top.jsp" %>
 </body>
+<script>
+    let search = document.getElementById('input_search');
+    let div = document.getElementById('content1');
+    search.addEventListener('input', function () {
+        $.ajax({
+            url: '${pageContext.request.contextPath}/Search',
+            type: 'GET',
+            data: {
+                txt: search.value
+            },
+            success: function (response) {
+                $('#product').html(response)
+                let product = document.querySelectorAll('.hover-all-product');
+                let slide = document.getElementById('slider');
+                if (search.value == '' || product.length <= 0) {
+                    div.style.display = 'none';
+                    slide.style.display = 'block';
+                } else {
+                    div.style.display = 'flex';
+                    slide.style.display = 'none';
+                }
+            },
+            error: function () {
+            }
+        });
+    })
+</script>
 <script>
     let price = document.querySelectorAll('.slogan-item');
     let price1 = document.querySelectorAll('.product-price');

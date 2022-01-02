@@ -1078,6 +1078,10 @@ body, html {
     border-radius: 10px;
 }
 
+.search-product{
+    display: none;
+}
+
 #main #content1 .cover-all-product {
     /*background: white;*/
     /*padding: 1px 0;*/

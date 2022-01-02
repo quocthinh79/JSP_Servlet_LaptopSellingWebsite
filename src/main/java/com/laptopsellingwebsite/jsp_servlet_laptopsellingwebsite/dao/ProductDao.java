@@ -1051,4 +1051,108 @@ public class ProductDao {
         }
         return 0;
     }
+
+    public ArrayList<Product> search(String txt) {
+        ArrayList<Product> result = new ArrayList();
+        try {
+            String query = "select * from THONGTINLAPTOP " + " WHERE " + " TENLAPTOP " + " LIKE ? "
+                    + " OR " + " HANG " + " LIKE ? " + " OR " + " SERIES " + " LIKE ? " +
+                    " OR " + " MAU " + " LIKE ? " + " OR " + " CPU " + " LIKE ? " + " OR " + " VGA "
+                    + " LIKE ? " + " OR " + " RAM " + " LIKE ? " + " OR " + " OCUNG " + " LIKE ?";
+            int count = query.length() - query.replace("?","").length();
+            PreparedStatement ps = DBConnect.getInstance().get(query);
+            for (int i = 1; i <= count; i++) {
+                ps.setString(i, "%" + txt + "%");
+            }
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Product product = new Product(rs.getString(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getInt(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getString(7),
+                        rs.getString(8),
+                        rs.getString(9),
+                        rs.getString(10),
+                        rs.getString(11),
+                        rs.getString(12),
+                        rs.getString(13),
+                        rs.getString(14),
+                        rs.getString(15),
+                        rs.getString(16),
+                        rs.getString(17),
+                        rs.getString(18),
+                        rs.getString(19));
+                result.add(product);
+            }
+            return result;
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public int getTotalPageSearch(String txt) {
+        try {
+            String query = "select count(*) as total from THONGTINLAPTOP " + " WHERE " + " TENLAPTOP " + " LIKE ? "
+                    + " OR " + " HANG " + " LIKE ? " + " OR " + " SERIES " + " LIKE ? " +
+                    " OR " + " MAU " + " LIKE ? " + " OR " + " CPU " + " LIKE ? " + " OR " + " VGA "
+                    + " LIKE ? " + " OR " + " RAM " + " LIKE ? " + " OR " + " OCUNG " + " LIKE ?";
+            PreparedStatement ps = DBConnect.getInstance().get(query);
+            int count = query.length() - query.replace("?","").length();
+            for (int i = 1; i <= count; i++) {
+                ps.setString(i, "%" + txt + "%");
+            }
+            ResultSet resultSet = ps.executeQuery();
+            resultSet.next();
+            return resultSet.getInt("total");
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public ArrayList<Product> searchClick(String txt) {
+        ArrayList<Product> result = new ArrayList();
+        try {
+            String query = "select * from THONGTINLAPTOP " + " WHERE " + " TENLAPTOP " + " LIKE ? "
+                    + " OR " + " HANG " + " LIKE ? " + " OR " + " SERIES " + " LIKE ? " +
+                    " OR " + " MAU " + " LIKE ? " + " OR " + " CPU " + " LIKE ? " + " OR " + " VGA "
+                    + " LIKE ? " + " OR " + " RAM " + " LIKE ? " + " OR " + " OCUNG " + " LIKE ?";
+            int count = query.length() - query.replace("?","").length();
+            PreparedStatement ps = DBConnect.getInstance().get(query);
+            for (int i = 1; i <= count; i++) {
+                ps.setString(i, "%" + txt + "%");
+            }
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Product product = new Product(rs.getString(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getInt(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getString(7),
+                        rs.getString(8),
+                        rs.getString(9),
+                        rs.getString(10),
+                        rs.getString(11),
+                        rs.getString(12),
+                        rs.getString(13),
+                        rs.getString(14),
+                        rs.getString(15),
+                        rs.getString(16),
+                        rs.getString(17),
+                        rs.getString(18),
+                        rs.getString(19));
+                result.add(product);
+            }
+            return result;
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }
