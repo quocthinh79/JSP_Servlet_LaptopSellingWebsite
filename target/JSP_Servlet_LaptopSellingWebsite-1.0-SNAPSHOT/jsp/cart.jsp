@@ -11,7 +11,7 @@
     response.setCharacterEncoding("UTF-8");
 %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:url value="/" var="root" />
+<c:url value="/" var="root"/>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -36,7 +36,7 @@
 </head>
 <body>
 <div id="cart-main">
-    <%@include file="../layout/header.jsp"%>
+    <%@include file="../layout/header.jsp" %>
     <div class="cart" class="bg-gray">
         <div class="container padding padding-top-60">
             <div class="address-menu">
@@ -80,7 +80,8 @@
                                 <div class="left-provider-content">
                                     <div class="provider-container">
                                         <div class="provider-padding provider-checkbox">
-                                            <input type="checkbox" name="checkAllProduct" value="">
+                                            <input class="checkAllProduct" type="checkbox" name="checkAllProduct"
+                                                   value="">
                                         </div>
                                         <div class="provider-padding-left provider-info">
                                             <div class="provider-icon">
@@ -96,7 +97,7 @@
                                     </div>
                                 </div>
                                 <div class="right-provider-content">
-                                    <span class="total-pay blue-text bolder"> 84000000<span>đ</span></span>
+                                    <span class="total-pay blue-text bolder"></span>
                                 </div>
                             </div>
                             <div class="cart-item-info">
@@ -104,7 +105,7 @@
                                     <div class="item">
                                         <div class="left-cart-item">
                                             <div class="item-checkbox item-padding">
-                                                <input type="checkbox" name="checkItem" value="">
+                                                <input type="checkbox" class="checkItem" name="checkItem" value="">
                                             </div>
                                             <div class="item-thumbnail item-padding">
                                                 <img class="item-logo-thumbnail" src="${root}image/man-hinh-asus.jpg">
@@ -119,13 +120,14 @@
                                                 <button class="btn-padding btn-subtract">
                                                     <i class="icon-btn fas fa-chevron-down"></i>
                                                 </button>
-                                                <div class="btn-padding number">1</div>
+                                                <div class="btn-padding number">5</div>
                                                 <button class="btn-padding btn-add">
                                                     <i class="icon-btn fas fa-chevron-up"></i>
                                                 </button>
                                             </div>
                                             <div class="price">
-                                                <span class="bolder gray-text price-text">4300000<span>đ</span></span>
+                                                <input type="hidden" value="500000" class="origin-price">
+                                                <span class="bolder gray-text price-text">2500000</span>
                                             </div>
                                         </div>
                                     </div>
@@ -137,7 +139,7 @@
                                     <div class="item">
                                         <div class="left-cart-item">
                                             <div class="item-checkbox item-padding">
-                                                <input type="checkbox" name="checkItem" value="">
+                                                <input type="checkbox" class="checkItem" name="checkItem" value="">
                                             </div>
                                             <div class="item-thumbnail item-padding">
                                                 <img class="item-logo-thumbnail" src="${root}image/man-hinh-asus.jpg">
@@ -158,7 +160,8 @@
                                                 </button>
                                             </div>
                                             <div class="price">
-                                                <span class="bolder gray-text price-text">4300000<span>đ</span></span>
+                                                <input type="hidden" value="4300000" class="origin-price">
+                                                <span class="bolder gray-text price-text">4300000</span>
                                             </div>
                                         </div>
                                     </div>
@@ -170,7 +173,7 @@
                                     <div class="item">
                                         <div class="left-cart-item">
                                             <div class="item-checkbox item-padding">
-                                                <input type="checkbox" name="checkItem" value="">
+                                                <input type="checkbox" class="checkItem" name="checkItem" value="">
                                             </div>
                                             <div class="item-thumbnail item-padding">
                                                 <img class="item-logo-thumbnail" src="${root}image/man-hinh-asus.jpg">
@@ -191,7 +194,8 @@
                                                 </button>
                                             </div>
                                             <div class="price">
-                                                <span class="bolder gray-text price-text">4300000<span>đ</span></span>
+                                                <input type="hidden" value="8000000" class="origin-price">
+                                                <span class="bolder gray-text price-text">8000000</span>
                                             </div>
                                         </div>
                                     </div>
@@ -208,7 +212,8 @@
                                 <div class="left-provider-content">
                                     <div class="provider-container">
                                         <div class="provider-padding provider-checkbox">
-                                            <input type="checkbox" name="checkAllProduct" value="">
+                                            <input class="checkAllProduct" type="checkbox" name="checkAllProduct"
+                                                   value="">
                                         </div>
                                         <div class="provider-padding-left provider-info">
                                             <div class="provider-icon">
@@ -224,7 +229,7 @@
                                     </div>
                                 </div>
                                 <div class="right-provider-content">
-                                    <span class="total-pay blue-text bolder"> 84000000<span>đ</span></span>
+                                    <span class="total-pay blue-text bolder"></span>
                                 </div>
                             </div>
                             <div class="cart-item-info">
@@ -232,7 +237,41 @@
                                     <div class="item">
                                         <div class="left-cart-item">
                                             <div class="item-checkbox item-padding">
-                                                <input type="checkbox" name="checkItem" value="">
+                                                <input type="checkbox" class="checkItem" name="checkItem" value="">
+                                            </div>
+                                            <div class="item-thumbnail item-padding">
+                                                <img class="item-logo-thumbnail" src="${root}image/man-hinh-asus.jpg">
+                                            </div>
+                                            <div class="item-info-container item-padding">
+                                                <span class="item-info-name smaller-text">Màn hình LCD ASUS VL249HE (1920 x 1080/IPS/75Hz/5 ms)</span>
+                                                <span class=" item-info-sku smaller-text light-gray-text">Mã Laptop: 191100961</span>
+                                            </div>
+                                        </div>
+                                        <div class="right-cart-item">
+                                            <div class="btn-add-subtract">
+                                                <button class="btn-padding btn-subtract">
+                                                    <i class="icon-btn fas fa-chevron-down"></i>
+                                                </button>
+                                                <div class="btn-padding number">5</div>
+                                                <button class="btn-padding btn-add">
+                                                    <i class="icon-btn fas fa-chevron-up"></i>
+                                                </button>
+                                            </div>
+                                            <div class="price">
+                                                <input type="hidden" value="500000" class="origin-price">
+                                                <span class="bolder gray-text price-text">2500000</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="cart-item-info">
+                                <div class="container">
+                                    <div class="item">
+                                        <div class="left-cart-item">
+                                            <div class="item-checkbox item-padding">
+                                                <input type="checkbox" class="checkItem" name="checkItem" value="">
                                             </div>
                                             <div class="item-thumbnail item-padding">
                                                 <img class="item-logo-thumbnail" src="${root}image/man-hinh-asus.jpg">
@@ -253,7 +292,8 @@
                                                 </button>
                                             </div>
                                             <div class="price">
-                                                <span class="bolder gray-text price-text">4300000<span>đ</span></span>
+                                                <input type="hidden" value="4300000" class="origin-price">
+                                                <span class="bolder gray-text price-text">4300000</span>
                                             </div>
                                         </div>
                                     </div>
@@ -265,7 +305,7 @@
                                     <div class="item">
                                         <div class="left-cart-item">
                                             <div class="item-checkbox item-padding">
-                                                <input type="checkbox" name="checkItem" value="">
+                                                <input type="checkbox" class="checkItem" name="checkItem" value="">
                                             </div>
                                             <div class="item-thumbnail item-padding">
                                                 <img class="item-logo-thumbnail" src="${root}image/man-hinh-asus.jpg">
@@ -286,7 +326,72 @@
                                                 </button>
                                             </div>
                                             <div class="price">
-                                                <span class="bolder gray-text price-text">4300000<span>đ</span></span>
+                                                <input type="hidden" value="8000000" class="origin-price">
+                                                <span class="bolder gray-text price-text">8000000</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <div class="cart-item">
+                        <div class="cart-container">
+                            <div class="cart-header">
+                                <div class="left-provider-content">
+                                    <div class="provider-container">
+                                        <div class="provider-padding provider-checkbox">
+                                            <input class="checkAllProduct" type="checkbox" name="checkAllProduct"
+                                                   value="">
+                                        </div>
+                                        <div class="provider-padding-left provider-info">
+                                            <div class="provider-icon">
+                                                <img class="provider-logo" src="${root}image/asus-logo.png" alt="Asus">
+                                            </div>
+                                        </div>
+                                        <div class="provider-padding provider-name">
+                                            <span class="normal-text bolder">Asus</span>
+                                        </div>
+                                        <div class="provider-padding verified-logo">
+                                            <i class="fas fa-check-circle"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="right-provider-content">
+                                    <span class="total-pay blue-text bolder"></span>
+                                </div>
+                            </div>
+                            <div class="cart-item-info">
+                                <div class="container">
+                                    <div class="item">
+                                        <div class="left-cart-item">
+                                            <div class="item-checkbox item-padding">
+                                                <input type="checkbox" class="checkItem" name="checkItem" value="">
+                                            </div>
+                                            <div class="item-thumbnail item-padding">
+                                                <img class="item-logo-thumbnail" src="${root}image/man-hinh-asus.jpg">
+                                            </div>
+                                            <div class="item-info-container item-padding">
+                                                <span class="item-info-name smaller-text">Màn hình LCD ASUS VL249HE (1920 x 1080/IPS/75Hz/5 ms)</span>
+                                                <span class=" item-info-sku smaller-text light-gray-text">Mã Laptop: 191100961</span>
+                                            </div>
+                                        </div>
+                                        <div class="right-cart-item">
+                                            <div class="btn-add-subtract">
+                                                <button class="btn-padding btn-subtract">
+                                                    <i class="icon-btn fas fa-chevron-down"></i>
+                                                </button>
+                                                <div class="btn-padding number">5</div>
+                                                <button class="btn-padding btn-add">
+                                                    <i class="icon-btn fas fa-chevron-up"></i>
+                                                </button>
+                                            </div>
+                                            <div class="price">
+                                                <input type="hidden" value="500000" class="origin-price">
+                                                <span class="bolder gray-text price-text">2500000</span>
                                             </div>
                                         </div>
                                     </div>
@@ -298,14 +403,14 @@
                                     <div class="item">
                                         <div class="left-cart-item">
                                             <div class="item-checkbox item-padding">
-                                                <input type="checkbox" name="checkItem" value="">
+                                                <input type="checkbox" class="checkItem" name="checkItem" value="">
                                             </div>
                                             <div class="item-thumbnail item-padding">
                                                 <img class="item-logo-thumbnail" src="${root}image/man-hinh-asus.jpg">
                                             </div>
                                             <div class="item-info-container item-padding">
                                                 <span class="item-info-name smaller-text">Màn hình LCD ASUS VL249HE (1920 x 1080/IPS/75Hz/5 ms)</span>
-                                                <span class=" item-info-sku smaller-text light-gray-text">SKU: 191100961</span>
+                                                <span class=" item-info-sku smaller-text light-gray-text">Mã Laptop: 191100961</span>
                                             </div>
                                         </div>
                                         <div class="right-cart-item">
@@ -319,12 +424,50 @@
                                                 </button>
                                             </div>
                                             <div class="price">
-                                                <span class="bolder gray-text price-text">4300000<span>đ</span></span>
+                                                <input type="hidden" value="4300000" class="origin-price">
+                                                <span class="bolder gray-text price-text">4300000</span>
                                             </div>
                                         </div>
                                     </div>
+
                                 </div>
                             </div>
+                            <div class="cart-item-info">
+                                <div class="container">
+                                    <div class="item">
+                                        <div class="left-cart-item">
+                                            <div class="item-checkbox item-padding">
+                                                <input type="checkbox" class="checkItem" name="checkItem" value="">
+                                            </div>
+                                            <div class="item-thumbnail item-padding">
+                                                <img class="item-logo-thumbnail" src="${root}image/man-hinh-asus.jpg">
+                                            </div>
+                                            <div class="item-info-container item-padding">
+                                                <span class="item-info-name smaller-text">Màn hình LCD ASUS VL249HE (1920 x 1080/IPS/75Hz/5 ms)</span>
+                                                <span class=" item-info-sku smaller-text light-gray-text">Mã Laptop: 191100961</span>
+                                            </div>
+                                        </div>
+                                        <div class="right-cart-item">
+                                            <div class="btn-add-subtract">
+                                                <button class="btn-padding btn-subtract">
+                                                    <i class="icon-btn fas fa-chevron-down"></i>
+                                                </button>
+                                                <div class="btn-padding number">1</div>
+                                                <button class="btn-padding btn-add">
+                                                    <i class="icon-btn fas fa-chevron-up"></i>
+                                                </button>
+                                            </div>
+                                            <div class="price">
+                                                <input type="hidden" value="8000000" class="origin-price">
+                                                <span class="bolder gray-text price-text">8000000</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+
                         </div>
                     </div>
                 </div>
@@ -347,7 +490,7 @@
                                         <div class="applied-coupon-left">
                                             <div class="coupon-applied">
                                                 <div class="coupon-code">
-                                                    <span class="bolder larger-text">123Y681209</span>
+                                                    <span class="bolder larger-text">856F684856</span>
                                                 </div>
                                                 <div class="coupon-name padding-10">
                                                     <span class="blue-text smaller-text">Giảm giá 30% dành cho đồ điện tử</span>
@@ -361,7 +504,7 @@
                                         <div class="applied-coupon-right">
                                             <div class="returned-money">
                                                 <span>-</span>
-                                                <span class="blue-text">30000<span>đ</span></span>
+                                                <span class="sale-with-code blue-text">3%</span>
                                             </div>
                                         </div>
                                     </div>
@@ -384,7 +527,7 @@
 
                                         <div class="applied-coupon-right">
                                             <span>-</span>
-                                            <span class="blue-text returned-money">30000<span>đ</span></span>
+                                            <span class="blue-text returned-money sale-with-code">3%</span>
 
                                         </div>
                                     </div>
@@ -398,11 +541,11 @@
                                 </div>
                                 <!-- <div class="provisional-price" class="padding-10">
                                     <span class="left gray-text">Tạm tính</span>
-                                    <span class="right provisional-cash bolder">4300000<span>đ</span></span>
+                                    <span class="right provisional-cash bolder">4300000</span>
                                 </div> -->
                                 <div class="final-price" class="padding-10 padding-bottom-20">
                                     <span class="left gray-text">Thành tiền</span>
-                                    <span class="right final-cash large-text red-text bolder">4300000<span>đ</span></span>
+                                    <span class="right final-cash large-text red-text bolder">0</span>
                                 </div>
                                 <!-- <div class="VAT" class="padding-10">
                                     <span class="gray-text">(Đã bao gồm VAT)</span>
@@ -427,6 +570,175 @@
 <!--Back to top-->
 <%@include file="../layout/back-to-top.jsp" %>
 </body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+    $('.confirm-btn').click(function () {
+        let sale = $('.coupon-input');
+        let code = document.querySelectorAll('.coupon-code');
+        let final = parseInt($('.final-cash').text().match(/\d+/g).join(''));
+        let saleByCode = document.querySelectorAll('.sale-with-code');
+        console.log(final)
+        for (let i = 0; i < code.length; i++) {
+            if (sale.val() == (code[i].innerText)){
+                final = final - (final * (saleByCode[i].innerText.match(/\d+/g).join('') / 100));
+            }
+        }
+        $('.final-cash').html(final.toLocaleString('it-IT', {
+            style: 'currency',
+            currency: 'VND'
+        }))
+    })
+</script>
+<script>
+    listenCart();
+    function listenCart() {
+        let priceHTML = document.querySelectorAll('.price-text');
+        for (let i = 0; i < priceHTML.length; i++) {
+            priceHTML[i].innerHTML = parseInt(priceHTML[i].innerHTML.match(/\d+/g).join('')).toLocaleString('it-IT', {
+                style: 'currency',
+                currency: 'VND'
+            })
+        }
+        $('.clear').click(function () {
+            $('.cart-item').remove();
+            $('.final-cash').html("0");
+        });
+        let total = 0;
+        $('.checkAllProduct').click(function (event) {
+            total = 0;
+            var destination = $(this).closest('.cart-item');
+            if (this.checked) {
+                // Iterate each checkbox
+                $(destination).find("input[name='checkItem']").each(function () {
+                    this.checked = true;
+                    total += parseInt($(this).closest('.item').find('.price-text').text().match(/\d+/g).join(''));
+                    $(destination).find(".total-pay").html(total.toLocaleString('it-IT', {
+                        style: 'currency',
+                        currency: 'VND'
+                    }));
+                });
+            } else {
+                $(destination).find("input[name='checkItem']").each(function () {
+                    this.checked = false;
+                    total = 0;
+                    sum = 0;
+                    $(destination).find(".total-pay").html(sum.toLocaleString('it-IT', {
+                        style: 'currency',
+                        currency: 'VND'
+                    }));
+                });
+            }
+            changePrice();
+        });
+        let sum = 0;
+        let elementTotalPrice;
+        $('.checkItem').click(function () {
+            var destination = $(this).closest('.cart-item');
+            elementTotalPrice = $(this).closest('.cart-item').find('.total-pay');
+            let checkAll = $(this).closest('.cart-item').find("input[name='checkAllProduct']");
+            if (!checkAll.checked)
+                sum = 0;
+            $(destination).find("input[name='checkItem']").each(function () {
+                if (this.checked) {
+                    sum += parseInt($(this).closest('.item').find('.price-text').text().match(/\d+/g).join(''));
+                }
+            });
+            $(destination).find(".total-pay").html(sum.toLocaleString('it-IT', {
+                style: 'currency',
+                currency: 'VND'
+            }));
+            if ($(destination).find("input[name='checkItem']").not(':checked').length === 0) {
+                checkAll.prop("checked", true);
+            } else {
+                total = 0;
+                // sum = 0;
+                checkAll.prop("checked", false);
+            }
+            changePrice();
+        });
+        $('.btn-subtract').click(function () {
+            var parent = $(this).closest('.right-cart-item');
+            var numberProduct = parent.find('.number');
+            var valueNumProduct = parseInt(numberProduct.text().match(/\d+/g).join(''));
+            let checkAll = $(this).closest('.cart-item').find("input[name='checkAllProduct']");
+            var destination = $(this).closest('.cart-item');
+            var originPrice = parseInt(parent.find('.origin-price').val().match(/\d+/g).join(''));
+            var checkBoxItem = $(this).closest('.item').find("input[name='checkItem']");
+            if (valueNumProduct > 1) {
+                valueNumProduct--;
+                if (checkAll.prop("checked")) {
+                    total -= originPrice;
+                    $(destination).find(".total-pay").html(total.toLocaleString('it-IT', {
+                        style: 'currency',
+                        currency: 'VND'
+                    }));
+                } else if (checkBoxItem.prop("checked")) {
+                    sum -= originPrice;
+                    $(destination).find(".total-pay").html(sum.toLocaleString('it-IT', {
+                        style: 'currency',
+                        currency: 'VND'
+                    }));
+                }
+            }
+            numberProduct.html(valueNumProduct);
+            var price = parent.find('.price-text');
+            var priceValue = originPrice * valueNumProduct
+            price.html(priceValue.toLocaleString('it-IT', {
+                style: 'currency',
+                currency: 'VND'
+            }));
+            changePrice();
+        });
+        $('.btn-add').click(function () {
+            var parent = $(this).closest('.right-cart-item');
+            var numberProduct = parent.find('.number');
+            var valueNumProduct = parseInt(numberProduct.text().match(/\d+/g).join(''));
+            let checkAll = $(this).closest('.cart-item').find("input[name='checkAllProduct']");
+            var destination = $(this).closest('.cart-item');
+            var originPrice = parseInt(parent.find('.origin-price').val().match(/\d+/g).join(''));
+            var checkBoxItem = $(this).closest('.item').find("input[name='checkItem']");
+            valueNumProduct++;
+            if (checkAll.prop("checked")) {
+                total += originPrice;
+                $(destination).find(".total-pay").html(total.toLocaleString('it-IT', {
+                    style: 'currency',
+                    currency: 'VND'
+                }));
+            } else if (checkBoxItem.prop("checked")) {
+                sum += originPrice;
+                $(destination).find(".total-pay").html(sum.toLocaleString('it-IT', {
+                    style: 'currency',
+                    currency: 'VND'
+                }));
+            }
+
+            numberProduct.html(valueNumProduct);
+            var price = parent.find('.price-text');
+            var priceValue = originPrice * valueNumProduct
+            price.html(priceValue.toLocaleString('it-IT', {
+                style: 'currency',
+                currency: 'VND'
+            }));
+            changePrice();
+        });
+    }
+
+    function changePrice() {
+        let finalCash = 0
+        let totalPayPrice = document.querySelectorAll('.total-pay');
+        console.log()
+        for (let i = 0; i < totalPayPrice.length; i++) {
+            if (totalPayPrice[i].innerText != "") {
+                finalCash += parseInt(totalPayPrice[i].innerText.match(/\d+/g).join(''));
+            }
+        }
+        $('.final-cash').html(finalCash.toLocaleString('it-IT', {
+            style: 'currency',
+            currency: 'VND'
+        }));
+    }
+
+</script>
 <script src="${root}js/register.js"></script>
 <script crossorigin="anonymous" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
         src="https://code.jquery.com/jquery-3.6.0.js"></script>
