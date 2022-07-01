@@ -22,6 +22,7 @@
     <link rel="icon" href="${root}image/logo-re.png">
     <link rel="stylesheet" href="${root}css/about.css">
     <link rel="stylesheet" href="${root}css/style.css">
+    <link rel="stylesheet" href="${root}css/loading.css">
     <link href="${root}css/responsiveIndex.css" rel="stylesheet">
     <link href="${root}fonts/themify-icons/themify-icons.css" rel="stylesheet">
     <link href="${root}fonts/font-awesome-4.7.0/css/font-awesome.css" rel="stylesheet">
@@ -102,7 +103,18 @@
 <%@include file="../layout/register.jsp"%>
 <!--Back to top-->
 <%@include file="../layout/back-to-top.jsp"%>
+<div id="loading">
+    <div class="loadingio-spinner-eclipse-okswoys3or7">
+        <div class="ldio-yzbzl1tp5rn">
+            <div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
+<script>
+    fetch('${pageContext.request.contextPath}/AboutUs').then(res => document.getElementById('loading').remove());
+</script>
 <script src="${root}js/register.js"></script>
 <script crossorigin="anonymous" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
         src="https://code.jquery.com/jquery-3.6.0.js"></script>

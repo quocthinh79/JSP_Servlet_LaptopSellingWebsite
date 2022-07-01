@@ -22,6 +22,7 @@
     <title>Metaverse Laptop</title>
     <link rel="icon" href="${root}image/logo-re.png">
     <link href="${root}css/style-product.css" rel="stylesheet">
+    <link href="${root}css/loading.css" rel="stylesheet">
     <link href="${root}css/responsiveIndex.css" rel="stylesheet">
     <link href="${root}fonts/themify-icons/themify-icons.css" rel="stylesheet">
     <link href="${root}fonts/font-awesome-4.7.0/css/font-awesome.css" rel="stylesheet">
@@ -238,7 +239,18 @@
 <%@include file="../layout/register.jsp" %>
 <!--Back to top-->
 <%@include file="../layout/back-to-top.jsp" %>
+<div id="loading">
+    <div class="loadingio-spinner-eclipse-okswoys3or7">
+        <div class="ldio-yzbzl1tp5rn">
+            <div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
+<script>
+    fetch('${pageContext.request.contextPath}/Product').then(res => document.getElementById('loading').remove());
+</script>
 <script>
     let price = document.querySelectorAll('.price-product');
     let price1 = document.querySelectorAll('.product-price');

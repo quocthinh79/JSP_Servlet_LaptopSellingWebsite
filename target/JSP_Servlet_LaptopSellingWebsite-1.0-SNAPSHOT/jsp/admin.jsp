@@ -27,6 +27,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="${root}css/admin.css" class="css">
+    <link rel="stylesheet" href="${root}css/loading.css" class="css">
     <link href="fonts/themify-icons/themify-icons.css" rel="stylesheet">
     <link href="fonts/font-awesome-4.7.0/css/font-awesome.css" rel="stylesheet">
     <link href="fonts/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
@@ -470,7 +471,18 @@
 </div>
 <!--Back to top-->
 <%@include file="../layout/back-to-top.jsp" %>
+<div id="loading">
+    <div class="loadingio-spinner-eclipse-okswoys3or7">
+        <div class="ldio-yzbzl1tp5rn">
+            <div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
+<script>
+    fetch('${pageContext.request.contextPath}/Admin').then(res => document.getElementById('loading').remove());
+</script>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha384-vk5WoKIaW/vJyUAd9n/wmopsmNhiy+L2Z+SBxGYnUkunIxVxAv/UtMOhba/xskxh"
         crossorigin="anonymous"></script>
