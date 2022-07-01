@@ -35,6 +35,7 @@
           integrity="sha512-yHknP1/AwR+yx26cB1y0cjvQUMvEa2PFzt1c9LlS4pRQ5NOTZFWbhBig+X9G9eYW/8m0/4OXNx8pxJ6z57x0dw=="
           referrerpolicy="no-referrer" rel="stylesheet"/>
     <link href="css/responsiveIndex.css" rel="stylesheet">
+    <link href="css/loading.css" rel="stylesheet">
 </head>
 <body>
 <div id="main">
@@ -133,7 +134,19 @@
 <%@include file="layout/register.jsp" %>
 <%--<!--Back to top-->--%>
 <%@include file="layout/back-to-top.jsp" %>
+
+<div id="loading">
+    <div class="loadingio-spinner-eclipse-okswoys3or7">
+        <div class="ldio-yzbzl1tp5rn">
+            <div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
+<script>
+    fetch('${pageContext.request.contextPath}/Index').then(res => document.getElementById('loading').remove());
+</script>
 <script>
     let search = document.getElementById('input_search');
     let div = document.getElementById('content1');
