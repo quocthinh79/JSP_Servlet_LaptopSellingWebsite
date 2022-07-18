@@ -30,7 +30,7 @@
         <ul class="header_list-item">
             <li class="header_sub-list">
                 <a class="font-14 hover-header" href="${root}AllProduct">
-<%--                    <a class="font-14 hover-header" href="${param.productPage}">--%>
+                    <%--                    <a class="font-14 hover-header" href="${param.productPage}">--%>
                     <i class="hover-header1 fas fa-laptop"></i>Sản phẩm
                 </a>
             </li>
@@ -51,9 +51,18 @@
                 <div id="icon-cart" class="icon-cart"></div>
             </li>
             <li class="header_sub-list">
-                <a class="font-14 hover-header js-btn-login" role="button">
-                    <i class="hover-header1 fas fa-user"></i>Đăng nhập
-                </a>
+                <c:choose>
+                    <c:when test="${sessionScope.account == null}">
+                        <a class="font-14 hover-header js-btn-login" role="button">
+                            <i class="hover-header1 fas fa-user"></i>Đăng nhập
+                        </a>
+                    </c:when>
+                    <c:otherwise>
+                        <a class="font-14 hover-header" href="${root}Logout">
+                            <i class="hover-header1 fa-solid fa-right-from-bracket"></i>Đăng xuất
+                        </a>
+                    </c:otherwise>
+                </c:choose>
             </li>
         </ul>
     </div>

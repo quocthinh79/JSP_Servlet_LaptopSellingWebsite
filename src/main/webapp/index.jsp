@@ -132,6 +132,8 @@
 <%@include file="layout/login.jsp" %>
 <%@include file="layout/fogot.jsp" %>
 <%@include file="layout/register.jsp" %>
+<%@include file="layout/otp.jsp" %>
+<%@include file="layout/newPass.jsp" %>
 <%--<!--Back to top-->--%>
 <%@include file="layout/back-to-top.jsp" %>
 
