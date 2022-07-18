@@ -56,4 +56,105 @@ public class UserDao {
         }
         return result;
     }
+    private static UserDao instance;
+
+    public static UserDao getInstance() {
+        if (instance == null) {
+            instance = new UserDao();
+        }
+        return instance;
+    }
+
+    public ArrayList getAccount(String email) {
+        ArrayList<Account> listResult = new ArrayList<>();
+        try {
+            String query = "SELECT * FROM tk WHERE tk.EMAIL = ?";
+            PreparedStatement ps = DBConnect.getInstance().get(query);
+            ps.setString(1, email);
+            ResultSet resultSet = ps.executeQuery();
+            while (resultSet.next()) {
+                Account account = new Account(resultSet.getInt(1),
+                        resultSet.getString(2),
+                        resultSet.getString(3),
+                        resultSet.getString(4),
+                        resultSet.getString(5),
+                        resultSet.getString(6));
+                listResult.add(account);
+            }
+            return listResult;
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+//    public ArrayList getInfoCustomer(String maKH) {
+//        ArrayList<Customer> listResult = new ArrayList<>();
+//        try {
+//            String query = "SELECT * FROM khachhang WHERE khachhang.maKH= ?";
+//            PreparedStatement ps = DBConnect.getInstance().get(query);
+//            ps.setString(1, maKH);
+//            ResultSet resultSet = ps.executeQuery();
+//            while (resultSet.next()) {
+//                Customer customer = new Customer(resultSet.getString(5),
+//                        resultSet.getString(6),
+//                        resultSet.getString(7),
+//                        resultSet.getString(8));
+//
+//                listResult.add(customer);
+//            }
+//            return listResult;
+//        } catch (SQLException | ClassNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//        return null;
+//    }
+
+    public void updateOTP(String email, int otp) {
+        try {
+            String query = "UPDATE tk SET OTP = ? WHERE tk.EMAIL = ?";
+            PreparedStatement ps = DBConnect.getInstance().get(query);
+            ps.setInt(1, otp);
+            ps.setString(2, email);
+            ps.executeUpdate();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public ArrayList checkOTP(String email, int otp) {
+        ArrayList<Account> listResult = new ArrayList<>();
+        try {
+            String query = "SELECT * FROM tk WHERE tk.EMAIL = ? AND tk.OTP = ?";
+            PreparedStatement ps = DBConnect.getInstance().get(query);
+            ps.setString(1, email);
+            ps.setInt(2, otp);
+            ResultSet resultSet = ps.executeQuery();
+            while (resultSet.next()) {
+                Account account = new Account(resultSet.getInt(1),
+                        resultSet.getString(2),
+                        resultSet.getString(3),
+                        resultSet.getString(4),
+                        resultSet.getString(5),
+                        resultSet.getString(6));
+                listResult.add(account);
+            }
+            return listResult;
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public void updatePass(String email, String newPass) {
+        try {
+            String query = "UPDATE tk SET PASSWORD = ? WHERE tk.EMAIL = ?";
+            PreparedStatement ps = DBConnect.getInstance().get(query);
+            ps.setString(1, newPass);
+            ps.setString(2, email);
+            ps.executeUpdate();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

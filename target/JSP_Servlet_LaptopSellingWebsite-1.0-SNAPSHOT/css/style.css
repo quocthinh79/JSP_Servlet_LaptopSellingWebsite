@@ -675,6 +675,14 @@ body, html {
     display: flex;
 }
 
+#verification-main.js-verification.open {
+    display: flex;
+}
+
+#new-pass-main,
+#verification-main,
+#notify-fail-main,
+#notify-success-main,
 #register-main,
 #forgot-main,
 #login-main {
@@ -716,9 +724,6 @@ body, html {
     height: 425px;
 }
 
-#forgot-main .forgot {
-    height: 390px;
-}
 
 #login-main .title-login,
 #forgot-main .title-forgot {
@@ -777,6 +782,10 @@ body, html {
     text-align: center;
 }
 
+#new-pass-main .register-div,
+#verification-main .register-div,
+#notify-fail-main .register-div,
+#notify-success-main .register-div,
 #register-main .register-div,
 #forgot-main .come-back,
 #login-main .new-account {
@@ -786,6 +795,10 @@ body, html {
     text-align: center;
 }
 
+#new-pass-main .register-div .btn-register,
+#verification-main .register-div .btn-register,
+#notify-fail-main .register-div .btn-register,
+#notify-success-main .register-div .btn-register,
 #register-main .register-div .btn-register,
 #forgot-main .come-back .btn-come-back,
 #login-main .new-account .btn-new-account {
@@ -795,6 +808,330 @@ body, html {
     background-color: #42b72a;
     border-radius: 8px;
     cursor: pointer;
+}
+
+/*End CSS login forgot*/
+/*Start CSS register*/
+#register-main .register {
+    width: 432px;
+    height: auto;
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 10px 16px 24px 16px;
+    animation: downAnimation ease 0.3s;
+}
+
+#register-main .register .border {
+    align-items: center;
+    width: 100%;
+    border-bottom: 1px solid #dadde1;
+    margin: 12px 0;
+    text-align: center;
+}
+
+#register-main .register-form .input-item-haft {
+    width: 48%;
+    padding: 14px 16px;
+    margin: 6px 0;
+    font-size: 16px;
+    float: left;
+}
+
+#register-main .input-item-haft.left {
+    margin-right: 8px;
+}
+
+#register-main .input-item-haft.right {
+    margin-left: 8px;
+}
+
+#register-main .register-form .input-items {
+    width: 100%;
+    padding: 14px 16px;
+    margin: 6px 0;
+    font-size: 16px;
+}
+
+#register-main .register-form .register-div {
+    margin-top: 24px;
+}
+
+#register-main .register .title-register {
+    position: relative;
+}
+
+#register-main .title-register .close-register {
+    padding: 2px 2px;
+    position: absolute;
+    right: 0;
+    z-index: 1;
+    font-size: 30px;
+    color: #111111;
+    cursor: pointer;
+}
+
+#register-main.js-register.open {
+    display: flex;
+}
+
+/*End CSS register*/
+
+/*Start CSS register*/
+#new-pass-main .register {
+    width: 432px;
+    height: auto;
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 10px 16px 24px 16px;
+    animation: downAnimation ease 0.3s;
+}
+
+#new-pass-main .register .border {
+    align-items: center;
+    width: 100%;
+    border-bottom: 1px solid #dadde1;
+    margin: 12px 0;
+    text-align: center;
+}
+
+#new-pass-main .register-form .input-item-haft {
+    width: 48%;
+    padding: 14px 16px;
+    margin: 6px 0;
+    font-size: 16px;
+    float: left;
+}
+
+#new-pass-main .input-item-haft.left {
+    margin-right: 8px;
+}
+
+#new-pass-main .input-item-haft.right {
+    margin-left: 8px;
+}
+
+#new-pass-main .register-form .input-items {
+    width: 100%;
+    padding: 14px 16px;
+    margin: 6px 0;
+    font-size: 16px;
+}
+
+#new-pass-main .register-form .register-div {
+    margin-top: 24px;
+}
+
+#new-pass-main .register .title-register {
+    position: relative;
+}
+
+#new-pass-main .title-register .close-register {
+    padding: 2px 2px;
+    position: absolute;
+    right: 0;
+    z-index: 1;
+    font-size: 30px;
+    color: #111111;
+    cursor: pointer;
+}
+
+#new-pass-main.js-new-pass.open {
+    display: flex;
+}
+
+/*End CSS register*/
+
+/*Start CSS register*/
+#verification-main .register {
+    width: 432px;
+    height: auto;
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 10px 16px 24px 16px;
+    animation: downAnimation ease 0.3s;
+}
+
+#verification-main .register .border {
+    align-items: center;
+    width: 100%;
+    border-bottom: 1px solid #dadde1;
+    margin: 12px 0;
+    text-align: center;
+}
+
+#verification-main .register-form .input-item-haft {
+    width: 48%;
+    padding: 14px 16px;
+    margin: 6px 0;
+    font-size: 16px;
+    float: left;
+}
+
+#verification-main .input-item-haft.left {
+    margin-right: 8px;
+}
+
+#verification-main .input-item-haft.right {
+    margin-left: 8px;
+}
+
+#verification-main .register-form .input-items {
+    width: 100%;
+    padding: 14px 16px;
+    margin: 6px 0;
+    font-size: 16px;
+}
+
+#verification-main .register-form .register-div {
+    margin-top: 24px;
+}
+
+#verification-main .register .title-register {
+    position: relative;
+}
+
+#verification-main .title-register .close-register {
+    padding: 2px 2px;
+    position: absolute;
+    right: 0;
+    z-index: 1;
+    font-size: 30px;
+    color: #111111;
+    cursor: pointer;
+}
+
+#verification-main.js-verification.open {
+    display: flex;
+}
+
+/*End CSS register*/
+
+/*Start CSS notify success*/
+#notify-success-main .register {
+    width: 432px;
+    height: auto;
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 10px 16px 24px 16px;
+    animation: downAnimation ease 0.3s;
+}
+
+#notify-success-main .register .border {
+    align-items: center;
+    width: 100%;
+    border-bottom: 1px solid #dadde1;
+    margin: 12px 0;
+    text-align: center;
+}
+
+#notify-success-main .register-form .input-item-haft {
+    width: 48%;
+    padding: 14px 16px;
+    margin: 6px 0;
+    font-size: 16px;
+    float: left;
+}
+
+#notify-success-main .input-item-haft.left {
+    margin-right: 8px;
+}
+
+#notify-success-main .input-item-haft.right {
+    margin-left: 8px;
+}
+
+#notify-success-main .register-form .input-items {
+    width: 100%;
+    padding: 14px 16px;
+    margin: 6px 0;
+    font-size: 16px;
+}
+
+#notify-success-main .register-form .register-div {
+    margin-top: 24px;
+}
+
+#notify-success-main .register .title-register {
+    position: relative;
+}
+
+#notify-success-main .title-register .close-register {
+    padding: 2px 2px;
+    position: absolute;
+    right: 0;
+    z-index: 1;
+    font-size: 30px;
+    color: #111111;
+    cursor: pointer;
+}
+
+#notify-success-main.js-notify-success.open {
+    display: flex;
+}
+
+/*End CSS notify success*/
+
+/*Start CSS notify fail*/
+#notify-fail-main .register {
+    width: 432px;
+    height: auto;
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 10px 16px 24px 16px;
+    animation: downAnimation ease 0.3s;
+}
+
+#notify-fail-main .register .border {
+    align-items: center;
+    width: 100%;
+    border-bottom: 1px solid #dadde1;
+    margin: 12px 0;
+    text-align: center;
+}
+
+#notify-fail-main .register-form .input-item-haft {
+    width: 48%;
+    padding: 14px 16px;
+    margin: 6px 0;
+    font-size: 16px;
+    float: left;
+}
+
+#notify-fail-main .input-item-haft.left {
+    margin-right: 8px;
+}
+
+#notify-fail-main .input-item-haft.right {
+    margin-left: 8px;
+}
+
+#notify-fail-main .register-form .input-items {
+    width: 100%;
+    padding: 14px 16px;
+    margin: 6px 0;
+    font-size: 16px;
+}
+
+#notify-fail-main .register-form .register-div {
+    margin-top: 24px;
+}
+
+#notify-fail-main .register .title-register {
+    position: relative;
+}
+
+#notify-fail-main .title-register .close-register {
+    padding: 2px 2px;
+    position: absolute;
+    right: 0;
+    z-index: 1;
+    font-size: 30px;
+    color: #111111;
+    cursor: pointer;
+}
+
+#notify-fail-main.js-notify-fail.open {
+    display: flex;
 }
 
 /*End CSS login forgot*/

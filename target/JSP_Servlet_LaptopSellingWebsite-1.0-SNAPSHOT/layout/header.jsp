@@ -59,7 +59,7 @@
                     </c:when>
                     <c:otherwise>
                         <a class="font-14 hover-header" href="${root}Logout">
-                            <i class="hover-header1 fas fa-user"></i>Đăng xuất
+                            <i class="hover-header1 fa-solid fa-right-from-bracket"></i>Đăng xuất
                         </a>
                     </c:otherwise>
                 </c:choose>
