@@ -10,7 +10,7 @@
   request.setCharacterEncoding("UTF-8");
   response.setCharacterEncoding("UTF-8");
 %>
-<div class="js-login" id="login-main" style="z-index: 1000">
+<div class="js-login ${requestScope.error !=null?"open":""}" id="login-main" style="z-index: 1000">
   <div class="login js-login-container">
     <div class="title-login">
       <a class="close-login" role="button"></a>
@@ -18,10 +18,11 @@
       <p class="slogan-login">Hãy tham gia cùng chúng tôi</p>
     </div>
     <div class="border"></div>
-    <form action="" class="login-form">
+    <form action="Login" class="login-form" method="post">
       <div class="input-login">
-        <input class="input-items" placeholder="Tên đăng nhập" required type="text">
-        <input class="input-items" placeholder="Mật khẩu" required type="password">
+        <input class="input-items" name="username" placeholder="Tên đăng nhập" required type="text" value="${requestScope.username}">
+        <input class="input-items" name="password" placeholder="Mật khẩu" required type="password" value="${requestScope.password}">
+        <p style="color: red">${requestScope.error}</p>
       </div>
       <button class="btn-login">Đăng nhập</button>
     </form>
