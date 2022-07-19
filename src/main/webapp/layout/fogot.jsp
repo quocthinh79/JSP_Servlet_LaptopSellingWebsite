@@ -20,7 +20,7 @@
         <div class="border"></div>
         <form action="FindAccount" class="forgot-form" method="get">
             <div class="input-forgot">
-                <input class="input-items" name="email" placeholder="Email đăng kí" required type="text" value="${requestScope.email}">
+                <input class="input-items" name="email" placeholder="Email đăng kí" required type="email" value="${requestScope.email}">
                 <p style="color: red">${requestScope.errorFindAccount}</p>
             </div>
             <button class="btn-forgot">Tìm tài khoản</button>

@@ -67,6 +67,41 @@ public class UserDao {
         return instance;
     }
 
+    public boolean checkEmail(String email) {
+        String sql = "select username from tk where email = ?";
+        try {
+            PreparedStatement preparedStatement = DBConnect.getInstance().get(sql);
+            preparedStatement.setString(1, email);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                return true;
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public int registerCustomer(String hoTen, String username, String pass, String diaChi, String email) {
+        try {
+            String query = "INSERT INTO `tk` VALUES (NULL, ?, ?, ?, ?, ?, NULL)";
+            String query2 = "INSERT INTO `phanquyen` VALUES (NULL, ?)";
+            PreparedStatement ps = DBConnect.getInstance().get(query);
+            ps.setString(1, hoTen);
+            ps.setString(2, username);
+            ps.setString(3, pass);
+            ps.setString(4, diaChi);
+            ps.setString(5, email);
+            PreparedStatement ps2 = DBConnect.getInstance().get(query2);
+            ps2.setString(1, "CUSTOMER");
+            ps2.executeUpdate();
+            return ps.executeUpdate();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
     public boolean checkPermission(String username) {
         ArrayList<Account> listResult = new ArrayList<>();
         try {

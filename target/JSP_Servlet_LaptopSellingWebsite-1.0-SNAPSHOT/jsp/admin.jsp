@@ -47,7 +47,7 @@
     display: flex;
     margin: auto;
     height: 100vh;
-">Trang web không tồn tại
+">Đường dẫn không tồn tại
             </div>
         </c:when>
         <c:otherwise>
