@@ -35,9 +35,18 @@
                 </a>
             </li>
             <li class="header_sub-list">
-                <a class="font-14 hover-header" href="${root}Tutorial">
-                    <i class="hover-header1 fas fa-clipboard-check"></i>Hướng dẫn
-                </a>
+                <c:choose>
+                    <c:when test="${sessionScope.permission == null}">
+                        <a class="font-14 hover-header" href="${root}Tutorial">
+                            <i class="hover-header1 fas fa-clipboard-check"></i>Hướng dẫn
+                        </a>
+                    </c:when>
+                    <c:otherwise>
+                        <a class="font-14 hover-header" href="${root}Admin">
+                            <i class="hover-header1 fa-solid fa-unlock"></i>Admin
+                        </a>
+                    </c:otherwise>
+                </c:choose>
             </li>
             <li class="header_sub-list">
                 <a class="font-14 hover-header" href="${root}AboutUs">

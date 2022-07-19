@@ -11,11 +11,11 @@ import java.util.List;
 
 public class UserDao {
 
-    static {
-        List<Account> accounts = new ArrayList<>();
-        Account ac1 = new Account(1, "Nguyen Van A", "userName1", "123456", "tp hcm", "1@gmail.com");
-        accounts.add(ac1);
-    }
+//    static {
+//        List<Account> accounts = new ArrayList<>();
+//        Account ac1 = new Account(1, "Nguyen Van A", "userName1", "123456", "tp hcm", "1@gmail.com");
+//        accounts.add(ac1);
+//    }
 
     public static boolean checkUser(String userName) {
         String sql = "select username from tk where username = ?";
@@ -31,6 +31,8 @@ public class UserDao {
         }
         return false;
     }
+
+
 
     public static Account getUser(String userName, String passWord) {
         Account result = null;
@@ -63,6 +65,30 @@ public class UserDao {
             instance = new UserDao();
         }
         return instance;
+    }
+
+    public boolean checkPermission(String username) {
+        ArrayList<Account> listResult = new ArrayList<>();
+        try {
+            String query = "SELECT tk.ID, tk.HOTEN, tk.USERNAME, tk.PASSWORD, tk.DIACHI, tk.EMAIL  from tk join phanquyen pq on tk.ID = pq.ID WHERE pq.QUYEN = 'ADMIN' AND tk.USERNAME = ?";
+            PreparedStatement ps = DBConnect.getInstance().get(query);
+            ps.setString(1, username);
+            ResultSet resultSet = ps.executeQuery();
+            while (resultSet.next()) {
+                Account account = new Account(resultSet.getInt(1),
+                        resultSet.getString(2),
+                        resultSet.getString(3),
+                        resultSet.getString(4),
+                        resultSet.getString(5),
+                        resultSet.getString(6));
+                listResult.add(account);
+            }
+            if (!listResult.isEmpty())
+                return true;
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     public ArrayList getAccount(String email) {

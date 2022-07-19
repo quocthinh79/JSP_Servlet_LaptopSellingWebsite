@@ -46,4 +46,8 @@ public class UserServices {
     public void updatePass(String email, String newPass) {
         UserDao.getInstance().updatePass(email, newPass);
     }
+
+    public boolean checkPermission(String username) {
+       return UserDao.getInstance().checkPermission(username);
+    }
 }

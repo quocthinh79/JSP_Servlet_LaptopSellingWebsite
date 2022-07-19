@@ -24,8 +24,11 @@ public class LoginController extends HttpServlet {
             Account account = UserServices.getUser(userName, pass);
             if (account != null) {
                 HttpSession session = request.getSession();
-
                 session.setAttribute("account", account);
+                if (UserServices.getInstance().checkPermission(userName)) {
+                    HttpSession sessionPermission = request.getSession();
+                    sessionPermission.setAttribute("permission", account);
+                }
                 response.sendRedirect(base);
             } else {
                 request.setAttribute("error", "Sai tên đăng nhập hoặc mật khẩu");
