@@ -48,6 +48,14 @@ public class UserServices {
     }
 
     public boolean checkPermission(String username) {
-       return UserDao.getInstance().checkPermission(username);
+        return UserDao.getInstance().checkPermission(username);
+    }
+
+    public int registerCustomer(String hoTen, String username, String pass, String diaChi, String email) {
+        return UserDao.getInstance().registerCustomer(hoTen, username, pass, diaChi, email);
+    }
+
+    public boolean checkEmail(String email) {
+        return UserDao.getInstance().checkEmail(email);
     }
 }
