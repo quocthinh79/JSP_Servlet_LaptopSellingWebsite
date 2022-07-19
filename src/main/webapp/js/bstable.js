@@ -9,6 +9,8 @@
 "use strict";
 
 /** @class BSTable class that represents an editable bootstrap table. */
+let command = '';
+let temp = '';
 class BSTable {
 
   /**
@@ -170,9 +172,21 @@ class BSTable {
     console.log($cols);
     if (this.currentlyEditingRow($currentRow)) return;    // not currently editing, return
     //Pone en modo de edición
+    const arr = [];
+    let numCount = 0;
     this._modifyEachColumn(this.options.editableColumns, $cols, function($td) {  // modify each column
+      numCount++;
       let content = $td.html();             // read content
-      console.log(content);
+      if (content !== '' && content !== undefined && content !== null) {
+        arr.push(content)
+      }
+      console.log("Arr", arr)
+      if (arr.length === 0 || (numCount === 1 && content === '')) {
+        command = 'INSERT'
+      }
+      if (arr.length !== 0 && (numCount === 1 && content !== '')){
+        command = 'UPDATE'
+      }
       let div = '<div style="display: none;">' + content + '</div>';  // hide content (save for later use)
       let input = '<input class="form-control input-sm"  data-original-value="' + content + '" value="' + content + '">';
       $td.html(div + input);                // set content
@@ -184,10 +198,43 @@ class BSTable {
     let btnYes = document.getElementById('yes');
     let btnNo = document.getElementById('no');
     let $currentRow = $(button).parents('tr');       // access the row
+    let currentTable = $(button).parents('table')[0].id
+    let $cols = $currentRow.find('td');
+    const map = new Map();
+    let count = 1;
+    this._modifyEachColumn(this.options.editableColumns, $cols, function($td) {  // modify each column
+      let cont = $td.html();       // read through each input
+      map.set("Col" + count++, cont);
+      console.log(cont)
+      // arr.push(cont)
+    });
+    let dataSend = ''
+    let num = 0;
+    map.forEach(function (value, key, map) {
+      num++;
+      if (num < map.size) {
+        dataSend += value.replaceAll(".", "") + ","
+      } else {
+        dataSend += value.replaceAll(".", "")
+      }
+    })
     this.options.onBeforeDelete($currentRow);
     thongbao.style.display = 'flex';
     btnYes.addEventListener('click', function () {
       // Remove the row
+      $.ajax({
+        url: 'Delete',
+        type: 'POST',
+        data: {
+          send: dataSend,
+          currentTable: currentTable,
+        },
+        success: function (response) {
+
+        },
+        error: function () {
+        }
+      });
       thongbao.style.display = 'none';
       $currentRow.remove();
       this.options.onDelete();
@@ -198,16 +245,85 @@ class BSTable {
   }
   _rowAccept(button) {
     // Accept the changes to the row
+    let thongbao = document.getElementById('thongbaoIdEmpty');
+    let btnOK = document.getElementById('ok');
     let $currentRow = $(button).parents('tr');    // access the row
-    console.log($currentRow);
+    let currentTable = $(button).parents('table')[0].id
     let $cols = $currentRow.find('td');              // read fields
     if (!this.currentlyEditingRow($currentRow)) return;   // not currently editing, return
 
     // Finish editing the row & save edits
+    // const arr = []
+    const map = new Map();
+    let count = 1;
+    let numCount = 0;
     this._modifyEachColumn(this.options.editableColumns, $cols, function($td) {  // modify each column
       let cont = $td.find('input').val();     // read through each input
+      numCount++;
+      if (numCount === 1 && cont === '') {
+        // command = '';
+        temp = 'NOT';
+        thongbao.style.display = 'flex';
+      }
+      if (numCount === 1 && cont !== ''){
+        temp = '';
+      }
+      if (cont === '') {
+        map.set("Col" + count++, 'NULL');
+      } else {
+        map.set("Col" + count++, cont);
+      }
+      // arr.push(cont)
       $td.html(cont);                         // set the content and remove the input fields
     });
+    btnOK.addEventListener('click', function () {
+      thongbao.style.display = 'none';
+    })
+    console.log(map)
+    let dataSend = ''
+    let num = 0;
+    map.forEach(function (value, key, map) {
+      num++;
+      if (num < map.size) {
+        dataSend += value.replaceAll(".", "") + ","
+      } else {
+        dataSend += value.replaceAll(".", "")
+      }
+    })
+    console.log(command)
+    if (temp !== 'NOT') {
+      if (command === 'INSERT') {
+        $.ajax({
+          url: 'Add',
+          type: 'POST',
+          data: {
+            send: dataSend,
+            currentTable: currentTable,
+          },
+          success: function (response) {
+
+          },
+          error: function () {
+          }
+        });
+      }
+      if (command === 'UPDATE'){
+        $.ajax({
+          url: 'Edit',
+          type: 'POST',
+          data: {
+            send: dataSend,
+            currentTable: currentTable,
+          },
+          success: function (response) {
+
+          },
+          error: function () {
+          }
+        });
+      }
+    }
+
     this._actionsModeNormal(button);
     this.options.onEdit($currentRow[0]);
   }
@@ -226,7 +342,7 @@ class BSTable {
   }
   _actionAddRow() {
     // Add row to this table
-
+    // command = 'INSERT'
     let $allRows = this.table.find('tbody tr');
     if ($allRows.length==0) { // there are no rows. we must create them
       let $currentRow = this.table.find('thead tr');  // find header
