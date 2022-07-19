@@ -37,424 +37,448 @@
 </head>
 <body>
 <div id="main">
-    <h1 class="title"><strong>DASHBOARD</strong></h1>
-    <button class="logout">LOGOUT <i class="fas fa-sign-out-alt"></i></button>
-    <div class="container">
-        <div class="tab">
-            <button class="tablinks">DELL</button>
-            <button class="tablinks">MSI</button>
-            <button class="tablinks">ASUS</button>
-        </div>
-        <div id="dell" class="details-laptop">
-            <a role="button" type="button" href="#table2">
-                <div class="logo" style="background-image: url('${root}image/logo lap/dell.png')"></div>
-            </a>
-            <div class="details bg-blue">
-                <div class="details-number">52</div>
-                <div class="details-title">Tổng số lượng nhập</div>
+    <c:choose>
+        <c:when test="${sessionScope.permission == null}">
+            <div style="
+    font-size: 5rem;
+    align-items: center;
+    /* width: 100vw; */
+    text-align: center;
+    display: flex;
+    margin: auto;
+    height: 100vh;
+">Đường dẫn không tồn tại
             </div>
-            <div class="details bg-green">
-                <div class="details-number">52</div>
-                <div class="details-title">Tổng số lượng xuất</div>
+        </c:when>
+        <c:otherwise>
+            <h1 class="title"><strong>DASHBOARD</strong></h1>
+            <a href="${root}Logout" class="logout">LOGOUT <i class="fas fa-sign-out-alt"></i></a>
+            <div class="container">
+                <div class="tab">
+                    <button class="tablinks">DELL</button>
+                    <button class="tablinks">MSI</button>
+                    <button class="tablinks">ASUS</button>
+                </div>
+                <div id="dell" class="details-laptop">
+                    <a role="button" type="button" href="#table2">
+                        <div class="logo" style="background-image: url('${root}image/logo lap/dell.png')"></div>
+                    </a>
+                    <div class="details bg-blue">
+                        <div class="details-number">52</div>
+                        <div class="details-title">Tổng số lượng nhập</div>
+                    </div>
+                    <div class="details bg-green">
+                        <div class="details-number">52</div>
+                        <div class="details-title">Tổng số lượng xuất</div>
+                    </div>
+                    <div class="details bg-red">
+                        <div class="details-number">52</div>
+                        <div class="details-title">Tổng số lượng tồn kho</div>
+                    </div>
+                </div>
+                <div id="msi" class="details-laptop">
+                    <a role="button" type="button">
+                        <div class="logo" style="background-image: url('${root}image/logo lap/msi.png')"></div>
+                    </a>
+                    <div class="details bg-blue">
+                        <div class="details-number">52</div>
+                        <div class="details-title">Tổng số lượng nhập</div>
+                    </div>
+                    <div class="details bg-green">
+                        <div class="details-number">52</div>
+                        <div class="details-title">Tổng số lượng xuất</div>
+                    </div>
+                    <div class="details bg-red">
+                        <div class="details-number">52</div>
+                        <div class="details-title">Tổng số lượng tồn kho</div>
+                    </div>
+                </div>
+                <div id="asus" class="details-laptop">
+                    <a role="button" type="button">
+                        <div class="logo" style="background-image: url('${root}image/logo lap/asus.png')"></div>
+                    </a>
+                    <div class="details bg-blue">
+                        <div class="details-number">52</div>
+                        <div class="details-title">Tổng số lượng nhập</div>
+                    </div>
+                    <div class="details bg-green">
+                        <div class="details-number">52</div>
+                        <div class="details-title">Tổng số lượng xuất</div>
+                    </div>
+                    <div class="details bg-red">
+                        <div class="details-number">52</div>
+                        <div class="details-title">Tổng số lượng tồn kho</div>
+                    </div>
+                </div>
             </div>
-            <div class="details bg-red">
-                <div class="details-number">52</div>
-                <div class="details-title">Tổng số lượng tồn kho</div>
-            </div>
-        </div>
-        <div id="msi" class="details-laptop">
-            <a role="button" type="button">
-                <div class="logo" style="background-image: url('${root}image/logo lap/msi.png')"></div>
-            </a>
-            <div class="details bg-blue">
-                <div class="details-number">52</div>
-                <div class="details-title">Tổng số lượng nhập</div>
-            </div>
-            <div class="details bg-green">
-                <div class="details-number">52</div>
-                <div class="details-title">Tổng số lượng xuất</div>
-            </div>
-            <div class="details bg-red">
-                <div class="details-number">52</div>
-                <div class="details-title">Tổng số lượng tồn kho</div>
-            </div>
-        </div>
-        <div id="asus" class="details-laptop">
-            <a role="button" type="button">
-                <div class="logo" style="background-image: url('${root}image/logo lap/asus.png')"></div>
-            </a>
-            <div class="details bg-blue">
-                <div class="details-number">52</div>
-                <div class="details-title">Tổng số lượng nhập</div>
-            </div>
-            <div class="details bg-green">
-                <div class="details-number">52</div>
-                <div class="details-title">Tổng số lượng xuất</div>
-            </div>
-            <div class="details bg-red">
-                <div class="details-number">52</div>
-                <div class="details-title">Tổng số lượng tồn kho</div>
-            </div>
-        </div>
-    </div>
-    <div class="container">
-        <div class="table-responsive">
-            <div class="table-wrapper" style="width: auto">
-                <div class="table-title">
-                    <div class="row">
-                        <div class="col-xs-6">
-                            <h2>Quản lý <b>Kho hàng</b></h2>
+            <div class="container">
+                <div class="table-responsive">
+                    <div class="table-wrapper" style="width: auto">
+                        <div class="table-title">
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <h2>Quản lý <b>Kho hàng</b></h2>
+                                </div>
+                                <div class="col-xs-6">
+                                    <a id="addRow2" class="btn btn-success" data-toggle="modal"><i
+                                            class="material-icons">&#xE147;</i>
+                                        <span>Thêm hàng</span></a>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-xs-6">
-                            <a id="addRow2" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i>
-                                <span>Thêm hàng</span></a>
+                        <table id="table3" class="table table-striped table-hover">
+                            <thead>
+                            <tr>
+                                <th>MÃ LAPTOP</th>
+                                <th>SỐ LƯỢNG NHẬP</th>
+                                <th>SỐ LƯỢNG XUẤT</th>
+                                <th>TỒN KHO</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>V4R53500U001W</td>
+                                <td>Laptop Dell Vostro 14 3405</td>
+                                <td>Dell</td>
+                                <td>16.190.000</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="clearfix">
+                            <ul class="pagination">
+                                <li class="page-item disabled"><a href="#">Previous</a></li>
+                                <li class="page-item"><a href="#" class="page-link">1</a></li>
+                                <li class="page-item"><a href="#" class="page-link">2</a></li>
+                                <li class="page-item active"><a href="#" class="page-link">3</a></li>
+                                <li class="page-item"><a href="#" class="page-link">4</a></li>
+                                <li class="page-item"><a href="#" class="page-link">5</a></li>
+                                <li class="page-item"><a href="#" class="page-link">Next</a></li>
+                            </ul>
                         </div>
                     </div>
                 </div>
-                <table id="table3" class="table table-striped table-hover">
-                    <thead>
-                    <tr>
-                        <th>MÃ LAPTOP</th>
-                        <th>SỐ LƯỢNG NHẬP</th>
-                        <th>SỐ LƯỢNG XUẤT</th>
-                        <th>TỒN KHO</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>V4R53500U001W</td>
-                        <td>Laptop Dell Vostro 14 3405</td>
-                        <td>Dell</td>
-                        <td>16.190.000</td>
-                    </tr>
-                    </tbody>
-                </table>
-                <div class="clearfix">
-                    <ul class="pagination">
-                        <li class="page-item disabled"><a href="#">Previous</a></li>
-                        <li class="page-item"><a href="#" class="page-link">1</a></li>
-                        <li class="page-item"><a href="#" class="page-link">2</a></li>
-                        <li class="page-item active"><a href="#" class="page-link">3</a></li>
-                        <li class="page-item"><a href="#" class="page-link">4</a></li>
-                        <li class="page-item"><a href="#" class="page-link">5</a></li>
-                        <li class="page-item"><a href="#" class="page-link">Next</a></li>
-                    </ul>
-                </div>
             </div>
-        </div>
-    </div>
-    <div class="container">
-        <div class="table-responsive">
-            <div class="table-wrapper" style="width: auto">
-                <div class="table-title">
-                    <div class="row">
-                        <div class="col-xs-6">
-                            <h2>Quản lý <b>Khách hàng</b></h2>
+            <div class="container">
+                <div class="table-responsive">
+                    <div class="table-wrapper" style="width: auto">
+                        <div class="table-title">
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <h2>Quản lý <b>Khách hàng</b></h2>
+                                </div>
+                                <div class="col-xs-6">
+                                    <a id="addRow3" class="btn btn-success" data-toggle="modal"><i
+                                            class="material-icons">&#xE147;</i>
+                                        <span>Thêm hàng</span></a>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-xs-6">
-                            <a id="addRow3" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i>
-                                <span>Thêm hàng</span></a>
+                        <table id="table4" class="table table-striped table-hover">
+                            <thead>
+                            <tr>
+                                <th>KHÁCH HÀNG</th>
+                                <th>TÊN KHÁCH HÀNG</th>
+                                <th>ID</th>
+                                <th>ĐỊA CHỈ</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>V4R53500U001W</td>
+                                <td>Laptop Dell Vostro 14 3405</td>
+                                <td>Dell</td>
+                                <td>16.190.000</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="clearfix">
+                            <ul class="pagination">
+                                <li class="page-item disabled"><a href="#">Previous</a></li>
+                                <li class="page-item"><a href="#" class="page-link">1</a></li>
+                                <li class="page-item"><a href="#" class="page-link">2</a></li>
+                                <li class="page-item active"><a href="#" class="page-link">3</a></li>
+                                <li class="page-item"><a href="#" class="page-link">4</a></li>
+                                <li class="page-item"><a href="#" class="page-link">5</a></li>
+                                <li class="page-item"><a href="#" class="page-link">Next</a></li>
+                            </ul>
                         </div>
                     </div>
                 </div>
-                <table id="table4" class="table table-striped table-hover">
-                    <thead>
-                    <tr>
-                        <th>KHÁCH HÀNG</th>
-                        <th>TÊN KHÁCH HÀNG</th>
-                        <th>ID</th>
-                        <th>ĐỊA CHỈ</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>V4R53500U001W</td>
-                        <td>Laptop Dell Vostro 14 3405</td>
-                        <td>Dell</td>
-                        <td>16.190.000</td>
-                    </tr>
-                    </tbody>
-                </table>
-                <div class="clearfix">
-                    <ul class="pagination">
-                        <li class="page-item disabled"><a href="#">Previous</a></li>
-                        <li class="page-item"><a href="#" class="page-link">1</a></li>
-                        <li class="page-item"><a href="#" class="page-link">2</a></li>
-                        <li class="page-item active"><a href="#" class="page-link">3</a></li>
-                        <li class="page-item"><a href="#" class="page-link">4</a></li>
-                        <li class="page-item"><a href="#" class="page-link">5</a></li>
-                        <li class="page-item"><a href="#" class="page-link">Next</a></li>
-                    </ul>
-                </div>
             </div>
-        </div>
-    </div>
-    <div class="container">
-        <div class="table-responsive">
-            <div class="table-wrapper" style="width: auto">
-                <div class="table-title">
-                    <div class="row">
-                        <div class="col-xs-6">
-                            <h2>Quản lý <b>Chi tiết giỏ hàng</b></h2>
+            <div class="container">
+                <div class="table-responsive">
+                    <div class="table-wrapper" style="width: auto">
+                        <div class="table-title">
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <h2>Quản lý <b>Chi tiết giỏ hàng</b></h2>
+                                </div>
+                                <div class="col-xs-6">
+                                    <a id="addRow4" class="btn btn-success" data-toggle="modal"><i
+                                            class="material-icons">&#xE147;</i>
+                                        <span>Thêm hàng</span></a>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-xs-6">
-                            <a id="addRow4" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i>
-                                <span>Thêm hàng</span></a>
+                        <table id="table5" class="table table-striped table-hover">
+                            <thead>
+                            <tr>
+                                <th>MÃ GIỎ HÀNG</th>
+                                <th>MÃ LAPTOP</th>
+                                <th>SỐ LƯỢNG</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>V4R53500U001W</td>
+                                <td>Laptop Dell Vostro 14 3405</td>
+                                <td>Dell</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="clearfix">
+                            <ul class="pagination">
+                                <li class="page-item disabled"><a href="#">Previous</a></li>
+                                <li class="page-item"><a href="#" class="page-link">1</a></li>
+                                <li class="page-item"><a href="#" class="page-link">2</a></li>
+                                <li class="page-item active"><a href="#" class="page-link">3</a></li>
+                                <li class="page-item"><a href="#" class="page-link">4</a></li>
+                                <li class="page-item"><a href="#" class="page-link">5</a></li>
+                                <li class="page-item"><a href="#" class="page-link">Next</a></li>
+                            </ul>
                         </div>
                     </div>
                 </div>
-                <table id="table5" class="table table-striped table-hover">
-                    <thead>
-                    <tr>
-                        <th>MÃ GIỎ HÀNG</th>
-                        <th>MÃ LAPTOP</th>
-                        <th>SỐ LƯỢNG</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>V4R53500U001W</td>
-                        <td>Laptop Dell Vostro 14 3405</td>
-                        <td>Dell</td>
-                    </tr>
-                    </tbody>
-                </table>
-                <div class="clearfix">
-                    <ul class="pagination">
-                        <li class="page-item disabled"><a href="#">Previous</a></li>
-                        <li class="page-item"><a href="#" class="page-link">1</a></li>
-                        <li class="page-item"><a href="#" class="page-link">2</a></li>
-                        <li class="page-item active"><a href="#" class="page-link">3</a></li>
-                        <li class="page-item"><a href="#" class="page-link">4</a></li>
-                        <li class="page-item"><a href="#" class="page-link">5</a></li>
-                        <li class="page-item"><a href="#" class="page-link">Next</a></li>
-                    </ul>
-                </div>
             </div>
-        </div>
-    </div>
-    <div class="container">
-        <div class="table-responsive">
-            <div class="table-wrapper" style="width: auto">
-                <div class="table-title">
-                    <div class="row">
-                        <div class="col-xs-6">
-                            <h2>Quản lý <b>Tài khoản</b></h2>
+            <div class="container">
+                <div class="table-responsive">
+                    <div class="table-wrapper" style="width: auto">
+                        <div class="table-title">
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <h2>Quản lý <b>Tài khoản</b></h2>
+                                </div>
+                                <div class="col-xs-6">
+                                    <a id="addRow5" class="btn btn-success" data-toggle="modal"><i
+                                            class="material-icons">&#xE147;</i>
+                                        <span>Thêm hàng</span></a>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-xs-6">
-                            <a id="addRow5" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i>
-                                <span>Thêm hàng</span></a>
+                        <table id="table6" class="table table-striped table-hover">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>USERNAME</th>
+                                <th>PASSWORD</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>V4R53500U001W</td>
+                                <td>Laptop Dell Vostro 14 3405</td>
+                                <td>Dell</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="clearfix">
+                            <ul class="pagination">
+                                <li class="page-item disabled"><a href="#">Previous</a></li>
+                                <li class="page-item"><a href="#" class="page-link">1</a></li>
+                                <li class="page-item"><a href="#" class="page-link">2</a></li>
+                                <li class="page-item active"><a href="#" class="page-link">3</a></li>
+                                <li class="page-item"><a href="#" class="page-link">4</a></li>
+                                <li class="page-item"><a href="#" class="page-link">5</a></li>
+                                <li class="page-item"><a href="#" class="page-link">Next</a></li>
+                            </ul>
                         </div>
                     </div>
                 </div>
-                <table id="table6" class="table table-striped table-hover">
-                    <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>USERNAME</th>
-                        <th>PASSWORD</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>V4R53500U001W</td>
-                        <td>Laptop Dell Vostro 14 3405</td>
-                        <td>Dell</td>
-                    </tr>
-                    </tbody>
-                </table>
-                <div class="clearfix">
-                    <ul class="pagination">
-                        <li class="page-item disabled"><a href="#">Previous</a></li>
-                        <li class="page-item"><a href="#" class="page-link">1</a></li>
-                        <li class="page-item"><a href="#" class="page-link">2</a></li>
-                        <li class="page-item active"><a href="#" class="page-link">3</a></li>
-                        <li class="page-item"><a href="#" class="page-link">4</a></li>
-                        <li class="page-item"><a href="#" class="page-link">5</a></li>
-                        <li class="page-item"><a href="#" class="page-link">Next</a></li>
-                    </ul>
-                </div>
             </div>
-        </div>
-    </div>
-    <div class="container">
-        <div class="table-responsive">
-            <div class="table-wrapper" style="width: auto">
-                <div class="table-title">
-                    <div class="row">
-                        <div class="col-xs-6">
-                            <h2>Quản lý <b>Giỏ hàng</b></h2>
+            <div class="container">
+                <div class="table-responsive">
+                    <div class="table-wrapper" style="width: auto">
+                        <div class="table-title">
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <h2>Quản lý <b>Giỏ hàng</b></h2>
+                                </div>
+                                <div class="col-xs-6">
+                                    <a id="addRow6" class="btn btn-success" data-toggle="modal"><i
+                                            class="material-icons">&#xE147;</i>
+                                        <span>Thêm hàng</span></a>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-xs-6">
-                            <a id="addRow6" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i>
-                                <span>Thêm hàng</span></a>
+                        <table id="table7" class="table table-striped table-hover">
+                            <thead>
+                            <tr>
+                                <th>MÃ GIỎ HÀNG</th>
+                                <th>MÃ KHÁCH HÀNG</th>
+                                <th>NGÀY XUẤT</th>
+                                <th>TRỊ GIÁ</th>
+                                <th>MÃ KHUYẾN MÃI</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>V4R53500U001W</td>
+                                <td>Laptop Dell Vostro 14 3405</td>
+                                <td>Dell</td>
+                                <td>16.190.000</td>
+                                <td>Dell</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="clearfix">
+                            <ul class="pagination">
+                                <li class="page-item disabled"><a href="#">Previous</a></li>
+                                <li class="page-item"><a href="#" class="page-link">1</a></li>
+                                <li class="page-item"><a href="#" class="page-link">2</a></li>
+                                <li class="page-item active"><a href="#" class="page-link">3</a></li>
+                                <li class="page-item"><a href="#" class="page-link">4</a></li>
+                                <li class="page-item"><a href="#" class="page-link">5</a></li>
+                                <li class="page-item"><a href="#" class="page-link">Next</a></li>
+                            </ul>
                         </div>
                     </div>
                 </div>
-                <table id="table7" class="table table-striped table-hover">
-                    <thead>
-                    <tr>
-                        <th>MÃ GIỎ HÀNG</th>
-                        <th>MÃ KHÁCH HÀNG</th>
-                        <th>NGÀY XUẤT</th>
-                        <th>TRỊ GIÁ</th>
-                        <th>MÃ KHUYẾN MÃI</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>V4R53500U001W</td>
-                        <td>Laptop Dell Vostro 14 3405</td>
-                        <td>Dell</td>
-                        <td>16.190.000</td>
-                        <td>Dell</td>
-                    </tr>
-                    </tbody>
-                </table>
-                <div class="clearfix">
-                    <ul class="pagination">
-                        <li class="page-item disabled"><a href="#">Previous</a></li>
-                        <li class="page-item"><a href="#" class="page-link">1</a></li>
-                        <li class="page-item"><a href="#" class="page-link">2</a></li>
-                        <li class="page-item active"><a href="#" class="page-link">3</a></li>
-                        <li class="page-item"><a href="#" class="page-link">4</a></li>
-                        <li class="page-item"><a href="#" class="page-link">5</a></li>
-                        <li class="page-item"><a href="#" class="page-link">Next</a></li>
-                    </ul>
-                </div>
             </div>
-        </div>
-    </div>
-    <div class="container">
-        <div class="table-responsive">
-            <div class="table-wrapper" style="width: auto">
-                <div class="table-title">
-                    <div class="row">
-                        <div class="col-xs-6">
-                            <h2>Quản lý <b>Khuyến mãi</b></h2>
+            <div class="container">
+                <div class="table-responsive">
+                    <div class="table-wrapper" style="width: auto">
+                        <div class="table-title">
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <h2>Quản lý <b>Khuyến mãi</b></h2>
+                                </div>
+                                <div class="col-xs-6">
+                                    <a id="addRow7" class="btn btn-success" data-toggle="modal"><i
+                                            class="material-icons">&#xE147;</i>
+                                        <span>Thêm hàng</span></a>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-xs-6">
-                            <a id="addRow7" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i>
-                                <span>Thêm hàng</span></a>
+                        <table id="table8" class="table table-striped table-hover">
+                            <thead>
+                            <tr>
+                                <th>MÃ KHUYẾN MÃI</th>
+                                <th>TÊN KHUYẾN MÃI</th>
+                                <th>MỨC KHUYẾN MÃI</th>
+                                <th>NGÀY HẾT HẠN</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>V4R53500U001W</td>
+                                <td>Laptop Dell Vostro 14 3405</td>
+                                <td>Dell</td>
+                                <td>16.190.000</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="clearfix">
+                            <ul class="pagination">
+                                <li class="page-item disabled"><a href="#">Previous</a></li>
+                                <li class="page-item"><a href="#" class="page-link">1</a></li>
+                                <li class="page-item"><a href="#" class="page-link">2</a></li>
+                                <li class="page-item active"><a href="#" class="page-link">3</a></li>
+                                <li class="page-item"><a href="#" class="page-link">4</a></li>
+                                <li class="page-item"><a href="#" class="page-link">5</a></li>
+                                <li class="page-item"><a href="#" class="page-link">Next</a></li>
+                            </ul>
                         </div>
                     </div>
                 </div>
-                <table id="table8" class="table table-striped table-hover">
-                    <thead>
-                    <tr>
-                        <th>MÃ KHUYẾN MÃI</th>
-                        <th>TÊN KHUYẾN MÃI</th>
-                        <th>MỨC KHUYẾN MÃI</th>
-                        <th>NGÀY HẾT HẠN</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>V4R53500U001W</td>
-                        <td>Laptop Dell Vostro 14 3405</td>
-                        <td>Dell</td>
-                        <td>16.190.000</td>
-                    </tr>
-                    </tbody>
-                </table>
-                <div class="clearfix">
-                    <ul class="pagination">
-                        <li class="page-item disabled"><a href="#">Previous</a></li>
-                        <li class="page-item"><a href="#" class="page-link">1</a></li>
-                        <li class="page-item"><a href="#" class="page-link">2</a></li>
-                        <li class="page-item active"><a href="#" class="page-link">3</a></li>
-                        <li class="page-item"><a href="#" class="page-link">4</a></li>
-                        <li class="page-item"><a href="#" class="page-link">5</a></li>
-                        <li class="page-item"><a href="#" class="page-link">Next</a></li>
-                    </ul>
-                </div>
             </div>
-        </div>
-    </div>
-    <div class="container">
-        <!--        <div class="tab">-->
-        <!--            <button class="tablink active">DELL</button>-->
-        <!--            <button class="tablink">MSI</button>-->
-        <!--            <button class="tablink">ASUS</button>-->
-        <!--        </div>-->
-        <div id="table-dell" class="table-responsive table-tabs">
-            <div class="table-wrapper">
-                <div class="table-title">
-                    <div class="row">
-                        <div class="col-xs-6">
-                            <h2>Quản lý <b>Laptop Dell</b></h2>
+            <div class="container">
+                <!--        <div class="tab">-->
+                <!--            <button class="tablink active">DELL</button>-->
+                <!--            <button class="tablink">MSI</button>-->
+                <!--            <button class="tablink">ASUS</button>-->
+                <!--        </div>-->
+                <div id="table-dell" class="table-responsive table-tabs">
+                    <div class="table-wrapper">
+                        <div class="table-title">
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <h2>Quản lý <b>Laptop Dell</b></h2>
+                                </div>
+                                <div class="col-xs-6">
+                                    <a id="addRow1" class="btn btn-success" data-toggle="modal"><i
+                                            class="material-icons">&#xE147;</i>
+                                        <span>Thêm hàng</span></a>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-xs-6">
-                            <a id="addRow1" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i>
-                                <span>Thêm hàng</span></a>
+                        <table id="table2" class="table table-striped table-hover">
+                            <thead>
+                            <tr>
+                                <th>MÃ LAPTOP</th>
+                                <th>TÊN LAPTOP</th>
+                                <th>HÃNG</th>
+                                <th>GIÁ BÁN</th>
+                                <th>SERIES</th>
+                                <th>MÀU</th>
+                                <th>CPU</th>
+                                <th>GPU</th>
+                                <th>RAM</th>
+                                <th>MÀN HÌNH</th>
+                                <th>Ổ CỨNG</th>
+                                <th>BÀN PHÍM</th>
+                                <th>PIN</th>
+                                <th>KHỐI LƯỢNG</th>
+                                <th>Hình 1</th>
+                                <th>Hình 2</th>
+                                <th>Hình 3</th>
+                                <th>Hình 4</th>
+                                <th>Hình 5</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <jsp:useBean id="productsDell" scope="request" type="java.util.List"/>
+                            <c:forEach var="x" items="${productsDell}">
+                                <tr>
+                                    <td>${x.maLapTop}</td>
+                                    <td>${x.tenLaptop}</td>
+                                    <td>${x.hangSX}</td>
+                                    <td>${x.giaBan}</td>
+                                    <td>${x.series}</td>
+                                    <td>${x.mau}</td>
+                                    <td>${x.cpu}</td>
+                                    <td>${x.vga}</td>
+                                    <td>${x.ram}</td>
+                                    <td>${x.kichThuocManHinh}</td>
+                                    <td>${x.oCung}</td>
+                                    <td>${x.banPhim}</td>
+                                    <td>${x.pin}</td>
+                                    <td>${x.khoiLuong}</td>
+                                    <td>${x.linkHinh1}</td>
+                                    <td>${x.linkHinh2}</td>
+                                    <td>${x.linkHinh3}</td>
+                                    <td>${x.linkHinh4}</td>
+                                    <td>${x.linkHinh5}</td>
+                                </tr>
+                            </c:forEach>
+                            </tbody>
+                        </table>
+                        <div class="clearfix">
+                            <ul class="pagination">
+                                <li class="page-item disabled"><a href="#">Previous</a></li>
+                                <li class="page-item"><a href="#" class="page-link">1</a></li>
+                                <li class="page-item"><a href="#" class="page-link">2</a></li>
+                                <li class="page-item active"><a href="#" class="page-link">3</a></li>
+                                <li class="page-item"><a href="#" class="page-link">4</a></li>
+                                <li class="page-item"><a href="#" class="page-link">5</a></li>
+                                <li class="page-item"><a href="#" class="page-link">Next</a></li>
+                            </ul>
                         </div>
                     </div>
                 </div>
-                <table id="table2" class="table table-striped table-hover">
-                    <thead>
-                    <tr>
-                        <th>MÃ LAPTOP</th>
-                        <th>TÊN LAPTOP</th>
-                        <th>HÃNG</th>
-                        <th>GIÁ BÁN</th>
-                        <th>SERIES</th>
-                        <th>MÀU</th>
-                        <th>CPU</th>
-                        <th>GPU</th>
-                        <th>RAM</th>
-                        <th>MÀN HÌNH</th>
-                        <th>Ổ CỨNG</th>
-                        <th>BÀN PHÍM</th>
-                        <th>PIN</th>
-                        <th>KHỐI LƯỢNG</th>
-                        <th>Hình 1</th>
-                        <th>Hình 2</th>
-                        <th>Hình 3</th>
-                        <th>Hình 4</th>
-                        <th>Hình 5</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <jsp:useBean id="productsDell" scope="request" type="java.util.List"/>
-                    <c:forEach var="x" items="${productsDell}">
-                        <tr>
-                            <td>${x.maLapTop}</td>
-                            <td>${x.tenLaptop}</td>
-                            <td>${x.hangSX}</td>
-                            <td>${x.giaBan}</td>
-                            <td>${x.series}</td>
-                            <td>${x.mau}</td>
-                            <td>${x.cpu}</td>
-                            <td>${x.vga}</td>
-                            <td>${x.ram}</td>
-                            <td>${x.kichThuocManHinh}</td>
-                            <td>${x.oCung}</td>
-                            <td>${x.banPhim}</td>
-                            <td>${x.pin}</td>
-                            <td>${x.khoiLuong}</td>
-                            <td>${x.linkHinh1}</td>
-                            <td>${x.linkHinh2}</td>
-                            <td>${x.linkHinh3}</td>
-                            <td>${x.linkHinh4}</td>
-                            <td>${x.linkHinh5}</td>
-                        </tr>
-                    </c:forEach>
-                    </tbody>
-                </table>
-                <div class="clearfix">
-                    <ul class="pagination">
-                        <li class="page-item disabled"><a href="#">Previous</a></li>
-                        <li class="page-item"><a href="#" class="page-link">1</a></li>
-                        <li class="page-item"><a href="#" class="page-link">2</a></li>
-                        <li class="page-item active"><a href="#" class="page-link">3</a></li>
-                        <li class="page-item"><a href="#" class="page-link">4</a></li>
-                        <li class="page-item"><a href="#" class="page-link">5</a></li>
-                        <li class="page-item"><a href="#" class="page-link">Next</a></li>
-                    </ul>
-                </div>
             </div>
-        </div>
-    </div>
+        </c:otherwise>
+    </c:choose>
+
 </div>
 <div id="thongbao" style="z-index: 1000">
     <div class="register js-register-container">
@@ -463,7 +487,7 @@
                 Bạn chắc chứ?
             </div>
             <div class="register-div">
-                <button type="button" id="yes" class="btn-register" >Có</button>
+                <button type="button" id="yes" class="btn-register">Có</button>
                 <button type="button" id="no" class="btn-register">Không</button>
             </div>
         </form>
