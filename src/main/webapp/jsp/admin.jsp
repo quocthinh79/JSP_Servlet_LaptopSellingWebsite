@@ -191,6 +191,164 @@
                     </div>
                 </div>
             </div>
+            <div class="container" style="position: relative">
+                <div class="table-responsive">
+                    <div class="table-wrapper" style="width: auto">
+                        <div class="table-title" style="position: absolute;width: 98%;">
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <h2>Quản lý <b>Tài khoản</b></h2>
+                                </div>
+                                <div class="col-xs-6">
+                                    <a id="addRowAccount" class="btn btn-success" data-toggle="modal"><i
+                                            class="material-icons">&#xE147;</i>
+                                        <span>Thêm hàng</span></a>
+                                </div>
+                            </div>
+                        </div>
+                        <table id="Account" class="table table-striped table-hover" style="margin-top: 45px;">
+                            <thead>
+                            <tr>
+                                <th>ID TÀI KHOẢN</th>
+                                <th>HỌ TÊN</th>
+                                <th>USERNAME</th>
+                                <th>PASSWORD</th>
+                                <th>ĐỊA CHỈ</th>
+                                <th>EMAIL</th>
+                            </tr>
+                            </thead>
+                            <tbody id="tbodyAccount">
+                            <c:forEach var="x" items="${allAccount}">
+                                <tr>
+                                    <td>${x.id}</td>
+                                    <td>${x.fullName}</td>
+                                    <td>${x.userName}</td>
+                                    <td>${x.pass}</td>
+                                    <td>${x.address}</td>
+                                    <td>${x.email}</td>
+                                </tr>
+                            </c:forEach>
+                            </tbody>
+                        </table>
+                        <div class="clearfix">
+                            <ul class="pagination">
+                                <c:forEach var="i" begin="1" end="${totalAccount}">
+                                    <c:if test="${i == pageAccount}">
+                                        <li style="cursor: pointer" class="page-item active paging"><a href="Admin?pageAccount=${i}" style="cursor: pointer" value="${i}" class="page-link">${i}</a></li>
+                                    </c:if>
+                                    <c:if test="${i != pageAccount}">
+                                        <li style="cursor: pointer" class="page-item paging"><a href="Admin?pageAccount=${i}" style="cursor: pointer" value="${i}" class="page-link">${i}</a></li>
+                                    </c:if>
+                                </c:forEach>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container" style="position: relative">
+                <div class="table-responsive">
+                    <div class="table-wrapper" style="width: auto">
+                        <div class="table-title" style="position: absolute;width: 98%;">
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <h2>Quản lý <b>Kho hàng</b></h2>
+                                </div>
+                                <div class="col-xs-6">
+                                    <a id="addRowKho" class="btn btn-success" data-toggle="modal"><i
+                                            class="material-icons">&#xE147;</i>
+                                        <span>Thêm hàng</span></a>
+                                </div>
+                            </div>
+                        </div>
+                        <table id="Kho" class="table table-striped table-hover" style="margin-top: 45px;">
+                            <thead>
+                            <tr>
+                                <th>MÃ LAPTOP</th>
+                                <th>SỐ LƯỢNG NHẬP</th>
+                                <th>SỐ LƯỢNG XUẤT</th>
+                                <th>SỐ LƯỢNG TỒN KHO</th>
+                            </tr>
+                            </thead>
+                            <tbody id="tbodyKho">
+                            <c:forEach var="x" items="${allKho}">
+                                <tr>
+                                    <td>${x.maLaptop}</td>
+                                    <td>${x.slNhap}</td>
+                                    <td>${x.slXuat}</td>
+                                    <td>${x.slTon}</td>
+                                </tr>
+                            </c:forEach>
+                            </tbody>
+                        </table>
+                        <div class="clearfix">
+                            <ul class="pagination">
+                                <c:forEach var="i" begin="1" end="${totalPageKho}">
+                                    <c:if test="${i == pageKho}">
+                                        <li style="cursor: pointer" class="page-item active paging"><a href="Admin?pageKho=${i}" style="cursor: pointer" value="${i}" class="page-link">${i}</a></li>
+                                    </c:if>
+                                    <c:if test="${i != pageKho}">
+                                        <li style="cursor: pointer" class="page-item paging"><a href="Admin?pageKho=${i}" style="cursor: pointer" value="${i}" class="page-link">${i}</a></li>
+                                    </c:if>
+                                </c:forEach>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container" style="position: relative">
+                <div class="table-responsive">
+                    <div class="table-wrapper" style="width: auto">
+                        <div class="table-title" style="position: absolute;width: 98%;">
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <h2>Quản lý <b>Hãng sản xuất</b></h2>
+                                </div>
+                                <div class="col-xs-6">
+                                    <a id="addRowHSX" class="btn btn-success" data-toggle="modal"><i
+                                            class="material-icons">&#xE147;</i>
+                                        <span>Thêm hàng</span></a>
+                                </div>
+                            </div>
+                        </div>
+                        <table id="HSX" class="table table-striped table-hover" style="margin-top: 45px;">
+                            <thead>
+                            <tr>
+                                <th>TÊN HÃNG</th>
+                                <th>QUỐC GIA</th>
+                                <th>POSTER</th>
+                                <th>LOGO VUÔNG</th>
+                                <th>LOGO NGANG</th>
+                                <th>SLOGAN</th>
+                            </tr>
+                            </thead>
+                            <tbody id="tbodyHSX">
+                            <c:forEach var="x" items="${allProductHSX}">
+                                <tr>
+                                    <td>${x.tenHang}</td>
+                                    <td>${x.quocGia}</td>
+                                    <td>${x.poster}</td>
+                                    <td>${x.logoVuong}</td>
+                                    <td>${x.logoNgang}</td>
+                                    <td>${x.slogan}</td>
+                                </tr>
+                            </c:forEach>
+                            </tbody>
+                        </table>
+                        <div class="clearfix">
+                            <ul class="pagination">
+                                <c:forEach var="i" begin="1" end="${totalPageHSX}">
+                                    <c:if test="${i == pageHSX}">
+                                        <li style="cursor: pointer" class="page-item active paging"><a href="Admin?pageHSX=${i}" style="cursor: pointer" value="${i}" class="page-link">${i}</a></li>
+                                    </c:if>
+                                    <c:if test="${i != pageHSX}">
+                                        <li style="cursor: pointer" class="page-item paging"><a href="Admin?pageHSX=${i}" style="cursor: pointer" value="${i}" class="page-link">${i}</a></li>
+                                    </c:if>
+                                </c:forEach>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </c:otherwise>
     </c:choose>
 </div>
@@ -238,20 +396,6 @@
         crossorigin="anonymous"></script>
 <script src="${root}js/bstable.js"></script>
 <script>
-    // var example1 = new BSTable("table1", {
-    //     $addButton: $('#addRow'),
-    //     advanced: {
-    //         columnLabel: ''
-    //     }
-    // });
-    // example1.init();
-    // var example2 = new BSTable("table2", {
-    //     $addButton: $('#addRow1'),
-    //     advanced: {
-    //         columnLabel: ''
-    //     }
-    // });
-    // example2.init();
     var example3 = new BSTable("TTLT", {
         $addButton: $('#addRowTTLT'),
         advanced: {
@@ -259,41 +403,27 @@
         }
     });
     example3.init();
-    // var example4 = new BSTable("table4", {
-    //     $addButton: $('#addRow3'),
-    //     advanced: {
-    //         columnLabel: ''
-    //     }
-    // });
-    // example4.init();
-    // var example5 = new BSTable("table5", {
-    //     $addButton: $('#addRow4'),
-    //     advanced: {
-    //         columnLabel: ''
-    //     }
-    // });
-    // example5.init();
-    // var example6 = new BSTable("table6", {
-    //     $addButton: $('#addRow5'),
-    //     advanced: {
-    //         columnLabel: ''
-    //     }
-    // });
-    // example6.init();
-    // var example7 = new BSTable("table7", {
-    //     $addButton: $('#addRow6'),
-    //     advanced: {
-    //         columnLabel: ''
-    //     }
-    // });
-    // example7.init();
-    // var example8 = new BSTable("table8", {
-    //     $addButton: $('#addRow7'),
-    //     advanced: {
-    //         columnLabel: ''
-    //     }
-    // });
-    // example8.init();
+    var example4 = new BSTable("HSX", {
+        $addButton: $('#addRowHSX'),
+        advanced: {
+            columnLabel: ''
+        }
+    });
+    example4.init();
+    var example5 = new BSTable("Kho", {
+        $addButton: $('#addRowKho'),
+        advanced: {
+            columnLabel: ''
+        }
+    });
+    example5.init();
+    var example6 = new BSTable("Account", {
+        $addButton: $('#addRowAccount'),
+        advanced: {
+            columnLabel: ''
+        }
+    });
+    example6.init();
 </script>
 <script src="${root}js/BackToTop.js"></script>
 <script src="${root}js/tabs.js"></script>
