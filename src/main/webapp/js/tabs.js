@@ -18,4 +18,4 @@ for (var i = 0; i < buttons.length; i++) {
         showContent(id);
     });
 }
-showContent('dell');
+showContent('ACER');

@@ -96,4 +96,79 @@ public class AdminServices {
     public int deleteAccount(int dieuKien) {
         return AdminDao.getInstance().deleteAccount(dieuKien);
     }
+
+    // Phân trang tài khoản
+    public ArrayList getAllPermission() {
+        return AdminDao.getInstance().getAllPermission();
+    }
+
+    public ArrayList getAllPermission(int limit, int page) {
+        return AdminDao.getInstance().getAllPermission(limit, page);
+    }
+
+    public int getTotalPagePermission() {
+        return AdminDao.getInstance().getTotalPagePermission();
+    }
+
+    // Thêm xóa sửa phân quyền
+    public int insertPermission(int id, String quyen) {
+        return AdminDao.getInstance().insertPermission(id, quyen);
+    }
+
+    public int updatePermission(String quyen, int dieuKien) {
+        return AdminDao.getInstance().updatePermission(quyen, dieuKien);
+    }
+
+    public int deletePermission(int dieuKien) {
+        return AdminDao.getInstance().deletePermission(dieuKien);
+    }
+
+    // Phân trang giỏ hàng
+    public ArrayList getAllCart(int limit, int page) {
+        return AdminDao.getInstance().getAllCart(limit, page);
+    }
+
+    public int getTotalPageCart() {
+        return AdminDao.getInstance().getTotalPageCart();
+    }
+
+    // Thêm xóa sửa giỏ hàng
+    public int insertCart(String maGioHang, int makh, String ngayXuatGioHang, long triGia) {
+        return AdminDao.getInstance().insertCart(maGioHang, makh, ngayXuatGioHang, triGia);
+    }
+
+    public int updateCart(String maGioHang, int makh, String ngayXuatGioHang, long triGia, String dieuKien) {
+        return AdminDao.getInstance().updateCart(maGioHang, makh, ngayXuatGioHang, triGia, dieuKien);
+    }
+
+    public int deleteCart(String dieuKien) {
+        return AdminDao.getInstance().deleteCart(dieuKien);
+    }
+
+    // Phân trang chi tiết giỏ hàng
+    public ArrayList getAllCartDetail(int limit, int page) {
+        return AdminDao.getInstance().getAllCartDetail(limit, page);
+    }
+
+    public int getTotalPageCartDetail() {
+        return AdminDao.getInstance().getTotalPageCartDetail();
+    }
+
+    // Thêm xóa sửa chi tiết giỏ hàng
+    public int insertCartDetail(String maGioHang, String maLaptop, int soLuong) {
+        return AdminDao.getInstance().insertCartDetail(maGioHang, maLaptop, soLuong);
+    }
+
+    public int updateCartDetail(String maGioHang, String maLaptop, int soLuong, String dieuKien) {
+        return AdminDao.getInstance().updateCartDetail(maGioHang, maLaptop, soLuong, dieuKien);
+    }
+
+    public int deleteCartDetail(String dieuKien) {
+        return AdminDao.getInstance().deleteCartDetail(dieuKien);
+    }
+
+    // Phần trên cùng trang admin
+    public ArrayList getAllManufacturer() {
+        return AdminDao.getInstance().getAllManufacturer();
+    }
 }

@@ -55,61 +55,29 @@
             <a href="${root}Logout" class="logout">LOGOUT <i class="fas fa-sign-out-alt"></i></a>
             <div class="container">
                 <div class="tab">
-                    <button class="tablinks">DELL</button>
-                    <button class="tablinks">MSI</button>
-                    <button class="tablinks">ASUS</button>
+                    <c:forEach var="x" items="${AllManufacturer}">
+                        <button class="tablinks">${x.tenHang}</button>
+                    </c:forEach>
                 </div>
-                <div id="dell" class="details-laptop">
-                    <a role="button" type="button" href="#table2">
-                        <div class="logo" style="background-image: url('${root}image/logo lap/dell.png')"></div>
+                <c:forEach var="x" items="${AllManufacturer}">
+                <div id="${x.tenHang}" class="details-laptop">
+                    <a role="button" type="button" href="">
+                        <div class="logo" style="background-image: url(${root}${x.image})"></div>
                     </a>
                     <div class="details bg-blue">
-                        <div class="details-number">52</div>
+                        <div class="details-number">${x.nhap}</div>
                         <div class="details-title">Tổng số lượng nhập</div>
                     </div>
                     <div class="details bg-green">
-                        <div class="details-number">52</div>
+                        <div class="details-number">${x.xuat}</div>
                         <div class="details-title">Tổng số lượng xuất</div>
                     </div>
                     <div class="details bg-red">
-                        <div class="details-number">52</div>
+                        <div class="details-number">${x.ton}</div>
                         <div class="details-title">Tổng số lượng tồn kho</div>
                     </div>
                 </div>
-                <div id="msi" class="details-laptop">
-                    <a role="button" type="button">
-                        <div class="logo" style="background-image: url('${root}image/logo lap/msi.png')"></div>
-                    </a>
-                    <div class="details bg-blue">
-                        <div class="details-number">52</div>
-                        <div class="details-title">Tổng số lượng nhập</div>
-                    </div>
-                    <div class="details bg-green">
-                        <div class="details-number">52</div>
-                        <div class="details-title">Tổng số lượng xuất</div>
-                    </div>
-                    <div class="details bg-red">
-                        <div class="details-number">52</div>
-                        <div class="details-title">Tổng số lượng tồn kho</div>
-                    </div>
-                </div>
-                <div id="asus" class="details-laptop">
-                    <a role="button" type="button">
-                        <div class="logo" style="background-image: url('${root}image/logo lap/asus.png')"></div>
-                    </a>
-                    <div class="details bg-blue">
-                        <div class="details-number">52</div>
-                        <div class="details-title">Tổng số lượng nhập</div>
-                    </div>
-                    <div class="details bg-green">
-                        <div class="details-number">52</div>
-                        <div class="details-title">Tổng số lượng xuất</div>
-                    </div>
-                    <div class="details bg-red">
-                        <div class="details-number">52</div>
-                        <div class="details-title">Tổng số lượng tồn kho</div>
-                    </div>
-                </div>
+                </c:forEach>
             </div>
             <div class="container" style="position: relative">
                 <div class="table-responsive">
@@ -251,6 +219,53 @@
                         <div class="table-title" style="position: absolute;width: 98%;">
                             <div class="row">
                                 <div class="col-xs-6">
+                                    <h2>Quản lý <b>Phân quyền</b></h2>
+                                </div>
+                                <div class="col-xs-6">
+                                    <a id="addRowPermission" class="btn btn-success" data-toggle="modal"><i
+                                            class="material-icons">&#xE147;</i>
+                                        <span>Thêm hàng</span></a>
+                                </div>
+                            </div>
+                        </div>
+                        <table id="Permission" class="table table-striped table-hover" style="margin-top: 45px;">
+                            <thead>
+                            <tr>
+                                <th>ID TÀI KHOẢN</th>
+                                <th>QUYỀN</th>
+                            </tr>
+                            </thead>
+                            <tbody id="tbodyPermission">
+                            <c:forEach var="x" items="${allPermission}">
+                                <tr>
+                                    <td>${x.id}</td>
+                                    <td>${x.quyen}</td>
+                                </tr>
+                            </c:forEach>
+                            </tbody>
+                        </table>
+                        <div class="clearfix">
+                            <ul class="pagination">
+                                <c:forEach var="i" begin="1" end="${totalPermission}">
+                                    <c:if test="${i == pagePermission}">
+                                        <li style="cursor: pointer" class="page-item active paging"><a href="Admin?pagePermission=${i}" style="cursor: pointer" value="${i}" class="page-link">${i}</a></li>
+                                    </c:if>
+                                    <c:if test="${i != pagePermission}">
+                                        <li style="cursor: pointer" class="page-item paging"><a href="Admin?pagePermission=${i}" style="cursor: pointer" value="${i}" class="page-link">${i}</a></li>
+                                    </c:if>
+                                </c:forEach>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container" style="position: relative">
+                <div class="table-responsive">
+                    <div class="table-wrapper" style="width: auto">
+                        <div class="table-title" style="position: absolute;width: 98%;">
+                            <div class="row">
+                                <div class="col-xs-6">
                                     <h2>Quản lý <b>Kho hàng</b></h2>
                                 </div>
                                 <div class="col-xs-6">
@@ -349,6 +364,104 @@
                     </div>
                 </div>
             </div>
+            <div class="container" style="position: relative">
+                <div class="table-responsive">
+                    <div class="table-wrapper" style="width: auto">
+                        <div class="table-title" style="position: absolute;width: 98%;">
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <h2>Quản lý <b>Giỏ hàng</b></h2>
+                                </div>
+                                <div class="col-xs-6">
+                                    <a id="addRowCart" class="btn btn-success" data-toggle="modal"><i
+                                            class="material-icons">&#xE147;</i>
+                                        <span>Thêm hàng</span></a>
+                                </div>
+                            </div>
+                        </div>
+                        <table id="Cart" class="table table-striped table-hover" style="margin-top: 45px;">
+                            <thead>
+                            <tr>
+                                <th>MÃ GIỎ HÀNG</th>
+                                <th>MÃ KHÁCH HÀNG</th>
+                                <th>NGÀY XUẤT GIỎ HÀNG</th>
+                                <th>TRỊ GIÁ</th>
+                            </tr>
+                            </thead>
+                            <tbody id="tbodyCart">
+                            <c:forEach var="x" items="${allCart}">
+                                <tr>
+                                    <td>${x.maGioHang}</td>
+                                    <td>${x.makh}</td>
+                                    <td>${x.ngayXuatGioHang}</td>
+                                    <td>${x.triGia}</td>
+                                </tr>
+                            </c:forEach>
+                            </tbody>
+                        </table>
+                        <div class="clearfix">
+                            <ul class="pagination">
+                                <c:forEach var="i" begin="1" end="${totalCart}">
+                                    <c:if test="${i == pageCart}">
+                                        <li style="cursor: pointer" class="page-item active paging"><a href="Admin?pageCart=${i}" style="cursor: pointer" value="${i}" class="page-link">${i}</a></li>
+                                    </c:if>
+                                    <c:if test="${i != pageCart}">
+                                        <li style="cursor: pointer" class="page-item paging"><a href="Admin?pageCart=${i}" style="cursor: pointer" value="${i}" class="page-link">${i}</a></li>
+                                    </c:if>
+                                </c:forEach>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container" style="position: relative">
+                <div class="table-responsive">
+                    <div class="table-wrapper" style="width: auto">
+                        <div class="table-title" style="position: absolute;width: 98%;">
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <h2>Quản lý <b>Chi tiết giỏ hàng</b></h2>
+                                </div>
+                                <div class="col-xs-6">
+                                    <a id="addRowCartDetail" class="btn btn-success" data-toggle="modal"><i
+                                            class="material-icons">&#xE147;</i>
+                                        <span>Thêm hàng</span></a>
+                                </div>
+                            </div>
+                        </div>
+                        <table id="CartDetail" class="table table-striped table-hover" style="margin-top: 45px;">
+                            <thead>
+                            <tr>
+                                <th>MÃ GIỎ HÀNG</th>
+                                <th>MÃ LAPTOP</th>
+                                <th>SỐ LƯỢNG LAPTOP</th>
+                            </tr>
+                            </thead>
+                            <tbody id="tbodyCartDetail">
+                            <c:forEach var="x" items="${allCartDetail}">
+                                <tr>
+                                    <td>${x.maGioHang}</td>
+                                    <td>${x.maLaptop}</td>
+                                    <td>${x.soLuong}</td>
+                                </tr>
+                            </c:forEach>
+                            </tbody>
+                        </table>
+                        <div class="clearfix">
+                            <ul class="pagination">
+                                <c:forEach var="i" begin="1" end="${totalCartDetail}">
+                                    <c:if test="${i == pageCartDetail}">
+                                        <li style="cursor: pointer" class="page-item active paging"><a href="Admin?pageCartDetail=${i}" style="cursor: pointer" value="${i}" class="page-link">${i}</a></li>
+                                    </c:if>
+                                    <c:if test="${i != pageCartDetail}">
+                                        <li style="cursor: pointer" class="page-item paging"><a href="Admin?pageCartDetail=${i}" style="cursor: pointer" value="${i}" class="page-link">${i}</a></li>
+                                    </c:if>
+                                </c:forEach>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </c:otherwise>
     </c:choose>
 </div>
@@ -424,6 +537,27 @@
         }
     });
     example6.init();
+    var example7 = new BSTable("Permission", {
+        $addButton: $('#addRowPermission'),
+        advanced: {
+            columnLabel: ''
+        }
+    });
+    example7.init();
+    var example8 = new BSTable("Cart", {
+        $addButton: $('#addRowCart'),
+        advanced: {
+            columnLabel: ''
+        }
+    });
+    example8.init();
+    var example9 = new BSTable("CartDetail", {
+        $addButton: $('#addRowCartDetail'),
+        advanced: {
+            columnLabel: ''
+        }
+    });
+    example9.init();
 </script>
 <script src="${root}js/BackToTop.js"></script>
 <script src="${root}js/tabs.js"></script>
