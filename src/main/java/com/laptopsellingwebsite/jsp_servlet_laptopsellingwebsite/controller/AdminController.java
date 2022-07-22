@@ -88,6 +88,54 @@ public class AdminController extends HttpServlet {
                 int totalAccount = (int) Math.ceil((double) totalPageAccount / (double) limitAccount);
                 request.setAttribute("totalAccount", totalAccount);
 
+                // Đổ dữ liệu và phân trang cho bảng phân quyền
+                int pagePermission = 1;
+                if (request.getParameter("pagePermission") == null && request.getParameter("pagePermission") == "") {
+                    pagePermission = 1;
+                }
+                if (request.getParameter("pagePermission") != null && request.getParameter("pagePermission") != "") {
+                    pagePermission = Integer.parseInt(request.getParameter("pagePermission"));
+                }
+                request.setAttribute("pagePermission", pagePermission);
+                int limitPermission = 2;
+                request.setAttribute("allPermission", AdminServices.getInstance().getAllPermission(limitPermission, pagePermission));
+                int totalPagePermission = AdminServices.getInstance().getTotalPagePermission();
+                int totalPermission = (int) Math.ceil((double) totalPagePermission / (double) limitPermission);
+                request.setAttribute("totalPermission", totalPermission);
+
+                // Đổ dữ liệu và phân trang cho bảng giỏ hàng
+                int pageCart = 1;
+                if (request.getParameter("pageCart") == null && request.getParameter("pageCart") == "") {
+                    pageCart = 1;
+                }
+                if (request.getParameter("pageCart") != null && request.getParameter("pageCart") != "") {
+                    pageCart = Integer.parseInt(request.getParameter("pageCart"));
+                }
+                request.setAttribute("pageCart", pageCart);
+                int limitCart = 10;
+                request.setAttribute("allCart", AdminServices.getInstance().getAllCart(limitCart, pageCart));
+                int totalPageCart = AdminServices.getInstance().getTotalPageCart();
+                int totalCart = (int) Math.ceil((double) totalPageCart / (double) limitCart);
+                request.setAttribute("totalCart", totalCart);
+
+                // Đổ dữ liệu và phân trang cho bảng chi tiết giỏ hàng
+                int pageCartDetail = 1;
+                if (request.getParameter("pageCartDetail") == null && request.getParameter("pageCartDetail") == "") {
+                    pageCartDetail = 1;
+                }
+                if (request.getParameter("pageCartDetail") != null && request.getParameter("pageCartDetail") != "") {
+                    pageCartDetail = Integer.parseInt(request.getParameter("pageCartDetail"));
+                }
+                request.setAttribute("pageCartDetail", pageCartDetail);
+                int limitCartDetail = 10;
+                request.setAttribute("allCartDetail", AdminServices.getInstance().getAllCartDetail(limitCartDetail, pageCartDetail));
+                int totalPageCartDetail = AdminServices.getInstance().getTotalPageCartDetail();
+                int totalCartDetail = (int) Math.ceil((double) totalPageCartDetail / (double) limitCartDetail);
+                request.setAttribute("totalCartDetail", totalCartDetail);
+
+                // Phần trên cùng trang admin
+                request.setAttribute("AllManufacturer", AdminServices.getInstance().getAllManufacturer());
+
 
                 request.getRequestDispatcher("jsp/admin.jsp").forward(request, response);
                 break;
@@ -171,8 +219,40 @@ public class AdminController extends HttpServlet {
                         String diaChi = exactlyData[4];
                         String email = exactlyData[5];
                         int dieuKien = Integer.parseInt(dieuKienUpdate);
-                        System.out.println(hoTen);
                         out.println(AdminServices.getInstance().updateAccount(hoTen, username, pass, diaChi, email, dieuKien));
+                        break;
+                    case "Permission":
+                        String quyen = exactlyData[1];
+                        int dk = Integer.parseInt(dieuKienUpdate);
+                        out.println(AdminServices.getInstance().updatePermission(quyen, dk));
+                        break;
+                    case "Cart":
+                        String maGioHang = exactlyData[0];
+                        int makh = 0;
+                        try {
+                            makh = Integer.parseInt(exactlyData[1]);
+                        } catch (Exception e) {
+                        }
+                        String ngayXuatGioHang = exactlyData[2];
+                        long triGia = 0;
+                        try {
+                            triGia = Integer.parseInt(exactlyData[3]);
+                        } catch (Exception e) {
+                        }
+                        String dieuKienCart = dieuKienUpdate;
+                        out.println(AdminServices.getInstance().updateCart(maGioHang, makh, ngayXuatGioHang, triGia, dieuKienCart));
+                        break;
+                    case "CartDetail":
+                        String maGioHangCartDetail = exactlyData[0];
+                        String maLaptopCartDetail = exactlyData[1];
+                        int soLuong = 0;
+                        try {
+                            soLuong = Integer.parseInt(exactlyData[2]);
+                        } catch (Exception e) {
+                            soLuong = 0;
+                        }
+                        String dieuKienCartDetail = dieuKienUpdate;
+                        out.println(AdminServices.getInstance().updateCartDetail(maGioHangCartDetail, maLaptopCartDetail, soLuong, dieuKienCartDetail));
                         break;
                 }
                 break;
@@ -190,6 +270,15 @@ public class AdminController extends HttpServlet {
                         break;
                     case "Account":
                         out.println(AdminServices.getInstance().deleteAccount(Integer.parseInt(dieuKienDelete)));
+                        break;
+                    case "Permission":
+                        out.println(AdminServices.getInstance().deletePermission(Integer.parseInt(dieuKienDelete)));
+                        break;
+                    case "Cart":
+                        out.println(AdminServices.getInstance().deleteCart(dieuKienDelete));
+                        break;
+                    case "CartDetail":
+                        out.println(AdminServices.getInstance().deleteCartDetail(dieuKienDelete));
                         break;
                 }
                 break;
@@ -262,6 +351,42 @@ public class AdminController extends HttpServlet {
                         if (!UserServices.checkUser(username)){
                             out.println(AdminServices.getInstance().insertAccount(hoTen, username, pass, diaChi, email));
                         }
+                        break;
+                    case "Permission":
+                        int id;
+                        try {
+                            id = Integer.parseInt(exactlyData[0]);
+                        } catch (Exception e) {
+                            id = AdminServices.getInstance().getAllPermission().size() + 1;
+                        }
+                        String quyen = exactlyData[1];
+                        out.println(AdminServices.getInstance().insertPermission(id, quyen));
+                        break;
+                    case "Cart":
+                        String maGioHang = exactlyData[0];
+                        int makh = 0;
+                        try {
+                            makh = Integer.parseInt(exactlyData[1]);
+                        } catch (Exception e) {
+                        }
+                        String ngayXuatGioHang = exactlyData[2];
+                        long triGia = 0;
+                        try {
+                            triGia = Integer.parseInt(exactlyData[3]);
+                        } catch (Exception e) {
+                        }
+                        out.println(AdminServices.getInstance().insertCart(maGioHang, makh, ngayXuatGioHang, triGia));
+                        break;
+                    case "CartDetail":
+                        String maGioHangCartDetail = exactlyData[0];
+                        String maLaptopCartDetail = exactlyData[1];
+                        int soLuong = 0;
+                        try {
+                            soLuong = Integer.parseInt(exactlyData[2]);
+                        } catch (Exception e) {
+                            soLuong = 0;
+                        }
+                        out.println(AdminServices.getInstance().insertCartDetail(maGioHangCartDetail, maLaptopCartDetail, soLuong));
                         break;
                 }
                 break;

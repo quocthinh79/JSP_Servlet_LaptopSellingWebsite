@@ -1,9 +1,6 @@
 package com.laptopsellingwebsite.jsp_servlet_laptopsellingwebsite.dao;
 
-import com.laptopsellingwebsite.jsp_servlet_laptopsellingwebsite.beans.Account;
-import com.laptopsellingwebsite.jsp_servlet_laptopsellingwebsite.beans.Manufacturer;
-import com.laptopsellingwebsite.jsp_servlet_laptopsellingwebsite.beans.Product;
-import com.laptopsellingwebsite.jsp_servlet_laptopsellingwebsite.beans.WareHouse;
+import com.laptopsellingwebsite.jsp_servlet_laptopsellingwebsite.beans.*;
 import com.laptopsellingwebsite.jsp_servlet_laptopsellingwebsite.db.DBConnect;
 
 import java.sql.PreparedStatement;
@@ -346,5 +343,278 @@ public class AdminDao {
             e.printStackTrace();
         }
         return 0;
+    }
+
+    // Phân trang phân quyền
+    public ArrayList getAllPermission() {
+        ArrayList<Permission> listResult = new ArrayList<>();
+        try {
+            String query = "select * from phanquyen";
+            PreparedStatement ps = DBConnect.getInstance().get(query);
+            ResultSet resultSet = ps.executeQuery();
+            while (resultSet.next()) {
+                Permission permission = new Permission(resultSet.getInt(1),
+                        resultSet.getString(2));
+                listResult.add(permission);
+            }
+            return listResult;
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public ArrayList getAllPermission(int limit, int page) {
+        ArrayList<Permission> listResult = new ArrayList<>();
+        try {
+            int offset = (page - 1) * limit;
+            String query = "select * from phanquyen LIMIT " + "?" + " OFFSET " + "?";
+            PreparedStatement ps = DBConnect.getInstance().get(query);
+            ps.setInt(1, limit);
+            ps.setInt(2, offset);
+            ResultSet resultSet = ps.executeQuery();
+            while (resultSet.next()) {
+                Permission permission = new Permission(resultSet.getInt(1),
+                        resultSet.getString(2));
+                listResult.add(permission);
+            }
+            return listResult;
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public int getTotalPagePermission() {
+        try {
+            String query = "select count(*) as total from phanquyen";
+            PreparedStatement ps = DBConnect.getInstance().get(query);
+            ResultSet resultSet = ps.executeQuery();
+            resultSet.next();
+            return resultSet.getInt("total");
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    // Thêm, xóa, sửa tài khoản
+    public int insertPermission(int id, String quyen) {
+        try {
+            String query = "INSERT INTO phanquyen VALUES (?, ?)";
+            PreparedStatement ps = DBConnect.getInstance().get(query);
+            ps.setInt(1, id);
+            ps.setString(2, quyen);
+            return ps.executeUpdate();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public int updatePermission(String quyen, int dieuKien) {
+        try {
+            String query = "UPDATE `phanquyen` SET `QUYEN`=? WHERE `ID`=?";
+            PreparedStatement ps = DBConnect.getInstance().get(query);
+            ps.setString(1, quyen);
+            ps.setInt(2, dieuKien);
+            return ps.executeUpdate();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public int deletePermission(int dieuKien) {
+        try {
+            String query = "DELETE FROM `phanquyen` WHERE ID = ?";
+            PreparedStatement ps = DBConnect.getInstance().get(query);
+            ps.setInt(1, dieuKien);
+            return ps.executeUpdate();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    // Phân trang giỏ hàng
+    public ArrayList getAllCart(int limit, int page) {
+        ArrayList<Cart> listResult = new ArrayList<>();
+        try {
+            int offset = (page - 1) * limit;
+            String query = "select * from giohang LIMIT " + "?" + " OFFSET " + "?";
+            PreparedStatement ps = DBConnect.getInstance().get(query);
+            ps.setInt(1, limit);
+            ps.setInt(2, offset);
+            ResultSet resultSet = ps.executeQuery();
+            while (resultSet.next()) {
+                Cart cart = new Cart(resultSet.getString(1),
+                        resultSet.getInt(2),
+                        resultSet.getString(3),
+                        resultSet.getLong(4));
+                listResult.add(cart);
+            }
+            return listResult;
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public int getTotalPageCart() {
+        try {
+            String query = "select count(*) as total from giohang";
+            PreparedStatement ps = DBConnect.getInstance().get(query);
+            ResultSet resultSet = ps.executeQuery();
+            resultSet.next();
+            return resultSet.getInt("total");
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    // Thêm, xóa, sửa giỏ hàng
+    public int insertCart(String maGioHang, int makh, String ngayXuatGioHang, long triGia) {
+        try {
+            String query = "INSERT INTO giohang VALUES (?, ?, ?, ?)";
+            PreparedStatement ps = DBConnect.getInstance().get(query);
+            ps.setString(1, maGioHang);
+            ps.setInt(2, makh);
+            ps.setString(3, ngayXuatGioHang);
+            ps.setLong(4, triGia);
+            return ps.executeUpdate();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public int updateCart(String maGioHang, int makh, String ngayXuatGioHang, long triGia, String dieuKien) {
+        try {
+            String query = "UPDATE `giohang` SET `MAGIOHANG`=?, `MAKH`=?, `NGAYXUATGIOHANG`=?, `TRIGIA`=? WHERE `MAGIOHANG`=?";
+            PreparedStatement ps = DBConnect.getInstance().get(query);
+            ps.setString(1, maGioHang);
+            ps.setInt(2, makh);
+            ps.setString(3, ngayXuatGioHang);
+            ps.setLong(4, triGia);
+            ps.setString(5, dieuKien);
+            return ps.executeUpdate();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public int deleteCart(String dieuKien) {
+        try {
+            String query = "DELETE FROM `giohang` WHERE magiohang = ?";
+            PreparedStatement ps = DBConnect.getInstance().get(query);
+            ps.setString(1, dieuKien);
+            return ps.executeUpdate();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    // Phân trang chi tiết giỏ hàng
+    public ArrayList getAllCartDetail(int limit, int page) {
+        ArrayList<CartDetail> listResult = new ArrayList<>();
+        try {
+            int offset = (page - 1) * limit;
+            String query = "select * from ctgh LIMIT " + "?" + " OFFSET " + "?";
+            PreparedStatement ps = DBConnect.getInstance().get(query);
+            ps.setInt(1, limit);
+            ps.setInt(2, offset);
+            ResultSet resultSet = ps.executeQuery();
+            while (resultSet.next()) {
+                CartDetail cartDetail = new CartDetail(resultSet.getString(1),
+                        resultSet.getString(2),
+                        resultSet.getInt(3));
+                listResult.add(cartDetail);
+            }
+            return listResult;
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public int getTotalPageCartDetail() {
+        try {
+            String query = "select count(*) as total from ctgh";
+            PreparedStatement ps = DBConnect.getInstance().get(query);
+            ResultSet resultSet = ps.executeQuery();
+            resultSet.next();
+            return resultSet.getInt("total");
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    // Thêm, xóa, sửa chi tiết giỏ hàng
+    public int insertCartDetail(String maGioHang, String maLaptop, int soLuong) {
+        try {
+            String query = "INSERT INTO ctgh VALUES (?, ?, ?)";
+            PreparedStatement ps = DBConnect.getInstance().get(query);
+            ps.setString(1, maGioHang);
+            ps.setString(2, maLaptop);
+            ps.setInt(3, soLuong);
+            return ps.executeUpdate();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public int updateCartDetail(String maGioHang, String maLaptop, int soLuong, String dieuKien) {
+        try {
+            String query = "UPDATE `ctgh` SET `MAGIOHANG`=?, `MALAPTOP`=?, `SOLUONG`=? WHERE `MAGIOHANG`=?";
+            PreparedStatement ps = DBConnect.getInstance().get(query);
+            ps.setString(1, maGioHang);
+            ps.setString(2, maLaptop);
+            ps.setInt(3, soLuong);
+            ps.setString(4, dieuKien);
+            return ps.executeUpdate();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public int deleteCartDetail(String dieuKien) {
+        try {
+            String query = "DELETE FROM `ctgh` WHERE magiohang = ?";
+            PreparedStatement ps = DBConnect.getInstance().get(query);
+            ps.setString(1, dieuKien);
+            return ps.executeUpdate();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    // Phần trên cùng trang admin
+    public ArrayList getAllManufacturer() {
+        ArrayList<HeaderAdmin> listResult = new ArrayList<>();
+        try {
+            String query = "select a.hang, a.logovuong, sum(kho.SLNHAP), sum(kho.SLXUAT), sum(kho.TONKHO) FROM (SELECT tt.MALAPTOP, tt.HANG, h.LOGOVUONG FROM thongtinlaptop tt join hangsx h on tt.HANG = h.TENHANG) as a JOIN khohang kho on kho.MALAPTOP = a.MALAPTOP GROUP by a.hang";
+            PreparedStatement ps = DBConnect.getInstance().get(query);
+            ResultSet resultSet = ps.executeQuery();
+            while (resultSet.next()) {
+                HeaderAdmin headerAdmin = new HeaderAdmin(resultSet.getString(1),
+                        resultSet.getString(2),
+                        resultSet.getInt(3),
+                        resultSet.getInt(4),
+                        resultSet.getInt(5));
+                listResult.add(headerAdmin);
+            }
+            return listResult;
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
