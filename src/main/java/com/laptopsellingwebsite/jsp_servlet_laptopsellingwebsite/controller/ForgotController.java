@@ -1,6 +1,7 @@
 package com.laptopsellingwebsite.jsp_servlet_laptopsellingwebsite.controller;
 
 import com.laptopsellingwebsite.jsp_servlet_laptopsellingwebsite.service.UserServices;
+import org.apache.commons.codec.digest.DigestUtils;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
@@ -63,7 +64,8 @@ public class ForgotController extends HttpServlet {
                 String newPass1 = request.getParameter("newPass1");
                 String newPass2 = request.getParameter("newPass2");
                 if (newPass1.equals(newPass2)) {
-                    UserServices.getInstance().updatePass(emailStatic, newPass1);
+                    String md5Hex = DigestUtils.md5Hex(newPass1).toUpperCase();
+                    UserServices.getInstance().updatePass(emailStatic, md5Hex);
                     request.getRequestDispatcher("").forward(request, response);
                 } else {
                     request.setAttribute("openNewPass", "Mật khẩu đã nhập không khớp");

@@ -1,6 +1,8 @@
 package com.laptopsellingwebsite.jsp_servlet_laptopsellingwebsite.controller;
 
+import com.laptopsellingwebsite.jsp_servlet_laptopsellingwebsite.service.AdminServices;
 import com.laptopsellingwebsite.jsp_servlet_laptopsellingwebsite.service.UserServices;
+import org.apache.commons.codec.digest.DigestUtils;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -22,8 +24,9 @@ public class RegisterController extends HttpServlet {
         String diaChi = request.getParameter("diaChi");
         String email = request.getParameter("email");
         String base = request.getServletContext().getContextPath();
+        String md5Hex = DigestUtils.md5Hex(pass).toUpperCase();
         if (!UserServices.checkUser(username) && !UserServices.getInstance().checkEmail(email)) {
-            UserServices.getInstance().registerCustomer(hoTen, username, pass, diaChi, email);
+            UserServices.getInstance().registerCustomer(hoTen, username, md5Hex, diaChi, email);
             response.sendRedirect(base);
         } else {
             request.setAttribute("existsUsername", "Username hoặc email bạn đăng kí đã tồn tại");
