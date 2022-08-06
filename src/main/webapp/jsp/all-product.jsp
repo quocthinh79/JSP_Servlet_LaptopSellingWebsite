@@ -341,13 +341,14 @@
                 <c:forEach var="x" items="${allProduct}">
                     <div class="hover-all-product">
                         <a class="all-product-item" href="${pageContext.request.contextPath}/Product?id=${x.maLapTop}">
-                            <div class="status-sale">-11%</div>
                             <div class="img-all-product-item"
-                                 style="background-image: url('${root}${x.linkHinh1}')">
+                                 style="background-image: url('${root}${x.image}')">
                             </div>
-                            <div class="status">HẾT HÀNG</div>
+                            <c:if test="${x.trangThai == 0}">
+                                <div class="status">HẾT HÀNG</div>
+                            </c:if>
                             <div class="infor-all-product-item">
-                                    ${x.tenLaptop}
+                                    ${x.nameProduct}
                             </div>
                             <div class="price-all-product-item">
                                     ${x.giaBan}

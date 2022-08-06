@@ -2,6 +2,7 @@ package com.laptopsellingwebsite.jsp_servlet_laptopsellingwebsite.service;
 
 import com.google.common.collect.Multimap;
 import com.laptopsellingwebsite.jsp_servlet_laptopsellingwebsite.beans.Product;
+import com.laptopsellingwebsite.jsp_servlet_laptopsellingwebsite.beans.ProductWithStatus;
 import com.laptopsellingwebsite.jsp_servlet_laptopsellingwebsite.dao.ProductDao;
 
 import java.util.List;
@@ -25,8 +26,16 @@ public class ProductService {
         return ProductDao.getInstance().getAllProduct();
     }
 
+    public List<ProductWithStatus> getAllProductWithStatus() {
+        return ProductDao.getInstance().getAllProductWithStatus();
+    }
+
     public List<Product> getAllProduct(int limit, int page) {
         return ProductDao.getInstance().getAllProduct(limit, page);
+    }
+
+    public List<ProductWithStatus> getAllProductWithStatus(int limit, int page) {
+        return ProductDao.getInstance().getAllProductWithStatus(limit, page);
     }
 
     public int getTotalPage() {
