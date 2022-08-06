@@ -65,8 +65,8 @@
                                         <span class="big-text bolder">Giỏ hàng của bạn</span>
                                     </span>
                                     </div>
-                                    <div class="btn-clear">
-                                        <button class="clear">
+                                    <div clas="btn-clear">
+                                        <button id="btn-clear-all"class="clear">
                                             <span>Xóa tất cả</span>
                                         </button>
                                     </div>
@@ -82,26 +82,26 @@
                                         <div class="item">
                                             <div class="left-cart-item">
                                                 <div class="item-thumbnail item-padding">
-                                                    <img class="item-logo-thumbnail" src="${product.linkHinh1}">
+                                                    <img class="item-logo-thumbnail" src="${product.linkHinh}" ;/>
                                                 </div>
                                                 <div class="item-info-container item-padding">
                                                     <span class="item-info-name smaller-text">${product.tenLaptop}</span>
-                                                    <span class=" item-info-sku smaller-text light-gray-text">Mã Laptop: ${product.maLapTop}</span>
+                                                    <span class=" item-info-sku smaller-text light-gray-text">Mã Laptop: ${product.maLaptop}</span>
                                                 </div>
                                             </div>
                                             <div class="right-cart-item">
                                                 <div class="btn-add-subtract">
-                                                    <button class="btn-padding btn-subtract">
+                                                    <button id="btn-subtract-id" class="btn-padding btn-subtract">
                                                         <i class="icon-btn fas fa-chevron-down"></i>
                                                     </button>
-                                                    <div class="btn-padding number">5</div>
-                                                    <button class="btn-padding btn-add">
+                                                    <div class="btn-padding number">${product.soluong}</div>
+                                                    <button id="btn-add-id" class="btn-padding btn-add">
                                                         <i class="icon-btn fas fa-chevron-up"></i>
                                                     </button>
                                                 </div>
                                                 <div class="price">
-                                                    <input type="hidden" value="500000" class="origin-price">
-                                                    <span class="bolder gray-text price-text">${product.giaBan}</span>
+                                                    <input type="hidden" value="" class="origin-price">
+                                                    <span class="bolder gray-text price-text">${product.giaban * product.soluong}</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -160,7 +160,7 @@
         let saleByCode = document.querySelectorAll('.sale-with-code');
         console.log(final)
         for (let i = 0; i < code.length; i++) {
-            if (sale.val() == (code[i].innerText)){
+            if (sale.val() == (code[i].innerText)) {
                 final = final - (final * (saleByCode[i].innerText.match(/\d+/g).join('') / 100));
             }
         }
@@ -172,6 +172,7 @@
 </script>
 <script>
     listenCart();
+
     function listenCart() {
         let priceHTML = document.querySelectorAll('.price-text');
         for (let i = 0; i < priceHTML.length; i++) {
@@ -320,6 +321,24 @@
     }
 
 </script>
+<script>
+    let btnRemoveAll = document.getElementById('btn-clear-all');
+    btnRemoveAll.addEventListener('click', function() {
+        $.ajax({
+            url:"clearAllProduct",
+            type: "post",
+            success: function () {
+
+            },
+            error: function() {
+
+            }
+
+        })
+    })
+
+</script>
+
 <script src="${root}js/register.js"></script>
 <script crossorigin="anonymous" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
         src="https://code.jquery.com/jquery-3.6.0.js"></script>

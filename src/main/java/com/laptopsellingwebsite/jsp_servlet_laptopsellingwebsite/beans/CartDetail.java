@@ -5,7 +5,6 @@ public class CartDetail {
     private String maLaptop;
     private int soLuong;
 
-
     public CartDetail(String maGioHang, String maLaptop, int soLuong) {
         this.maGioHang = maGioHang;
         this.maLaptop = maLaptop;

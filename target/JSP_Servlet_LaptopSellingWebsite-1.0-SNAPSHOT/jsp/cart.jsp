@@ -65,8 +65,8 @@
                                         <span class="big-text bolder">Giỏ hàng của bạn</span>
                                     </span>
                                     </div>
-                                    <div class="btn-clear">
-                                        <button class="clear">
+                                    <div clas="btn-clear">
+                                        <button id="btn-clear-all"class="clear">
                                             <span>Xóa tất cả</span>
                                         </button>
                                     </div>
@@ -78,33 +78,35 @@
                         <div class="cart-container">
                             <div class="cart-item-info">
                                 <div class="container">
-                                    <div class="item">
-                                        <div class="left-cart-item">
-                                            <div class="item-thumbnail item-padding">
-                                                <img class="item-logo-thumbnail" src="${root}image/man-hinh-asus.jpg">
+                                    <c:forEach items="${listProduct}" var="product">
+                                        <div class="item">
+                                            <div class="left-cart-item">
+                                                <div class="item-thumbnail item-padding">
+                                                    <img class="item-logo-thumbnail" src="${product.linkHinh}" ;/>
+                                                </div>
+                                                <div class="item-info-container item-padding">
+                                                    <span class="item-info-name smaller-text">${product.tenLaptop}</span>
+                                                    <span class=" item-info-sku smaller-text light-gray-text">Mã Laptop: ${product.maLaptop}</span>
+                                                </div>
                                             </div>
-                                            <div class="item-info-container item-padding">
-                                                <span class="item-info-name smaller-text">Màn hình LCD ASUS VL249HE (1920 x 1080/IPS/75Hz/5 ms)</span>
-                                                <span class=" item-info-sku smaller-text light-gray-text">Mã Laptop: 191100961</span>
+                                            <div class="right-cart-item">
+                                                <div class="btn-add-subtract">
+                                                    <button id="btn-subtract-id" class="btn-padding btn-subtract">
+                                                        <i class="icon-btn fas fa-chevron-down"></i>
+                                                    </button>
+                                                    <div class="btn-padding number">${product.soluong}</div>
+                                                    <button id="btn-add-id" class="btn-padding btn-add">
+                                                        <i class="icon-btn fas fa-chevron-up"></i>
+                                                    </button>
+                                                </div>
+                                                <div class="price">
+                                                    <input type="hidden" value="" class="origin-price">
+                                                    <span class="bolder gray-text price-text">${product.giaban * product.soluong}</span>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="right-cart-item">
-                                            <div class="btn-add-subtract">
-                                                <button class="btn-padding btn-subtract">
-                                                    <i class="icon-btn fas fa-chevron-down"></i>
-                                                </button>
-                                                <div class="btn-padding number">5</div>
-                                                <button class="btn-padding btn-add">
-                                                    <i class="icon-btn fas fa-chevron-up"></i>
-                                                </button>
-                                            </div>
-                                            <div class="price">
-                                                <input type="hidden" value="500000" class="origin-price">
-                                                <span class="bolder gray-text price-text">2500000</span>
-                                            </div>
-                                        </div>
-                                    </div>
 
+                                    </c:forEach>
                                 </div>
                             </div>
                         </div>
@@ -113,67 +115,6 @@
                 </div>
                 <div class="right-content">
                     <div class="container">
-                        <div class="coupon">
-                            <div class="container">
-                                <div class="coupon-header">
-                                    <span class="coupon-text">Mã giảm giá</span>
-                                    <div class="coupon-input-container">
-                                        <input class="coupon-input" type="text" placeholder="Nhập mã của bạn">
-                                        <button class="confirm-btn"><span>Áp dụng ngay</span></button>
-                                    </div>
-                                </div>
-                                <div class="break">
-                                    <hr class="hr-break">
-                                </div>
-                                <div class="list-applied-coupon">
-                                    <div class="coupon container">
-                                        <div class="applied-coupon-left">
-                                            <div class="coupon-applied">
-                                                <div class="coupon-code">
-                                                    <span class="bolder larger-text">856F684856</span>
-                                                </div>
-                                                <div class="coupon-name padding-10">
-                                                    <span class="blue-text smaller-text">Giảm giá 30% dành cho đồ điện tử</span>
-                                                </div>
-                                                <div class="active-day padding-10">
-                                                    <span class="experied-day smaller-text">HSD:</span>
-                                                    <span class="red-text smaller-text">đến 30/10/2021</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="applied-coupon-right">
-                                            <div class="returned-money">
-                                                <span>-</span>
-                                                <span class="sale-with-code blue-text">3%</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="coupon container">
-                                        <div class="applied-coupon-left">
-                                            <div class="coupon-applied">
-                                                <div class="coupon-code">
-                                                    <span class="bolder larger-text">123Y681209</span>
-                                                </div>
-                                                <div class="coupon-name padding-10">
-                                                    <span class="blue-text smaller-text">Giảm giá 30% dành cho đồ điện tử</span>
-                                                </div>
-                                                <div class="active-day padding-10">
-                                                    <span class="experied-day smaller-text">HSD:</span>
-                                                    <span class="red-text smaller-text">đến 30/10/2021</span>
-                                                </div>
-
-                                            </div>
-                                        </div>
-
-                                        <div class="applied-coupon-right">
-                                            <span>-</span>
-                                            <span class="blue-text returned-money sale-with-code">3%</span>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                         <div class="cash">
                             <div class="container">
                                 <div class="cash-title">
@@ -219,7 +160,7 @@
         let saleByCode = document.querySelectorAll('.sale-with-code');
         console.log(final)
         for (let i = 0; i < code.length; i++) {
-            if (sale.val() == (code[i].innerText)){
+            if (sale.val() == (code[i].innerText)) {
                 final = final - (final * (saleByCode[i].innerText.match(/\d+/g).join('') / 100));
             }
         }
@@ -231,6 +172,7 @@
 </script>
 <script>
     listenCart();
+
     function listenCart() {
         let priceHTML = document.querySelectorAll('.price-text');
         for (let i = 0; i < priceHTML.length; i++) {
@@ -377,6 +319,23 @@
             currency: 'VND'
         }));
     }
+
+</script>
+<script>
+    let btnRemoveAll = document.getElementById('btn-clear-all');
+    btnRemoveAll.addEventListener('click', function() {
+        $.ajax({
+            url:"clearAllProduct",
+            type: "post",
+            success: function () {
+
+            },
+            error: function() {
+
+            }
+
+        })
+    })
 
 </script>
 <script src="${root}js/register.js"></script>

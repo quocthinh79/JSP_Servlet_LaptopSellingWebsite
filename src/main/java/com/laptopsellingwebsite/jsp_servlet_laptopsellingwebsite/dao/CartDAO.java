@@ -1,5 +1,6 @@
 package com.laptopsellingwebsite.jsp_servlet_laptopsellingwebsite.dao;
 
+import com.laptopsellingwebsite.jsp_servlet_laptopsellingwebsite.beans.CartInfo;
 import com.laptopsellingwebsite.jsp_servlet_laptopsellingwebsite.beans.Product;
 import com.laptopsellingwebsite.jsp_servlet_laptopsellingwebsite.db.DBConnect;
 
@@ -7,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class CartDAO {
     private static CartDAO instance;
@@ -37,36 +39,24 @@ public class CartDAO {
 
     }
 
-    public ArrayList getProductList (ArrayList<String> listProductID) {
-        ArrayList<Product> result = new ArrayList<Product>();
+    public ArrayList<CartInfo> getProductList (ArrayList<String> listProductID) {
+        ArrayList<CartInfo> result = new ArrayList<CartInfo>();
         try {
             for (String id_product: listProductID) {
-                String querry = "select * from thongtinlaptop where malaptop = ?";
+                String querry = "SELECT thongtinlaptop.MALAPTOP, thongtinlaptop.TENLAPTOP, thongtinlaptop.LINKHINH1, ctgh.SOLUONG, thongtinlaptop.GIABAN " +
+                        "from thongtinlaptop join ctgh on thongtinlaptop.MALAPTOP = ctgh.MALAPTOP where thongtinlaptop.MALAPTOP = ?";
                 PreparedStatement st = DBConnect.getInstance().get(querry);
                 st.setString(1,id_product);
 
                 ResultSet resultSet = st.executeQuery();
 
                 while(resultSet.next()) {
-                    Product product = new Product(resultSet.getString(1),
+                    CartInfo product = new CartInfo(resultSet.getString(1),
                             resultSet.getString(2),
-                            resultSet.getString(3),
+                            resultSet.getString(3).toLowerCase(),
                             resultSet.getInt(4),
-                            resultSet.getString(5),
-                            resultSet.getString(6),
-                            resultSet.getString(7),
-                            resultSet.getString(8),
-                            resultSet.getString(9),
-                            resultSet.getString(10),
-                            resultSet.getString(11),
-                            resultSet.getString(12),
-                            resultSet.getString(13),
-                            resultSet.getString(14),
-                            resultSet.getString(15),
-                            resultSet.getString(16),
-                            resultSet.getString(17),
-                            resultSet.getString(18),
-                            resultSet.getString(19));
+                            resultSet.getInt(5)
+                            );
                     result.add(product);
                 }
                 resultSet.close();
@@ -99,13 +89,13 @@ public class CartDAO {
 
     }
 
-    public String getCartID(String userID) {
+    public String getCartID(int userID) {
         String result = "";
         try {
 
             String command = "select magiohang from giohang where makh = ?";
             PreparedStatement ps = DBConnect.getInstance().get(command);
-            ps.setString(1,userID);
+            ps.setInt(1,userID);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 result = rs.getString(1);
@@ -113,11 +103,11 @@ public class CartDAO {
             return result;
         } catch (SQLException | ClassNotFoundException e ) {
             e.printStackTrace();
-            return null;
+            return result;
         }
     }
 
-    public boolean insertProductToCart(String productID, String userID, int quantity) {
+    public boolean insertProductToCart(String productID, int userID, int quantity) {
         boolean result = false;
         try {
             String cartID = getCartID(userID);
@@ -138,11 +128,11 @@ public class CartDAO {
         }
     }
 
-    public boolean updateProductQuantityByProductID(String productID, String userID, int quantityUpdated) {
+    public boolean updateProductQuantityByProductID(String productID, int userID, int quantityUpdated) {
         boolean result = false;
         try {
             String cartID = getCartID(userID);
-            String command = "update ctgh set soluong = ? where magiohang = ? and masanpham = ?";
+            String command = "update ctgh set soluong = ? where magiohang = ? and malaptop = ?";
             PreparedStatement ps = DBConnect.getInstance().get(command);
             ps.setInt(1,quantityUpdated);
             ps.setString(2,cartID);
@@ -157,7 +147,7 @@ public class CartDAO {
         }
     }
 
-    public boolean removeProductFromCart(String productID, String userID) {
+    public boolean removeProductFromCart(String productID, int userID) {
         boolean result = false;
         try {
             String cartID = getCartID(userID);
@@ -188,7 +178,7 @@ public class CartDAO {
         }
     }
 
-    public boolean insertCart(String userID) {
+    public boolean insertCart(int userID) {
         boolean result = false;
         try {
             String cartID = "";
@@ -201,7 +191,7 @@ public class CartDAO {
             String command = "insert into giohang values (?,?,'','')";
             PreparedStatement ps = DBConnect.getInstance().get(command);
             ps.setString(1,cartID);
-            ps.setString(2,userID);
+            ps.setInt(2,userID);
 
             int rowAffected = ps.executeUpdate();
             if (rowAffected > 0)
@@ -214,4 +204,80 @@ public class CartDAO {
             return false;
         }
     }
+
+    public boolean isProductOnCart(String productID, int userID) {
+        boolean check = false;
+        try {
+            ArrayList<String> result = new ArrayList<String>();
+            String cartID = getCartID(userID);
+            String command = "select * FROM ctgh where magiohang = ? and malaptop = ?";
+            PreparedStatement ps = DBConnect.getInstance().get(command);
+            ps.setString(1,cartID);
+            ps.setString(2, productID);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()) {
+                result.add(rs.getString(1));
+            }
+            for(String i: result) {
+                if(i != null)
+                    check = true;
+                else check = false;
+            }
+            ps.close();
+            rs.close();
+            return check;
+
+        } catch (SQLException | ClassNotFoundException e ) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public int getProductQuantity(String productID, int userID) {
+        try {
+            int result = 0;
+            String cartID = getCartID(userID);
+            String command = "select soluong FROM ctgh where magiohang = ? and malaptop = ?";
+            PreparedStatement ps = DBConnect.getInstance().get(command);
+            ps.setString(1,cartID);
+            ps.setString(2, productID);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()) {
+                result = rs.getInt(1);
+            }
+            ps.close();
+            rs.close();
+            return result;
+
+        } catch (SQLException | ClassNotFoundException e ) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
+    public boolean clearCart(int userID) {
+        try {
+            boolean result = false;
+            String cartID = getCartID(userID);
+            String command = "delete from ctgh where magiohang = ?";
+            PreparedStatement ps = DBConnect.getInstance().get(command);
+            ps.setString(1,cartID);
+            int affectedRow = ps.executeUpdate();
+            if(affectedRow > 1) {
+                result = true;
+            }
+
+            return result;
+
+        } catch (SQLException | ClassNotFoundException e ) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+//    public static void main(String[] args) {
+//        CartDAO dao = new CartDAO();
+//       System.out.println(dao.getCartID(1));
+///        System.out.println(dao.isProductOnCart("0WT8R1",1));
+//
+//    }
 }
