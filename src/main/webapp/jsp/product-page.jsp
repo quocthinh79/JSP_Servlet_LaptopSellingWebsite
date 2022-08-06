@@ -43,6 +43,7 @@
 <%@include file="../layout/cart-hover.jsp" %>
 <jsp:useBean id="productID" scope="request" type="java.util.List"/>
 <c:forEach var="x" items="${productID}">
+
 <div id="view-image-product">
     <div id="close-view-image-product"><i class="fas fa-times"></i></div>
     <div class="big-image-view-product" style="background-image: url('${root}${x.linkHinh1}')"></div>

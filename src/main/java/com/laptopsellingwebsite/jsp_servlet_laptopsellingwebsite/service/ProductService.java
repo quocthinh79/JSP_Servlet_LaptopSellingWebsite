@@ -128,4 +128,5 @@ public class ProductService {
     public List sortProductWithProducer(Multimap<String, String> map, String hangsx, String temp) {
         return ProductDao.getInstance().sortProductWithProducer(map, hangsx, temp);
     }
+
 }
