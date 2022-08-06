@@ -267,6 +267,8 @@ class BSTable {
         // Accept the changes to the row
         let thongbao = document.getElementById('thongbaoIdEmpty');
         let btnOK = document.getElementById('ok');
+        let thongbaoError = document.getElementById('thongbaoError');
+        let btnOKError = document.getElementById('okError');
         let $currentRow = $(button).parents('tr');    // access the row
         let currentTable = $(button).parents('table')[0].id
         let $cols = $currentRow.find('td');              // read fields
@@ -299,6 +301,10 @@ class BSTable {
         btnOK.addEventListener('click', function () {
             thongbao.style.display = 'none';
         })
+        btnOKError.addEventListener('click', function () {
+            thongbaoError.style.display = 'none';
+            window.open(window.location.href, '_self')
+        })
         console.log(map)
         let dataSend = ''
         let num = 0;
@@ -321,7 +327,9 @@ class BSTable {
                         currentTable: currentTable
                     },
                     success: function (response) {
-                        console.log(response)
+                        let mess = document.getElementById('message');
+                        mess.innerHTML = response
+                        thongbaoError.style.display = 'flex';
                     },
                     error: function () {
                         console.log("Error")
@@ -338,7 +346,9 @@ class BSTable {
                         dieuKien: dieuKienUpdate
                     },
                     success: function (response) {
-
+                        let mess = document.getElementById('message');
+                        mess.innerHTML = response
+                        thongbaoError.style.display = 'flex';
                     },
                     error: function () {
                     }

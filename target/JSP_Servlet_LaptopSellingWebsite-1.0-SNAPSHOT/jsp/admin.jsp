@@ -60,24 +60,49 @@
                     </c:forEach>
                 </div>
                 <c:forEach var="x" items="${AllManufacturer}">
-                <div id="${x.tenHang}" class="details-laptop">
-                    <a role="button" type="button" href="">
-                        <div class="logo" style="background-image: url(${root}${x.image})"></div>
-                    </a>
-                    <div class="details bg-blue">
-                        <div class="details-number">${x.nhap}</div>
-                        <div class="details-title">Tổng số lượng nhập</div>
+                    <div id="${x.tenHang}" class="details-laptop">
+                        <a role="button" type="button" href="">
+                            <div class="logo" style="background-image: url(${root}${x.image})"></div>
+                        </a>
+                        <div class="details bg-blue">
+                            <div class="details-number">${x.nhap}</div>
+                            <div class="details-title">Tổng số lượng nhập</div>
+                        </div>
+                        <div class="details bg-green">
+                            <div class="details-number">${x.xuat}</div>
+                            <div class="details-title">Tổng số lượng xuất</div>
+                        </div>
+                        <div class="details bg-red">
+                            <div class="details-number">${x.ton}</div>
+                            <div class="details-title">Tổng số lượng tồn kho</div>
+                        </div>
                     </div>
-                    <div class="details bg-green">
-                        <div class="details-number">${x.xuat}</div>
-                        <div class="details-title">Tổng số lượng xuất</div>
-                    </div>
-                    <div class="details bg-red">
-                        <div class="details-number">${x.ton}</div>
-                        <div class="details-title">Tổng số lượng tồn kho</div>
-                    </div>
-                </div>
                 </c:forEach>
+            </div>
+            <div class="container">
+                <div class="tab" style="display: flex; justify-content: center;">
+                    <a href="#TTLT">
+                        <button class="tablinks">Thông tin laptop</button>
+                    </a>
+                    <a href="#Account">
+                        <button class="tablinks">Account</button>
+                    </a>
+                    <a href="#Permission">
+                        <button class="tablinks">Phân quyền</button>
+                    </a>
+                    <a href="#Kho">
+                        <button class="tablinks">Kho</button>
+                    </a>
+                    <a href="#HSX">
+                        <button class="tablinks">Hãng sản xuất</button>
+                    </a>
+                    <a href="#Cart">
+                        <button class="tablinks">Giỏ hàng</button>
+                    </a>
+                    <a href="#CartDetail">
+                        <button class="tablinks">Chi tiết giỏ hàng</button>
+                    </a>
+                </div>
             </div>
             <div class="container" style="position: relative">
                 <div class="table-responsive">
@@ -148,10 +173,14 @@
                             <ul class="pagination">
                                 <c:forEach var="i" begin="1" end="${totalPageTTLT}">
                                     <c:if test="${i == pageTTLT}">
-                                        <li style="cursor: pointer" class="page-item active paging"><a href="Admin?pageTTLT=${i}" style="cursor: pointer" value="${i}" class="page-link">${i}</a></li>
+                                        <li style="cursor: pointer" class="page-item active paging"><a
+                                                href="Admin?pageTTLT=${i}" style="cursor: pointer" value="${i}"
+                                                class="page-link">${i}</a></li>
                                     </c:if>
                                     <c:if test="${i != pageTTLT}">
-                                        <li style="cursor: pointer" class="page-item paging"><a href="Admin?pageTTLT=${i}" style="cursor: pointer" value="${i}" class="page-link">${i}</a></li>
+                                        <li style="cursor: pointer" class="page-item paging"><a
+                                                href="Admin?pageTTLT=${i}" style="cursor: pointer" value="${i}"
+                                                class="page-link">${i}</a></li>
                                     </c:if>
                                 </c:forEach>
                             </ul>
@@ -202,10 +231,14 @@
                             <ul class="pagination">
                                 <c:forEach var="i" begin="1" end="${totalAccount}">
                                     <c:if test="${i == pageAccount}">
-                                        <li style="cursor: pointer" class="page-item active paging"><a href="Admin?pageAccount=${i}" style="cursor: pointer" value="${i}" class="page-link">${i}</a></li>
+                                        <li style="cursor: pointer" class="page-item active paging"><a
+                                                href="Admin?pageAccount=${i}" style="cursor: pointer" value="${i}"
+                                                class="page-link">${i}</a></li>
                                     </c:if>
                                     <c:if test="${i != pageAccount}">
-                                        <li style="cursor: pointer" class="page-item paging"><a href="Admin?pageAccount=${i}" style="cursor: pointer" value="${i}" class="page-link">${i}</a></li>
+                                        <li style="cursor: pointer" class="page-item paging"><a
+                                                href="Admin?pageAccount=${i}" style="cursor: pointer" value="${i}"
+                                                class="page-link">${i}</a></li>
                                     </c:if>
                                 </c:forEach>
                             </ul>
@@ -248,10 +281,14 @@
                             <ul class="pagination">
                                 <c:forEach var="i" begin="1" end="${totalPermission}">
                                     <c:if test="${i == pagePermission}">
-                                        <li style="cursor: pointer" class="page-item active paging"><a href="Admin?pagePermission=${i}" style="cursor: pointer" value="${i}" class="page-link">${i}</a></li>
+                                        <li style="cursor: pointer" class="page-item active paging"><a
+                                                href="Admin?pagePermission=${i}" style="cursor: pointer" value="${i}"
+                                                class="page-link">${i}</a></li>
                                     </c:if>
                                     <c:if test="${i != pagePermission}">
-                                        <li style="cursor: pointer" class="page-item paging"><a href="Admin?pagePermission=${i}" style="cursor: pointer" value="${i}" class="page-link">${i}</a></li>
+                                        <li style="cursor: pointer" class="page-item paging"><a
+                                                href="Admin?pagePermission=${i}" style="cursor: pointer" value="${i}"
+                                                class="page-link">${i}</a></li>
                                     </c:if>
                                 </c:forEach>
                             </ul>
@@ -259,7 +296,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="container" style="position: relative">
                 <div class="table-responsive">
                     <div class="table-wrapper" style="width: auto">
@@ -299,10 +335,14 @@
                             <ul class="pagination">
                                 <c:forEach var="i" begin="1" end="${totalPageKho}">
                                     <c:if test="${i == pageKho}">
-                                        <li style="cursor: pointer" class="page-item active paging"><a href="Admin?pageKho=${i}" style="cursor: pointer" value="${i}" class="page-link">${i}</a></li>
+                                        <li style="cursor: pointer" class="page-item active paging"><a
+                                                href="Admin?pageKho=${i}" style="cursor: pointer" value="${i}"
+                                                class="page-link">${i}</a></li>
                                     </c:if>
                                     <c:if test="${i != pageKho}">
-                                        <li style="cursor: pointer" class="page-item paging"><a href="Admin?pageKho=${i}" style="cursor: pointer" value="${i}" class="page-link">${i}</a></li>
+                                        <li style="cursor: pointer" class="page-item paging"><a
+                                                href="Admin?pageKho=${i}" style="cursor: pointer" value="${i}"
+                                                class="page-link">${i}</a></li>
                                     </c:if>
                                 </c:forEach>
                             </ul>
@@ -353,10 +393,14 @@
                             <ul class="pagination">
                                 <c:forEach var="i" begin="1" end="${totalPageHSX}">
                                     <c:if test="${i == pageHSX}">
-                                        <li style="cursor: pointer" class="page-item active paging"><a href="Admin?pageHSX=${i}" style="cursor: pointer" value="${i}" class="page-link">${i}</a></li>
+                                        <li style="cursor: pointer" class="page-item active paging"><a
+                                                href="Admin?pageHSX=${i}" style="cursor: pointer" value="${i}"
+                                                class="page-link">${i}</a></li>
                                     </c:if>
                                     <c:if test="${i != pageHSX}">
-                                        <li style="cursor: pointer" class="page-item paging"><a href="Admin?pageHSX=${i}" style="cursor: pointer" value="${i}" class="page-link">${i}</a></li>
+                                        <li style="cursor: pointer" class="page-item paging"><a
+                                                href="Admin?pageHSX=${i}" style="cursor: pointer" value="${i}"
+                                                class="page-link">${i}</a></li>
                                     </c:if>
                                 </c:forEach>
                             </ul>
@@ -403,10 +447,14 @@
                             <ul class="pagination">
                                 <c:forEach var="i" begin="1" end="${totalCart}">
                                     <c:if test="${i == pageCart}">
-                                        <li style="cursor: pointer" class="page-item active paging"><a href="Admin?pageCart=${i}" style="cursor: pointer" value="${i}" class="page-link">${i}</a></li>
+                                        <li style="cursor: pointer" class="page-item active paging"><a
+                                                href="Admin?pageCart=${i}" style="cursor: pointer" value="${i}"
+                                                class="page-link">${i}</a></li>
                                     </c:if>
                                     <c:if test="${i != pageCart}">
-                                        <li style="cursor: pointer" class="page-item paging"><a href="Admin?pageCart=${i}" style="cursor: pointer" value="${i}" class="page-link">${i}</a></li>
+                                        <li style="cursor: pointer" class="page-item paging"><a
+                                                href="Admin?pageCart=${i}" style="cursor: pointer" value="${i}"
+                                                class="page-link">${i}</a></li>
                                     </c:if>
                                 </c:forEach>
                             </ul>
@@ -451,10 +499,14 @@
                             <ul class="pagination">
                                 <c:forEach var="i" begin="1" end="${totalCartDetail}">
                                     <c:if test="${i == pageCartDetail}">
-                                        <li style="cursor: pointer" class="page-item active paging"><a href="Admin?pageCartDetail=${i}" style="cursor: pointer" value="${i}" class="page-link">${i}</a></li>
+                                        <li style="cursor: pointer" class="page-item active paging"><a
+                                                href="Admin?pageCartDetail=${i}" style="cursor: pointer" value="${i}"
+                                                class="page-link">${i}</a></li>
                                     </c:if>
                                     <c:if test="${i != pageCartDetail}">
-                                        <li style="cursor: pointer" class="page-item paging"><a href="Admin?pageCartDetail=${i}" style="cursor: pointer" value="${i}" class="page-link">${i}</a></li>
+                                        <li style="cursor: pointer" class="page-item paging"><a
+                                                href="Admin?pageCartDetail=${i}" style="cursor: pointer" value="${i}"
+                                                class="page-link">${i}</a></li>
                                     </c:if>
                                 </c:forEach>
                             </ul>
@@ -486,6 +538,18 @@
             </div>
             <div class="register-div">
                 <button type="button" id="ok" class="btn-register">OK</button>
+            </div>
+        </form>
+    </div>
+</div>
+<div id="thongbaoError" style="z-index: 1000;">
+    <div class="register js-register-container">
+        <form class="register-form">
+            <div id="message" class="input-register">
+                Lỗi khi thực hiện
+            </div>
+            <div class="register-div">
+                <button type="button" id="okError" class="btn-register">OK</button>
             </div>
         </form>
     </div>

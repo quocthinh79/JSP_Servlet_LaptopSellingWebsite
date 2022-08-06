@@ -443,8 +443,8 @@ body, html {
     height: 198px;
     padding: 16px;
     border: 1px solid #ccc;
-/*    border-top: none;
-    border-right: none;*/
+    border-top: none;
+    border-right: none;
 }
 
 #main #content .product .title-product-item {
