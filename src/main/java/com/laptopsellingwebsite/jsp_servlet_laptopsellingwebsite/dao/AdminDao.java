@@ -81,6 +81,8 @@ public class AdminDao {
 
     public int deleteLaptop(String dieuKien) {
         try {
+            deleteKho(dieuKien);
+            deleteCartDetail(dieuKien);
             String query = "DELETE FROM `thongtinlaptop` WHERE MALAPTOP = ?";
             PreparedStatement ps = DBConnect.getInstance().get(query);
             ps.setString(1, dieuKien);
@@ -168,6 +170,7 @@ public class AdminDao {
 
     public int deleteHangSx(String dieuKien) {
         try {
+            deleteLaptop(dieuKien);
             String query = "DELETE FROM `hangsx` WHERE TENHANG = ?";
             PreparedStatement ps = DBConnect.getInstance().get(query);
             ps.setString(1, dieuKien);
@@ -335,6 +338,7 @@ public class AdminDao {
 
     public int deleteAccount(int dieuKien) {
         try {
+            deletePermission(dieuKien);
             String query = "DELETE FROM `tk` WHERE ID = ?";
             PreparedStatement ps = DBConnect.getInstance().get(query);
             ps.setInt(1, dieuKien);
@@ -508,6 +512,7 @@ public class AdminDao {
 
     public int deleteCart(String dieuKien) {
         try {
+            deleteCartDetail(dieuKien);
             String query = "DELETE FROM `giohang` WHERE magiohang = ?";
             PreparedStatement ps = DBConnect.getInstance().get(query);
             ps.setString(1, dieuKien);

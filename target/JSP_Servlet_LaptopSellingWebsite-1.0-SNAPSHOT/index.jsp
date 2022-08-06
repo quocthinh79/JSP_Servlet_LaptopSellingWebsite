@@ -94,7 +94,7 @@
                                     class="fas fa-angle-right"></i></a>
                         </div>
                         <div class="product-cover">
-                            <div style="overflow: hidden; border-radius: 0 0 0 10px">
+                            <div style="overflow: hidden; border-radius: 0 0 0 10px; flex: 1">
                                 <a class="product-hover-selling" href="AllProduct?idHang=${y.tenHang}">
                                     <div class="product-selling"
                                          style="background-image: url('${y.poster}')"></div>
@@ -103,8 +103,8 @@
                                 <jsp:useBean id="productsTop" scope="request" type="java.util.List"/>
                                 <c:forEach var="z" items="${productsTop}">
                                     <c:if test="${z.hangSX == y.tenHang}">
-                                        <a class="product-hover-items" href="Product?id=${z.maLapTop}">
-                                            <div class="product-items  border-item-top1">
+                                        <a class="product-hover-items" href="Product?id=${z.maLapTop}" style="width: calc(100% / 2)">
+                                            <div class="product-items  border-item-top1" >
                                                 <div class="title-product-item">
                                                         ${z.tenLaptop}
                                                 </div>

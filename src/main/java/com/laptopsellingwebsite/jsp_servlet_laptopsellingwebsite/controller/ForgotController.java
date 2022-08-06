@@ -60,18 +60,6 @@ public class ForgotController extends HttpServlet {
                     request.getRequestDispatcher("").forward(request, response);
                 }
                 break;
-            case "/UpdatePass":
-                String newPass1 = request.getParameter("newPass1");
-                String newPass2 = request.getParameter("newPass2");
-                if (newPass1.equals(newPass2)) {
-                    String md5Hex = DigestUtils.md5Hex(newPass1).toUpperCase();
-                    UserServices.getInstance().updatePass(emailStatic, md5Hex);
-                    request.getRequestDispatcher("").forward(request, response);
-                } else {
-                    request.setAttribute("openNewPass", "Mật khẩu đã nhập không khớp");
-                    request.getRequestDispatcher("").forward(request, response);
-                }
-                break;
         }
     }
 
@@ -121,7 +109,8 @@ public class ForgotController extends HttpServlet {
                 String newPass1 = request.getParameter("newPass1");
                 String newPass2 = request.getParameter("newPass2");
                 if (newPass1.equals(newPass2)) {
-                    UserServices.getInstance().updatePass(emailStatic, newPass1);
+                    String md5Hex = DigestUtils.md5Hex(newPass1).toUpperCase();
+                    UserServices.getInstance().updatePass(emailStatic, md5Hex);
                     response.sendRedirect(base);
                 } else {
                     request.setAttribute("openNewPass", "Mật khẩu đã nhập không khớp");

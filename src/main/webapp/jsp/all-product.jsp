@@ -352,9 +352,9 @@
                             <div class="price-all-product-item">
                                     ${x.giaBan}
                             </div>
-                            <div class="sale-all-product-item">
+<%--                            <div class="sale-all-product-item">
                                 <span class="origin-price">33.999.000đ</span> <span>11%</span>
-                            </div>
+                            </div>--%>
                         </a>
                     </div>
                 </c:forEach>
