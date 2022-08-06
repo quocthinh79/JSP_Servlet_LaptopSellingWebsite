@@ -1,6 +1,9 @@
 package com.laptopsellingwebsite.jsp_servlet_laptopsellingwebsite.controller;
 
 import com.google.common.collect.Multimap;
+import com.laptopsellingwebsite.jsp_servlet_laptopsellingwebsite.beans.Account;
+import com.laptopsellingwebsite.jsp_servlet_laptopsellingwebsite.dao.CartDAO;
+import com.laptopsellingwebsite.jsp_servlet_laptopsellingwebsite.service.CartServices;
 import com.laptopsellingwebsite.jsp_servlet_laptopsellingwebsite.service.ProductService;
 
 import javax.servlet.ServletException;
@@ -11,25 +14,56 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet(name = "SingleProductController", value = "/Product")
+@WebServlet(urlPatterns = {"/addProductToCart","/Product"})
+
 public class ProductController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String id = request.getParameter("id");
-        String url = request.getServletPath();
-        HttpSession session = request.getSession();
-        Multimap<String, String> map = (Multimap<String, String>) session.getAttribute("map");
-        if (map != null){
-            map.clear();
+        String URL = request.getRequestURI().substring(request.getRequestURI().lastIndexOf("/"), request.getRequestURI().length());
+        switch (URL) {
+            case "/Product":
+                String id = request.getParameter("id");
+                String url = request.getServletPath();
+                HttpSession session = request.getSession();
+
+                request.setAttribute("url", url);
+                Multimap<String, String> map = (Multimap<String, String>) session.getAttribute("map");
+                if (map != null){
+                    map.clear();
+                }
+                request.setAttribute("productID", ProductService.getInstance().getProductWithID(id));
+                request.setAttribute("productsProductBS", ProductService.getInstance().getTopProductBestSeller(10));
+                request.getRequestDispatcher("jsp/product-page.jsp").forward(request, response);
         }
-        request.setAttribute("url", url);
-        request.setAttribute("productID", ProductService.getInstance().getProductWithID(id));
-        request.setAttribute("productsProductBS", ProductService.getInstance().getTopProductBestSeller(10));
-        request.getRequestDispatcher("jsp/product-page.jsp").forward(request, response);
+
+
+
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        doGet(request, response);
+        String URL = request.getRequestURI().substring(request.getRequestURI().lastIndexOf("/"), request.getRequestURI().length());
+        switch (URL) {
+            case "/Product":
+
+                request.getRequestDispatcher("jsp/product-page.jsp").forward(request, response);
+
+            case "/addProductToCart":
+                HttpSession session = request.getSession();
+                Account currentAccount = (Account) session.getAttribute("account");
+                int userID = currentAccount.getId();
+                String productId = request.getParameter("id");
+                CartDAO cartDAO = new CartDAO();
+                if (cartDAO.getCartID(userID) == null) {
+                    cartDAO.insertCart(userID);
+                } else if(cartDAO.isProductOnCart(productId,userID) == false){
+                    cartDAO.insertProductToCart(productId,userID,1);
+                } else {
+                    cartDAO.updateProductQuantityByProductID(productId,userID, cartDAO.getProductQuantity(productId,userID) + 1);
+
+            }
+
+        }
+
     }
 }

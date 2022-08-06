@@ -27,6 +27,31 @@ public class Product implements Serializable {
 
     }
 
+    @Override
+    public String toString() {
+        return "Product{" +
+                "maLapTop='" + maLapTop + '\'' +
+                ", tenLaptop='" + tenLaptop + '\'' +
+                ", hangSX='" + hangSX + '\'' +
+                ", giaBan=" + giaBan +
+                ", series='" + series + '\'' +
+                ", mau='" + mau + '\'' +
+                ", cpu='" + cpu + '\'' +
+                ", vga='" + vga + '\'' +
+                ", ram='" + ram + '\'' +
+                ", kichThuocManHinh='" + kichThuocManHinh + '\'' +
+                ", oCung='" + oCung + '\'' +
+                ", banPhim='" + banPhim + '\'' +
+                ", pin='" + pin + '\'' +
+                ", khoiLuong='" + khoiLuong + '\'' +
+                ", linkHinh1='" + linkHinh1 + '\'' +
+                ", linkHinh2='" + linkHinh2 + '\'' +
+                ", linkHinh3='" + linkHinh3 + '\'' +
+                ", linkHinh4='" + linkHinh4 + '\'' +
+                ", linkHinh5='" + linkHinh5 + '\'' +
+                '}';
+    }
+
     public Product(String maLapTop, String tenLaptop, String hangSX, int giaBan, String series, String mau, String cpu, String vga, String ram, String kichThuocManHinh, String oCung, String banPhim, String pin, String khoiLuong, String linkHinh1, String linkHinh2, String linkHinh3, String linkHinh4, String linkHinh5) {
         this.maLapTop = maLapTop;
         this.tenLaptop = tenLaptop;
