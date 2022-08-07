@@ -65,11 +65,11 @@
                                         <span class="big-text bolder">Giỏ hàng của bạn</span>
                                     </span>
                                     </div>
-                                    <div clas="btn-clear">
-                                        <button id="btn-clear-all"class="clear">
-                                            <span>Xóa tất cả</span>
-                                        </button>
-                                    </div>
+<%--                                    <div class="btn-clear">--%>
+<%--                                        <button class="btn-clear-all" style="background-color: #f8f8fc;color: blue;border: 1px solid #f8f8fc;cursor: pointer;">--%>
+<%--                                            <span>Xóa tất cả</span>--%>
+<%--                                        </button>--%>
+<%--                                    </div>--%>
                                 </div>
                             </div>
                         </div>
@@ -103,6 +103,9 @@
                                                     <input type="hidden" value="${product.giaban}" class="origin-price">
                                                     <span class="bolder gray-text price-text">${product.giaban * product.soluong}</span>
                                                 </div>
+                                                <div class="">
+                                                    <button style="margin-top:5px; padding:3px; background-color: #e00000;border: 1px solid #e00000; border-radius:7px ;color: #f8f8f8" class="btn-delete-product">Xoá sản phẩm</button>
+                                                </div>
                                             </div>
                                         </div>
 
@@ -126,7 +129,7 @@
                                 </div> -->
                                 <div class="final-price" class="padding-10 padding-bottom-20">
                                     <span class="left gray-text">Thành tiền</span>
-                                    <span class="right final-cash large-text red-text bolder">0</span>
+                                    <span class="right final-cash large-text red-text bolder"></span>
                                 </div>
                                 <!-- <div class="VAT" class="padding-10">
                                     <span class="gray-text">(Đã bao gồm VAT)</span>
@@ -175,16 +178,14 @@
 
     function listenCart() {
         let priceHTML = document.querySelectorAll('.price-text');
+        
         for (let i = 0; i < priceHTML.length; i++) {
             priceHTML[i].innerHTML = parseInt(priceHTML[i].innerHTML.match(/\d+/g).join('')).toLocaleString('it-IT', {
                 style: 'currency',
                 currency: 'VND'
             })
         }
-        $('.clear').click(function () {
-            $('.cart-item').remove();
-            $('.final-cash').html("0");
-        });
+
         let total = 0;
         $('.checkAllProduct').click(function (event) {
             total = 0;
@@ -212,6 +213,7 @@
             }
             changePrice();
         });
+
         let sum = 0;
         let elementTotalPrice;
         $('.checkItem').click(function () {
@@ -238,6 +240,7 @@
             }
             changePrice();
         });
+
         $('.btn-subtract').click(function () {
             var parent = $(this).closest('.right-cart-item');
             var numberProduct = parent.find('.number');
@@ -289,10 +292,11 @@
                 },
             })
         });
+
         $('.btn-add').click(function () {
             var parent = $(this).closest('.right-cart-item');
             var numberProduct = parent.find('.number');
-            console.log(numberProduct)
+
             var valueNumProduct = parseInt(numberProduct.text().match(/\d+/g).join(''));
             let checkAll = $(this).closest('.cart-item').find("input[name='checkAllProduct']");
             var destination = $(this).closest('.cart-item');
@@ -343,12 +347,50 @@
             })
         });
 
+        $('.btn-delete-product').click(function() {
+            var leftParent = $(this).closest('.item');
+
+            $(leftParent).remove();
+
+            var idElement = leftParent.find('.item-info-sku')[0].innerText.split(': ');
+            var idForDelete = idElement[1];
+            console.log(idForDelete)
+            $.ajax({
+                url:'clearAProduct',
+                type:'post',
+                data:{idForDelete: idForDelete},
+                success: function() {
+
+                }
+            })
+        })
+
+        // $('.buy').click(function() {
+        //     $.ajax({
+        //         url:'buy',
+        //         type:'post',
+        //         data:'click: 1'
+        //     })
+        // })
+        // let totalProduct
     }
+
+
 
     function changePrice() {
         let finalCash = 0
-        let totalPayPrice = document.querySelectorAll('.total-pay');
-        console.log()
+        let totalPayPrice = document.querySelectorAll('.price-text');
+        let getTotalPay = [];
+        //
+        // for (let i = 0; i < totalPayPrice.length; i++) {
+        //     getTotalPay.push(totalPayPrice[i].innerText)
+        // }
+        // for (let i = 0; i < getTotalPay.length; i++) {
+        //     console.log(getTotalPay[i].split(' VND'))
+        //
+        // }
+
+
         for (let i = 0; i < totalPayPrice.length; i++) {
             if (totalPayPrice[i].innerText != "") {
                 finalCash += parseInt(totalPayPrice[i].innerText.match(/\d+/g).join(''));
