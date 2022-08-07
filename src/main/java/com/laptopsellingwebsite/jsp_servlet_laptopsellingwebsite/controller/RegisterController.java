@@ -23,7 +23,7 @@ public class RegisterController extends HttpServlet {
         String pass = request.getParameter("pass");
         String diaChi = request.getParameter("diaChi");
         String email = request.getParameter("email");
-        String base = request.getServletContext().getContextPath();
+        String base = "https://" + request.getServerName();
         String md5Hex = DigestUtils.md5Hex(pass).toUpperCase();
         if (!UserServices.checkUser(username) && !UserServices.getInstance().checkEmail(email)) {
             UserServices.getInstance().registerCustomer(hoTen, username, md5Hex, diaChi, email);
