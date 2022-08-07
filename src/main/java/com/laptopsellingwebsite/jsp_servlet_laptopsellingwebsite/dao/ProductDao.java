@@ -259,7 +259,6 @@ public class ProductDao {
     public ArrayList getTopProductBestSeller(int num) {
         ArrayList<ProductWithStatus> listProductBestSeller = new ArrayList<>();
         try {
-            for (Manufacturer x : listProducer) {
                 String query = "select tt.MALAPTOP, tt.LINKHINH1, tt.TENLAPTOP, tt.GIABAN, kh.TONKHO from thongtinlaptop tt JOIN khohang kh on tt.MALAPTOP = kh.MALAPTOP ORDER BY kh.SLXUAT DESC LIMIT ?";
                 PreparedStatement ps = DBConnect.getInstance().get(query);
                 ps.setInt(1, num);
@@ -272,7 +271,6 @@ public class ProductDao {
                             resultSet.getInt(5));
                     listProductBestSeller.add(product);
                 }
-            }
             return listProductBestSeller;
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
@@ -1155,10 +1153,10 @@ public class ProductDao {
         return 0;
     }
 
-    public ArrayList<Product> search(String txt) {
-        ArrayList<Product> result = new ArrayList();
+    public ArrayList<ProductWithStatus> search(String txt) {
+        ArrayList<ProductWithStatus> result = new ArrayList();
         try {
-            String query = "select * from THONGTINLAPTOP " + " WHERE " + " TENLAPTOP " + " LIKE ? "
+            String query = "select tt.MALAPTOP, tt.LINKHINH1, tt.TENLAPTOP, tt.GIABAN, kh.TONKHO from thongtinlaptop tt JOIN khohang kh on tt.MALAPTOP = kh.MALAPTOP " + " WHERE " + " TENLAPTOP " + " LIKE ? "
                     + " OR " + " HANG " + " LIKE ? " + " OR " + " SERIES " + " LIKE ? " +
                     " OR " + " MAU " + " LIKE ? " + " OR " + " CPU " + " LIKE ? " + " OR " + " VGA "
                     + " LIKE ? " + " OR " + " RAM " + " LIKE ? " + " OR " + " OCUNG " + " LIKE ?";
@@ -1169,25 +1167,11 @@ public class ProductDao {
             }
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                Product product = new Product(rs.getString(1),
-                        rs.getString(2),
+                ProductWithStatus product = new ProductWithStatus(rs.getString(1),
+                        rs.getString(2).toLowerCase(),
                         rs.getString(3),
                         rs.getInt(4),
-                        rs.getString(5),
-                        rs.getString(6),
-                        rs.getString(7),
-                        rs.getString(8),
-                        rs.getString(9),
-                        rs.getString(10),
-                        rs.getString(11),
-                        rs.getString(12),
-                        rs.getString(13),
-                        rs.getString(14),
-                        rs.getString(15),
-                        rs.getString(16),
-                        rs.getString(17),
-                        rs.getString(18),
-                        rs.getString(19));
+                        rs.getInt(5));
                 result.add(product);
             }
             return result;

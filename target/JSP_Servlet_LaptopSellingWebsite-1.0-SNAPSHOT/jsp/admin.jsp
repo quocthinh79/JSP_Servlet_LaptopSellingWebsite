@@ -80,7 +80,7 @@
                 </c:forEach>
             </div>
             <div class="container">
-                <div class="tab" style="display: flex; justify-content: center;">
+                <div class="tab" style="display: flex; justify-content: space-around;">
                     <a href="#TTLT">
                         <button class="tablinks">Thông tin laptop</button>
                     </a>

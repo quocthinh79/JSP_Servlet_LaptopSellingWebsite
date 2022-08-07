@@ -366,7 +366,7 @@
                 <div>Không tìm thấy bất kì sản phẩm nào</div>
             </div>
         </div>
-        <div class="pagination p1">
+        <div id="pagination" class="pagination p1">
             <ul>
                 <c:forEach var="i" begin="1" end="${totalPage}">
                     <c:if test="${i == page}">
@@ -390,20 +390,32 @@
 <%@include file="../layout/register.jsp" %>
 <!--Back to top-->
 <%@include file="../layout/back-to-top.jsp" %>
-<%--<div id="loading">--%>
-<%--    <div class="loadingio-spinner-eclipse-okswoys3or7">--%>
-<%--        <div class="ldio-yzbzl1tp5rn">--%>
-<%--            <div>--%>
-<%--            </div>--%>
-<%--        </div>--%>
-<%--    </div>--%>
-<%--</div>--%>
-<%--</body>--%>
-<%--<script>--%>
-<%--    fetch('${pageContext.request.contextPath}/AllProduct').then(res => document.getElementById('loading').remove());--%>
-<%--    fetch('${pageContext.request.contextPath}/SearchClick').then(res => document.getElementById('loading').remove());--%>
-<%--    fetch('${pageContext.request.contextPath}/Sort').then(res => document.getElementById('loading').remove());--%>
-<%--</script>--%>
+
+<script>
+    let search = document.getElementById('input_search');
+    let div = document.getElementById('content1');
+    search.addEventListener('input', function () {
+        $.ajax({
+            url: '${pageContext.request.contextPath}/Search',
+            type: 'GET',
+            data: {
+                txt: search.value
+            },
+            success: function (response) {
+                $('#product').html(response)
+                let product = document.querySelectorAll('.hover-all-product');
+                let slide = document.getElementById('pagination')
+                if (search.value == '' || product.length <= 0) {
+                    slide.style.display = 'flex';
+                } else {
+                    slide.style.display = 'none';
+                }
+            },
+            error: function () {
+            }
+        });
+    })
+</script>
 <script>
     let notFound = document.getElementById('not-found');
     let product = document.querySelectorAll('.hover-all-product');

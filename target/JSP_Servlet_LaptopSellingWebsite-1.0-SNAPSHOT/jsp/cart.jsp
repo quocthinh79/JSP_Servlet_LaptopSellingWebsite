@@ -720,6 +720,9 @@
                 currency: 'VND'
             }));
             changePrice();
+
+            var parentLeft =  $(this).closest('.item');
+            console.log(parentLeft.find('.item-info-sku')[0].innerText)
         });
     }
 

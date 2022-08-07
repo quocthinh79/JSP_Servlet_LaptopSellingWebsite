@@ -94,7 +94,7 @@
                                     class="fas fa-angle-right"></i></a>
                         </div>
                         <div class="product-cover">
-                            <div style="overflow: hidden; border-radius: 0 0 0 10px; flex: 1">
+                            <div id="poster" style="overflow: hidden; border-radius: 0 0 0 10px; flex: 1">
                                 <a class="product-hover-selling" href="AllProduct?idHang=${y.tenHang}">
                                     <div class="product-selling"
                                          style="background-image: url('${y.poster}')"></div>
