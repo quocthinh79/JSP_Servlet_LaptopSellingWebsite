@@ -7,6 +7,7 @@ import com.laptopsellingwebsite.jsp_servlet_laptopsellingwebsite.db.DBConnect;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -68,6 +69,135 @@ public class CartDAO {
             return null;
         }
 
+    }
+
+    public int getCost (String productID) {
+        int result = 0;
+        try {
+            String querry = "select Giaban from thongtinlaptop where malaptop = ?";
+            PreparedStatement ps = DBConnect.getInstance().get(querry);
+            ps.setString(1, productID);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                result = rs.getInt(1);
+            }
+
+            return result;
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+            return 0;
+        }
+
+    }
+
+    public int totalCost(int userID) {
+        int result = 0;
+            ArrayList<String> listProductID = getProductIDFromCartByUserID(userID);
+            for(String productID: listProductID) {
+                int cost = getCost(productID);
+                int quantity = getProductQuantity(productID,userID);
+                result+= cost*quantity;
+            }
+            return result;
+    }
+
+    public boolean updateCart(int userID, int totalCost) {
+        boolean result = false;
+        try {
+            LocalDate dateNow = LocalDate.now();
+            String getDateNow = "" + dateNow;
+            String cartID = getCartID(userID);
+            String command = "update giohang set giohang.trigia = ?, giohang.ngayxuatgiohang = ? where magiohang = ?";
+            PreparedStatement ps = DBConnect.getInstance().get(command);
+            ps.setInt(1,totalCost);
+            ps.setString(2, getDateNow);
+            ps.setString(3, cartID);
+            int row = ps.executeUpdate();
+            if (row > 0) result = true;
+            ps.close();
+            return result;
+
+
+        } catch (SQLException | ClassNotFoundException e ) {
+            e.printStackTrace();
+            return result;
+        }
+    }
+
+    public int getImportNumber(String productID) {
+        int result = 0;
+        try {
+            String querry = "select slnhap from khohang where malaptop = ?";
+            PreparedStatement ps = DBConnect.getInstance().get(querry);
+            ps.setString(1, productID);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                result = rs.getInt(1);
+            }
+
+            return result;
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+            return 0;
+        }
+
+    }
+
+    public int getExportNumber(String productID) {
+        int result = 0;
+        try {
+            String querry = "select slxuat from khohang where malaptop = ?";
+            PreparedStatement ps = DBConnect.getInstance().get(querry);
+            ps.setString(1, productID);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                result = rs.getInt(1);
+            }
+
+            return result;
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
+    public int getRemainNumber(String productID) {
+        int result = 0;
+        try {
+            String querry = "select tonkho from khohang where malaptop = ?";
+            PreparedStatement ps = DBConnect.getInstance().get(querry);
+            ps.setString(1, productID);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                result = rs.getInt(1);
+            }
+
+            return result;
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
+    public boolean updateWarehouse(String productID, int numOfExport, int numRemain) {
+        boolean result = false;
+        try {
+
+            String command = "update khohang set khohang.slxuat = ?, khohang.tonkho = ?  where malaptop = ?";
+            PreparedStatement ps = DBConnect.getInstance().get(command);
+            ps.setInt(1,numOfExport);
+            ps.setInt(2,numRemain);
+            ps.setString(3, productID);
+            int row = ps.executeUpdate();
+            if (row > 0) result = true;
+            ps.close();
+            return result;
+
+
+        } catch (SQLException | ClassNotFoundException e ) {
+            e.printStackTrace();
+            return result;
+        }
     }
 
     public int getSLNhap(String productID) {
@@ -151,7 +281,7 @@ public class CartDAO {
         boolean result = false;
         try {
             String cartID = getCartID(userID);
-            String command = "DELETE FROM ctgh where magiohang = ? and masanpham = ?";
+            String command = "DELETE FROM ctgh where magiohang = ? and malaptop = ?";
             PreparedStatement ps = DBConnect.getInstance().get(command);
             ps.setString(1,cartID);
             ps.setString(2, productID);
@@ -274,10 +404,11 @@ public class CartDAO {
             return false;
         }
     }
-//    public static void main(String[] args) {
-//        CartDAO dao = new CartDAO();
-//       System.out.println(dao.getCartID(1));
-///        System.out.println(dao.isProductOnCart("0WT8R1",1));
-//
-//    }
+
+    public static void main(String[] args) {
+        CartDAO cartDAO = new CartDAO();
+        System.out.println(cartDAO.getProductQuantity("450-2H0Y1PA",1));
+        System.out.println(cartDAO.getCost("450-2H0Y1PA"));
+        System.out.println(cartDAO.totalCost(1));
+    }
 }
