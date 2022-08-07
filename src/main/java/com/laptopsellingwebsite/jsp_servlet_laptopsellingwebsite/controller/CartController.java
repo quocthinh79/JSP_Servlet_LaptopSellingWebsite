@@ -34,6 +34,22 @@ public class CartController extends HttpServlet {
                 request.getRequestDispatcher("jsp/cart.jsp").forward(request, response);
             case "/clearAllProduct":
 //              cartDAO.clearCart(id);
+
+            case "/addQuantity":
+                String productIDForAdd = request.getParameter("id");
+//                System.out.println(productIDForAdd);
+                cartDAO.updateProductQuantityByProductID(
+                        productIDForAdd,
+                        id,
+                        cartDAO.getProductQuantity(productIDForAdd,id) + 1);
+
+            case "/subtractQuantity":
+                String productIDForSubtract = request.getParameter("id");
+                cartDAO.updateProductQuantityByProductID(
+                        productIDForSubtract,
+                        id,
+                        cartDAO.getProductQuantity(productIDForSubtract,id) - 1);
+
         }
 
     }

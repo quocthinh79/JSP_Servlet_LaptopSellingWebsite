@@ -86,7 +86,7 @@
                                                 </div>
                                                 <div class="item-info-container item-padding">
                                                     <span class="item-info-name smaller-text">${product.tenLaptop}</span>
-                                                    <span class=" item-info-sku smaller-text light-gray-text">Mã Laptop: ${product.maLaptop}</span>
+                                                    <span class="item-info-sku smaller-text light-gray-text">Mã Laptop: ${product.maLaptop}</span>
                                                 </div>
                                             </div>
                                             <div class="right-cart-item">
@@ -94,13 +94,13 @@
                                                     <button id="btn-subtract-id" class="btn-padding btn-subtract">
                                                         <i class="icon-btn fas fa-chevron-down"></i>
                                                     </button>
-                                                    <div class="btn-padding number">${product.soluong}</div>
+                                                    <div id="quantity" class="btn-padding number">${product.soluong}</div>
                                                     <button id="btn-add-id" class="btn-padding btn-add">
                                                         <i class="icon-btn fas fa-chevron-up"></i>
                                                     </button>
                                                 </div>
                                                 <div class="price">
-                                                    <input type="hidden" value="" class="origin-price">
+                                                    <input type="hidden" value="${product.giaban}" class="origin-price">
                                                     <span class="bolder gray-text price-text">${product.giaban * product.soluong}</span>
                                                 </div>
                                             </div>
@@ -262,6 +262,7 @@
                     }));
                 }
             }
+
             numberProduct.html(valueNumProduct);
             var price = parent.find('.price-text');
             var priceValue = originPrice * valueNumProduct
@@ -270,16 +271,35 @@
                 currency: 'VND'
             }));
             changePrice();
+
+            var leftParent = $(this).closest('.item');
+            var idElement = leftParent.find('.item-info-sku')[0].innerText.split(': ')
+            var idForSubtract = idElement[1]
+
+            $.ajax({
+                url:"subtractQuantity",
+                type:"post",
+                data:{id: idForSubtract},
+
+                success: function() {
+
+                },
+                error: function() {
+
+                },
+            })
         });
         $('.btn-add').click(function () {
             var parent = $(this).closest('.right-cart-item');
             var numberProduct = parent.find('.number');
+            console.log(numberProduct)
             var valueNumProduct = parseInt(numberProduct.text().match(/\d+/g).join(''));
             let checkAll = $(this).closest('.cart-item').find("input[name='checkAllProduct']");
             var destination = $(this).closest('.cart-item');
             var originPrice = parseInt(parent.find('.origin-price').val().match(/\d+/g).join(''));
             var checkBoxItem = $(this).closest('.item').find("input[name='checkItem']");
             valueNumProduct++;
+
             if (checkAll.prop("checked")) {
                 total += originPrice;
                 $(destination).find(".total-pay").html(total.toLocaleString('it-IT', {
@@ -292,6 +312,7 @@
                     style: 'currency',
                     currency: 'VND'
                 }));
+
             }
 
             numberProduct.html(valueNumProduct);
@@ -302,7 +323,26 @@
                 currency: 'VND'
             }));
             changePrice();
+
+
+            var leftParent = $(this).closest('.item');
+            var idElement = leftParent.find('.item-info-sku')[0].innerText.split(': ');
+            var idForAdd = idElement[1];
+
+            $.ajax({
+                url:"addQuantity",
+                type:"post",
+                data:{id: idForAdd},
+
+                success: function() {
+
+                },
+                error: function() {
+
+                },
+            })
         });
+
     }
 
     function changePrice() {
@@ -321,23 +361,6 @@
     }
 
 </script>
-<script>
-    let btnRemoveAll = document.getElementById('btn-clear-all');
-    btnRemoveAll.addEventListener('click', function() {
-        $.ajax({
-            url:"clearAllProduct",
-            type: "post",
-            success: function () {
-
-            },
-            error: function() {
-
-            }
-
-        })
-    })
-
-</script>
 
 <script src="${root}js/register.js"></script>
 <script crossorigin="anonymous" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
@@ -349,4 +372,6 @@
 <script src="${root}js/nav-responsive.js"></script>
 <script src="${root}js/BackToTop.js"></script>
 <script src="${root}js/Scroll-Indicator.js"></script>
+<script src="${root}js/cart.js"></script>
+
 </html>
