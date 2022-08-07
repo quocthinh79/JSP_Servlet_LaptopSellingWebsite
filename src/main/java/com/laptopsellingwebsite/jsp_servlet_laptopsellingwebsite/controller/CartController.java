@@ -30,58 +30,61 @@ public class CartController extends HttpServlet {
         switch(URL) {
             case "/Cart":
                 ArrayList<CartInfo> listProductOnCart = cartDAO.getProductList(cartDAO.getProductIDFromCartByUserID(id));
+                int totalCost = cartDAO.totalCost(id);
+                System.out.println(totalCost);
                 request.setAttribute("listProduct", listProductOnCart);
+                request.setAttribute("totalCost", totalCost);
                 request.getRequestDispatcher("jsp/cart.jsp").forward(request, response);
-
+                break;
 
             case "/addQuantity":
                 String productIDForAdd = request.getParameter("id");
-                cartDAO.updateProductQuantityByProductID(
-                        productIDForAdd,
-                        id,
-                        cartDAO.getProductQuantity(productIDForAdd, id) + 1);
+                int getProductRemainQuantity = cartDAO.getRemainNumber(productIDForAdd);
+                int productQuantityWillAdd = cartDAO.getProductQuantity(productIDForAdd, id) + 1;
+                if (productQuantityWillAdd <= getProductRemainQuantity) {
+                    cartDAO.updateProductQuantityByProductID(
+                            productIDForAdd,
+                            id,
+                            cartDAO.getProductQuantity(productIDForAdd, id) + 1);
+                } else {
+                    System.out.println("Khong the them san pham");
+                }
+                break;
 
-                System.out.println(cartDAO.updateProductQuantityByProductID(
-                        productIDForAdd,
-                        id,
-                        cartDAO.getProductQuantity(productIDForAdd, id) + 1));
+
             case "/subtractQuantity":
                 String productIDForSubtract = request.getParameter("id");
                 cartDAO.updateProductQuantityByProductID(
                         productIDForSubtract,
                         id,
                         cartDAO.getProductQuantity(productIDForSubtract, id) - 1);
-                System.out.println(cartDAO.updateProductQuantityByProductID(
-                        productIDForSubtract,
-                        id,
-                        cartDAO.getProductQuantity(productIDForSubtract, id) - 1));
-            case "/clearAProduct":
+                break;
+
+                case "/clearAProduct":
                 String productIDForDelete = request.getParameter("idForDelete");
                 cartDAO.removeProductFromCart(productIDForDelete, id);
                 System.out.println(cartDAO.removeProductFromCart(productIDForDelete, id));
-
+                    break;
 
 //            case "/clearAllProduct":
 //                int clear = (int) Integer.parseInt(request.getParameter("clear"));
 //                System.out.println(clear);
 //                if (clear == 1)
 //                    cartDAO.clearCart(id);
-            case "/buy":
-                int getClick = (int) Integer.parseInt(request.getParameter("click"));
-                System.out.println(getClick);
-                ArrayList<String> listProduct = cartDAO.getProductIDFromCartByUserID(id);
-                for(String productID:listProduct) {
-
-                    cartDAO.updateWarehouse(
-                            productID, cartDAO.getExportNumber(productID),
-                            cartDAO.getRemainNumber(productID) - cartDAO.getExportNumber(productID));
-
-                }
-
-                //                if(listProduct.size() > 0) {
-                    int totalCost = cartDAO.totalCost(id);
-                    cartDAO.updateCart(id, totalCost);
-
+//            case "/buy":
+//                int getClick = (int) Integer.parseInt(request.getParameter("click"));
+//                System.out.println(getClick);
+//                ArrayList<String> listProduct = cartDAO.getProductIDFromCartByUserID(id);
+//
+//                for(String productID:listProduct) {
+//                    cartDAO.updateWarehouse(productID, cartDAO.getExportNumber(productID),
+//                            cartDAO.getRemainNumber(productID) - cartDAO.getExportNumber(productID)) ;
+//
+//                }
+//
+//                if(listProduct.size() > 0) {
+//                    int totalCost = cartDAO.totalCost(id);
+//                    cartDAO.updateCart(id, totalCost);
 //                } else {
 //                    request.setAttribute("Error","Gio hang rong");
 //                }

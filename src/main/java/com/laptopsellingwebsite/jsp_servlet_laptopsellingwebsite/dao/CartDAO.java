@@ -179,14 +179,14 @@ public class CartDAO {
         }
     }
 
-    public boolean updateWarehouse(String productID, int numOfExport, int numRemain) {
+    public boolean updateWarehouse(String productID, int numOfExportInDB, int numRemainInDB, int productQuantityOnCart) {
         boolean result = false;
         try {
 
             String command = "update khohang set khohang.slxuat = ?, khohang.tonkho = ?  where malaptop = ?";
             PreparedStatement ps = DBConnect.getInstance().get(command);
-            ps.setInt(1,numOfExport);
-            ps.setInt(2,numRemain);
+            ps.setInt(1,numOfExportInDB + productQuantityOnCart);
+            ps.setInt(2,numRemainInDB);
             ps.setString(3, productID);
             int row = ps.executeUpdate();
             if (row > 0) result = true;

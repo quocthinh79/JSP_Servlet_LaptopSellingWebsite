@@ -129,7 +129,7 @@
                                 </div> -->
                                 <div class="final-price" class="padding-10 padding-bottom-20">
                                     <span class="left gray-text">Thành tiền</span>
-                                    <span class="right final-cash large-text red-text bolder"></span>
+                                    <span id="final-cash" class="right final-cash large-text red-text bolder">${totalCost}</span>
                                 </div>
                                 <!-- <div class="VAT" class="padding-10">
                                     <span class="gray-text">(Đã bao gồm VAT)</span>
@@ -175,6 +175,14 @@
 </script>
 <script>
     listenCart();
+    $('.final-cash').text().match(/\d+/g).join('')
+
+    var price = document.getElementById("final-cash");
+    var priceText = $('.final-cash').text();
+    price.innerText = (Number(priceText).toLocaleString('it-IT', {
+        style: 'currency',
+        currency: 'VND'
+    }));
 
     function listenCart() {
         let priceHTML = document.querySelectorAll('.price-text');
@@ -302,6 +310,10 @@
             var destination = $(this).closest('.cart-item');
             var originPrice = parseInt(parent.find('.origin-price').val().match(/\d+/g).join(''));
             var checkBoxItem = $(this).closest('.item').find("input[name='checkItem']");
+
+
+            <%--console.log(${Error})--%>
+
             valueNumProduct++;
 
             if (checkAll.prop("checked")) {
