@@ -12,6 +12,7 @@
 let command = '';
 let temp = '';
 let dieuKienUpdate = '';
+let contentBefore = '';
 
 class BSTable {
 
@@ -181,6 +182,8 @@ class BSTable {
         //Pone en modo de edición
         const arr = [];
         let numCount = 0;
+        const map = new Map();
+        let countCol = 0;
         this._modifyEachColumn(this.options.editableColumns, $cols, function ($td) {  // modify each column
             numCount++;
             let content = $td.html();             // read content
@@ -198,10 +201,22 @@ class BSTable {
             if (arr.length !== 0 && (numCount === 1 && content !== '')) {
                 command = 'UPDATE'
             }
+            map.set("Col" + countCol++, content);
             let div = '<div style="display: none;">' + content + '</div>';  // hide content (save for later use)
             let input = '<input class="form-control input-sm"  data-original-value="' + content + '" value="' + content + '">';
             $td.html(div + input);                // set content
         });
+        let dataSend = ''
+        let num = 0;
+        map.forEach(function (value, key, map) {
+            num++;
+            if (num < map.size) {
+                dataSend += value + ","
+            } else {
+                dataSend += value
+            }
+        })
+        contentBefore = dataSend;
         this._actionsModeEdit(button);
     }
 
@@ -341,6 +356,7 @@ class BSTable {
                     url: 'Edit',
                     type: 'POST',
                     data: {
+                        contentBefore: contentBefore,
                         send: dataSend,
                         currentTable: currentTable,
                         dieuKien: dieuKienUpdate
