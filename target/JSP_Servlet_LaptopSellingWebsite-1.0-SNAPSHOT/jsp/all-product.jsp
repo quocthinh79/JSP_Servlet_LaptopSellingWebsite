@@ -390,7 +390,6 @@
 <%@include file="../layout/register.jsp" %>
 <!--Back to top-->
 <%@include file="../layout/back-to-top.jsp" %>
-
 <script>
     let search = document.getElementById('input_search');
     let div = document.getElementById('content1');
