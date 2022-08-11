@@ -10,6 +10,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 @WebServlet(urlPatterns = {"/Cart","/clearAllProduct","/addQuantity","/subtractQuantity","/clearAProduct","/getPrice","/getTotalPrice","/buy"})
@@ -31,7 +32,7 @@ public class CartController extends HttpServlet {
             case "/Cart":
                 ArrayList<CartInfo> listProductOnCart = cartDAO.getProductList(cartDAO.getProductIDFromCartByUserID(id));
                 int totalCost = cartDAO.totalCost(id);
-                System.out.println(totalCost);
+//                System.out.println(totalCost);
                 request.setAttribute("listProduct", listProductOnCart);
                 request.setAttribute("totalCost", totalCost);
                 request.getRequestDispatcher("jsp/cart.jsp").forward(request, response);
@@ -41,13 +42,24 @@ public class CartController extends HttpServlet {
                 String productIDForAdd = request.getParameter("id");
                 int getProductRemainQuantity = cartDAO.getRemainNumber(productIDForAdd);
                 int productQuantityWillAdd = cartDAO.getProductQuantity(productIDForAdd, id) + 1;
+                String result ;
+                // xu ly truong hop so luong nhap nhieu hon ton kho
                 if (productQuantityWillAdd <= getProductRemainQuantity) {
+                    result = "1";
+//                    request.setAttribute("result",result);
+                    PrintWriter out = response.getWriter();
+                    out.println(result);
+                    System.out.println("1");
                     cartDAO.updateProductQuantityByProductID(
                             productIDForAdd,
                             id,
                             cartDAO.getProductQuantity(productIDForAdd, id) + 1);
                 } else {
-                    System.out.println("Khong the them san pham");
+                    result = "0";
+//                    request.setAttribute("result",result);
+                    PrintWriter out = response.getWriter();
+                    out.println(result);
+                    System.out.println("0");
                 }
                 break;
 
@@ -71,27 +83,28 @@ public class CartController extends HttpServlet {
 //                System.out.println(clear);
 //                if (clear == 1)
 //                    cartDAO.clearCart(id);
-//            case "/buy":
-//                int getClick = (int) Integer.parseInt(request.getParameter("click"));
-//                System.out.println(getClick);
+            case "/buy":
+                int getClick = (int) Integer.parseInt(request.getParameter("click"));
+                System.out.println(getClick);
 //                ArrayList<String> listProduct = cartDAO.getProductIDFromCartByUserID(id);
 //
-//                for(String productID:listProduct) {
-//                    cartDAO.updateWarehouse(productID, cartDAO.getExportNumber(productID),
-//                            cartDAO.getRemainNumber(productID) - cartDAO.getExportNumber(productID)) ;
-//
-//                }
+////                for(String productID:listProduct) {
+////                    int productQuantityOnCartForBuyMethod = cartDAO.getProductQuantity(productID,id);
+////
+////                    cartDAO.updateWarehouse(productID,) ;
+////
+////                }
 //
 //                if(listProduct.size() > 0) {
-//                    int totalCost = cartDAO.totalCost(id);
-//                    cartDAO.updateCart(id, totalCost);
+//                    int totalCostForBuy = cartDAO.totalCost(id);
+//                    cartDAO.updateCart(id, totalCostForBuy);
 //                } else {
 //                    request.setAttribute("Error","Gio hang rong");
 //                }
 
-//
-//
-//
+
+
+
         }
     }
 }

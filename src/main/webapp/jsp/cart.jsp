@@ -65,11 +65,11 @@
                                         <span class="big-text bolder">Giỏ hàng của bạn</span>
                                     </span>
                                     </div>
-<%--                                    <div class="btn-clear">--%>
-<%--                                        <button class="btn-clear-all" style="background-color: #f8f8fc;color: blue;border: 1px solid #f8f8fc;cursor: pointer;">--%>
-<%--                                            <span>Xóa tất cả</span>--%>
-<%--                                        </button>--%>
-<%--                                    </div>--%>
+                                    <div class="btn-clear">
+                                        <button class="btn-clear-all" style="background-color: #f8f8fc;color: blue;border: 1px solid #f8f8fc;cursor: pointer;">
+                                            <span>Xóa tất cả</span>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -175,6 +175,13 @@
 </script>
 <script>
     listenCart();
+    $('.buy').click(function() {
+        $.ajax({
+            url:'buy',
+            type:'post',
+            data:{click: 1}
+        })
+    })
     $('.final-cash').text().match(/\d+/g).join('')
 
     var price = document.getElementById("final-cash");
@@ -305,17 +312,15 @@
             var parent = $(this).closest('.right-cart-item');
             var numberProduct = parent.find('.number');
 
-            var valueNumProduct = parseInt(numberProduct.text().match(/\d+/g).join(''));
+            let valueNumProduct = parseInt(numberProduct.text().match(/\d+/g).join(''));
             let checkAll = $(this).closest('.cart-item').find("input[name='checkAllProduct']");
             var destination = $(this).closest('.cart-item');
             var originPrice = parseInt(parent.find('.origin-price').val().match(/\d+/g).join(''));
             var checkBoxItem = $(this).closest('.item').find("input[name='checkItem']");
 
-
-            <%--console.log(${Error})--%>
-
-            valueNumProduct++;
-
+            var leftParent = $(this).closest('.item');
+            var idElement = leftParent.find('.item-info-sku')[0].innerText.split(': ');
+            var idForAdd = idElement[1];
             if (checkAll.prop("checked")) {
                 total += originPrice;
                 $(destination).find(".total-pay").html(total.toLocaleString('it-IT', {
@@ -330,33 +335,34 @@
                 }));
 
             }
-
-            numberProduct.html(valueNumProduct);
-            var price = parent.find('.price-text');
-            var priceValue = originPrice * valueNumProduct
-            price.html(priceValue.toLocaleString('it-IT', {
-                style: 'currency',
-                currency: 'VND'
-            }));
-            changePrice();
-
-
-            var leftParent = $(this).closest('.item');
-            var idElement = leftParent.find('.item-info-sku')[0].innerText.split(': ');
-            var idForAdd = idElement[1];
-
             $.ajax({
                 url:"addQuantity",
                 type:"post",
                 data:{id: idForAdd},
 
-                success: function() {
+                success: function(response) {
+                    let isSuccess = response;
+                    console.log(response)
+                    if (isSuccess == 0) {
+                        alert("Không thể thêm sản phẩm do vượt quá số lượng cho phép");
 
+                    } else {
+                        valueNumProduct++;
+                        numberProduct.html(valueNumProduct);
+                        var price = parent.find('.price-text');
+                        var priceValue = originPrice * valueNumProduct
+                        price.html(priceValue.toLocaleString('it-IT', {
+                            style: 'currency',
+                            currency: 'VND'
+                        }));
+                        changePrice();
+                    }
                 },
                 error: function() {
 
                 },
             })
+
         });
 
         $('.btn-delete-product').click(function() {
@@ -377,14 +383,7 @@
             })
         })
 
-        // $('.buy').click(function() {
-        //     $.ajax({
-        //         url:'buy',
-        //         type:'post',
-        //         data:'click: 1'
-        //     })
-        // })
-        // let totalProduct
+
     }
 
 
