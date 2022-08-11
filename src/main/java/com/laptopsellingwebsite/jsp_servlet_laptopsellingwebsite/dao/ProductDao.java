@@ -7,6 +7,7 @@ import com.laptopsellingwebsite.jsp_servlet_laptopsellingwebsite.beans.Product;
 import com.laptopsellingwebsite.jsp_servlet_laptopsellingwebsite.beans.ProductWithStatus;
 import com.laptopsellingwebsite.jsp_servlet_laptopsellingwebsite.db.DBConnect;
 
+import javax.xml.transform.Result;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -1242,4 +1243,6 @@ public class ProductDao {
             return null;
         }
     }
+
+
 }

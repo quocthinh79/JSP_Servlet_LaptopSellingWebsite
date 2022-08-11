@@ -6,4 +6,10 @@ btnAddCart.onclick = function () {
     countCart++;
     iconCart.innerHTML = countCart;
     iconCart.style.display = 'flex'
+
+
+
 }
+
+
+

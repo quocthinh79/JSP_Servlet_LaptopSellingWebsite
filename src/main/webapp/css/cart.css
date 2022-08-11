@@ -386,7 +386,10 @@ body, html {
 .cart-header .provider-container .provider-padding {
     padding: 10px;
 }
-
+.flex-box-row {
+    display: flex;
+    flex-direction: row;
+}
 .cart-header .provider-container .verified-logo {
     background-color: white;
     color: green;

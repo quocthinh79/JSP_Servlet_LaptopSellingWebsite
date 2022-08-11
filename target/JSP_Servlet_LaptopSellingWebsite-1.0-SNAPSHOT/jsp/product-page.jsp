@@ -43,6 +43,7 @@
 <%@include file="../layout/cart-hover.jsp" %>
 <jsp:useBean id="productID" scope="request" type="java.util.List"/>
 <c:forEach var="x" items="${productID}">
+
 <div id="view-image-product">
     <div id="close-view-image-product"><i class="fas fa-times"></i></div>
     <div class="big-image-view-product" style="background-image: url('${root}${x.linkHinh1}')"></div>
@@ -168,8 +169,7 @@
                                     <tbody>
                                     <tr>
                                         <td class="sizeTD"> Mã laptop</td>
-                                        <td> ${x.maLapTop}
-                                        </td>
+                                        <td id="productID">${x.maLapTop}</td>
                                     </tr>
                                     <tr>
                                         <td class="sizeTD"> Series</td>
@@ -263,6 +263,27 @@
     for (let i = 0; i < price1.length; i++){
         price1[i].innerHTML = parseInt(price1[i].textContent).toLocaleString('it-IT', {style: 'currency', currency: 'VND'});
     }
+</script>
+
+<script>
+    let btnAddProduct = document.getElementById('them-vao-gio')
+    btnAddProduct.addEventListener('click',function () {
+        $.ajax({
+            url:"addProductToCart",
+            type:"post",
+            data:{id: document.getElementById('productID').innerHTML.trim()},
+            success: function() {
+
+            },
+            error: function() {
+
+            }
+        })
+        console.log(document.getElementById('productID').innerHTML)
+
+    })
+
+
 </script>
 <script src="${root}js/register.js"></script>
 <script src="${root}js/register.js"></script>

@@ -40,6 +40,6 @@
             <div class="total-product">Tổng tiền (0) sản phẩm</div>
             <div class="total-price">0 VND</div>
         </div>
-        <div role="button" class="btn-view-cart"><a href="cart.jsp" class="btn-tt">Xem giỏ hàng</a></div>
+        <div role="button" class="btn-view-cart"><a href="${root}Cart" class="btn-tt">Xem giỏ hàng</a></div>
     </div>
 </div>

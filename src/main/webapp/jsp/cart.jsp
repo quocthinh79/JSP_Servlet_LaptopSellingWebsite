@@ -11,7 +11,7 @@
     response.setCharacterEncoding("UTF-8");
 %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:url value="/" var="root"/>
+<c:url value="" var="root"/>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -65,475 +65,59 @@
                                         <span class="big-text bolder">Giỏ hàng của bạn</span>
                                     </span>
                                     </div>
-                                    <div class="btn-clear">
-                                        <button class="clear">
-                                            <span>Xóa tất cả</span>
-                                        </button>
-                                    </div>
+<%--                                    <div class="btn-clear">--%>
+<%--                                        <button class="btn-clear-all" style="background-color: #f8f8fc;color: blue;border: 1px solid #f8f8fc;cursor: pointer;">--%>
+<%--                                            <span>Xóa tất cả</span>--%>
+<%--                                        </button>--%>
+<%--                                    </div>--%>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="cart-item">
                         <div class="cart-container">
-                            <div class="cart-header">
-                                <div class="left-provider-content">
-                                    <div class="provider-container">
-                                        <div class="provider-padding provider-checkbox">
-                                            <input class="checkAllProduct" type="checkbox" name="checkAllProduct"
-                                                   value="">
-                                        </div>
-                                        <div class="provider-padding-left provider-info">
-                                            <div class="provider-icon">
-                                                <img class="provider-logo" src="${root}image/asus-logo.png" alt="Asus">
-                                            </div>
-                                        </div>
-                                        <div class="provider-padding provider-name">
-                                            <span class="normal-text bolder">Asus</span>
-                                        </div>
-                                        <div class="provider-padding verified-logo">
-                                            <i class="fas fa-check-circle"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="right-provider-content">
-                                    <span class="total-pay blue-text bolder"></span>
-                                </div>
-                            </div>
                             <div class="cart-item-info">
                                 <div class="container">
-                                    <div class="item">
-                                        <div class="left-cart-item">
-                                            <div class="item-checkbox item-padding">
-                                                <input type="checkbox" class="checkItem" name="checkItem" value="">
+                                    <c:forEach items="${listProduct}" var="product">
+                                        <div class="item">
+                                            <div class="left-cart-item">
+                                                <div class="item-thumbnail item-padding">
+                                                    <img class="item-logo-thumbnail" src="${product.linkHinh}" ;/>
+                                                </div>
+                                                <div class="item-info-container item-padding">
+                                                    <span class="item-info-name smaller-text">${product.tenLaptop}</span>
+                                                    <span class="item-info-sku smaller-text light-gray-text">Mã Laptop: ${product.maLaptop}</span>
+                                                </div>
                                             </div>
-                                            <div class="item-thumbnail item-padding">
-                                                <img class="item-logo-thumbnail" src="${root}image/man-hinh-asus.jpg">
-                                            </div>
-                                            <div class="item-info-container item-padding">
-                                                <span class="item-info-name smaller-text">Màn hình LCD ASUS VL249HE (1920 x 1080/IPS/75Hz/5 ms)</span>
-                                                <span class=" item-info-sku smaller-text light-gray-text">Mã Laptop: 191100961</span>
+                                            <div class="right-cart-item">
+                                                <div class="btn-add-subtract">
+                                                    <button id="btn-subtract-id" class="btn-padding btn-subtract">
+                                                        <i class="icon-btn fas fa-chevron-down"></i>
+                                                    </button>
+                                                    <div id="quantity" class="btn-padding number">${product.soluong}</div>
+                                                    <button id="btn-add-id" class="btn-padding btn-add">
+                                                        <i class="icon-btn fas fa-chevron-up"></i>
+                                                    </button>
+                                                </div>
+                                                <div class="price">
+                                                    <input type="hidden" value="${product.giaban}" class="origin-price">
+                                                    <span class="bolder gray-text price-text">${product.giaban * product.soluong}</span>
+                                                </div>
+                                                <div class="">
+                                                    <button style="margin-top:5px; padding:3px; background-color: #e00000;border: 1px solid #e00000; border-radius:7px ;color: #f8f8f8" class="btn-delete-product">Xoá sản phẩm</button>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="right-cart-item">
-                                            <div class="btn-add-subtract">
-                                                <button class="btn-padding btn-subtract">
-                                                    <i class="icon-btn fas fa-chevron-down"></i>
-                                                </button>
-                                                <div class="btn-padding number">5</div>
-                                                <button class="btn-padding btn-add">
-                                                    <i class="icon-btn fas fa-chevron-up"></i>
-                                                </button>
-                                            </div>
-                                            <div class="price">
-                                                <input type="hidden" value="500000" class="origin-price">
-                                                <span class="bolder gray-text price-text">2500000</span>
-                                            </div>
-                                        </div>
-                                    </div>
 
+                                    </c:forEach>
                                 </div>
                             </div>
-                            <div class="cart-item-info">
-                                <div class="container">
-                                    <div class="item">
-                                        <div class="left-cart-item">
-                                            <div class="item-checkbox item-padding">
-                                                <input type="checkbox" class="checkItem" name="checkItem" value="">
-                                            </div>
-                                            <div class="item-thumbnail item-padding">
-                                                <img class="item-logo-thumbnail" src="${root}image/man-hinh-asus.jpg">
-                                            </div>
-                                            <div class="item-info-container item-padding">
-                                                <span class="item-info-name smaller-text">Màn hình LCD ASUS VL249HE (1920 x 1080/IPS/75Hz/5 ms)</span>
-                                                <span class=" item-info-sku smaller-text light-gray-text">Mã Laptop: 191100961</span>
-                                            </div>
-                                        </div>
-                                        <div class="right-cart-item">
-                                            <div class="btn-add-subtract">
-                                                <button class="btn-padding btn-subtract">
-                                                    <i class="icon-btn fas fa-chevron-down"></i>
-                                                </button>
-                                                <div class="btn-padding number">1</div>
-                                                <button class="btn-padding btn-add">
-                                                    <i class="icon-btn fas fa-chevron-up"></i>
-                                                </button>
-                                            </div>
-                                            <div class="price">
-                                                <input type="hidden" value="4300000" class="origin-price">
-                                                <span class="bolder gray-text price-text">4300000</span>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                            <div class="cart-item-info">
-                                <div class="container">
-                                    <div class="item">
-                                        <div class="left-cart-item">
-                                            <div class="item-checkbox item-padding">
-                                                <input type="checkbox" class="checkItem" name="checkItem" value="">
-                                            </div>
-                                            <div class="item-thumbnail item-padding">
-                                                <img class="item-logo-thumbnail" src="${root}image/man-hinh-asus.jpg">
-                                            </div>
-                                            <div class="item-info-container item-padding">
-                                                <span class="item-info-name smaller-text">Màn hình LCD ASUS VL249HE (1920 x 1080/IPS/75Hz/5 ms)</span>
-                                                <span class=" item-info-sku smaller-text light-gray-text">Mã Laptop: 191100961</span>
-                                            </div>
-                                        </div>
-                                        <div class="right-cart-item">
-                                            <div class="btn-add-subtract">
-                                                <button class="btn-padding btn-subtract">
-                                                    <i class="icon-btn fas fa-chevron-down"></i>
-                                                </button>
-                                                <div class="btn-padding number">1</div>
-                                                <button class="btn-padding btn-add">
-                                                    <i class="icon-btn fas fa-chevron-up"></i>
-                                                </button>
-                                            </div>
-                                            <div class="price">
-                                                <input type="hidden" value="8000000" class="origin-price">
-                                                <span class="bolder gray-text price-text">8000000</span>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-
-
                         </div>
                     </div>
-                    <div class="cart-item">
-                        <div class="cart-container">
-                            <div class="cart-header">
-                                <div class="left-provider-content">
-                                    <div class="provider-container">
-                                        <div class="provider-padding provider-checkbox">
-                                            <input class="checkAllProduct" type="checkbox" name="checkAllProduct"
-                                                   value="">
-                                        </div>
-                                        <div class="provider-padding-left provider-info">
-                                            <div class="provider-icon">
-                                                <img class="provider-logo" src="${root}image/asus-logo.png" alt="Asus">
-                                            </div>
-                                        </div>
-                                        <div class="provider-padding provider-name">
-                                            <span class="normal-text bolder">Asus</span>
-                                        </div>
-                                        <div class="provider-padding verified-logo">
-                                            <i class="fas fa-check-circle"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="right-provider-content">
-                                    <span class="total-pay blue-text bolder"></span>
-                                </div>
-                            </div>
-                            <div class="cart-item-info">
-                                <div class="container">
-                                    <div class="item">
-                                        <div class="left-cart-item">
-                                            <div class="item-checkbox item-padding">
-                                                <input type="checkbox" class="checkItem" name="checkItem" value="">
-                                            </div>
-                                            <div class="item-thumbnail item-padding">
-                                                <img class="item-logo-thumbnail" src="${root}image/man-hinh-asus.jpg">
-                                            </div>
-                                            <div class="item-info-container item-padding">
-                                                <span class="item-info-name smaller-text">Màn hình LCD ASUS VL249HE (1920 x 1080/IPS/75Hz/5 ms)</span>
-                                                <span class=" item-info-sku smaller-text light-gray-text">Mã Laptop: 191100961</span>
-                                            </div>
-                                        </div>
-                                        <div class="right-cart-item">
-                                            <div class="btn-add-subtract">
-                                                <button class="btn-padding btn-subtract">
-                                                    <i class="icon-btn fas fa-chevron-down"></i>
-                                                </button>
-                                                <div class="btn-padding number">5</div>
-                                                <button class="btn-padding btn-add">
-                                                    <i class="icon-btn fas fa-chevron-up"></i>
-                                                </button>
-                                            </div>
-                                            <div class="price">
-                                                <input type="hidden" value="500000" class="origin-price">
-                                                <span class="bolder gray-text price-text">2500000</span>
-                                            </div>
-                                        </div>
-                                    </div>
 
-                                </div>
-                            </div>
-                            <div class="cart-item-info">
-                                <div class="container">
-                                    <div class="item">
-                                        <div class="left-cart-item">
-                                            <div class="item-checkbox item-padding">
-                                                <input type="checkbox" class="checkItem" name="checkItem" value="">
-                                            </div>
-                                            <div class="item-thumbnail item-padding">
-                                                <img class="item-logo-thumbnail" src="${root}image/man-hinh-asus.jpg">
-                                            </div>
-                                            <div class="item-info-container item-padding">
-                                                <span class="item-info-name smaller-text">Màn hình LCD ASUS VL249HE (1920 x 1080/IPS/75Hz/5 ms)</span>
-                                                <span class=" item-info-sku smaller-text light-gray-text">Mã Laptop: 191100961</span>
-                                            </div>
-                                        </div>
-                                        <div class="right-cart-item">
-                                            <div class="btn-add-subtract">
-                                                <button class="btn-padding btn-subtract">
-                                                    <i class="icon-btn fas fa-chevron-down"></i>
-                                                </button>
-                                                <div class="btn-padding number">1</div>
-                                                <button class="btn-padding btn-add">
-                                                    <i class="icon-btn fas fa-chevron-up"></i>
-                                                </button>
-                                            </div>
-                                            <div class="price">
-                                                <input type="hidden" value="4300000" class="origin-price">
-                                                <span class="bolder gray-text price-text">4300000</span>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                            <div class="cart-item-info">
-                                <div class="container">
-                                    <div class="item">
-                                        <div class="left-cart-item">
-                                            <div class="item-checkbox item-padding">
-                                                <input type="checkbox" class="checkItem" name="checkItem" value="">
-                                            </div>
-                                            <div class="item-thumbnail item-padding">
-                                                <img class="item-logo-thumbnail" src="${root}image/man-hinh-asus.jpg">
-                                            </div>
-                                            <div class="item-info-container item-padding">
-                                                <span class="item-info-name smaller-text">Màn hình LCD ASUS VL249HE (1920 x 1080/IPS/75Hz/5 ms)</span>
-                                                <span class=" item-info-sku smaller-text light-gray-text">Mã Laptop: 191100961</span>
-                                            </div>
-                                        </div>
-                                        <div class="right-cart-item">
-                                            <div class="btn-add-subtract">
-                                                <button class="btn-padding btn-subtract">
-                                                    <i class="icon-btn fas fa-chevron-down"></i>
-                                                </button>
-                                                <div class="btn-padding number">1</div>
-                                                <button class="btn-padding btn-add">
-                                                    <i class="icon-btn fas fa-chevron-up"></i>
-                                                </button>
-                                            </div>
-                                            <div class="price">
-                                                <input type="hidden" value="8000000" class="origin-price">
-                                                <span class="bolder gray-text price-text">8000000</span>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-
-
-                        </div>
-                    </div>
-                    <div class="cart-item">
-                        <div class="cart-container">
-                            <div class="cart-header">
-                                <div class="left-provider-content">
-                                    <div class="provider-container">
-                                        <div class="provider-padding provider-checkbox">
-                                            <input class="checkAllProduct" type="checkbox" name="checkAllProduct"
-                                                   value="">
-                                        </div>
-                                        <div class="provider-padding-left provider-info">
-                                            <div class="provider-icon">
-                                                <img class="provider-logo" src="${root}image/asus-logo.png" alt="Asus">
-                                            </div>
-                                        </div>
-                                        <div class="provider-padding provider-name">
-                                            <span class="normal-text bolder">Asus</span>
-                                        </div>
-                                        <div class="provider-padding verified-logo">
-                                            <i class="fas fa-check-circle"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="right-provider-content">
-                                    <span class="total-pay blue-text bolder"></span>
-                                </div>
-                            </div>
-                            <div class="cart-item-info">
-                                <div class="container">
-                                    <div class="item">
-                                        <div class="left-cart-item">
-                                            <div class="item-checkbox item-padding">
-                                                <input type="checkbox" class="checkItem" name="checkItem" value="">
-                                            </div>
-                                            <div class="item-thumbnail item-padding">
-                                                <img class="item-logo-thumbnail" src="${root}image/man-hinh-asus.jpg">
-                                            </div>
-                                            <div class="item-info-container item-padding">
-                                                <span class="item-info-name smaller-text">Màn hình LCD ASUS VL249HE (1920 x 1080/IPS/75Hz/5 ms)</span>
-                                                <span class=" item-info-sku smaller-text light-gray-text">Mã Laptop: 191100961</span>
-                                            </div>
-                                        </div>
-                                        <div class="right-cart-item">
-                                            <div class="btn-add-subtract">
-                                                <button class="btn-padding btn-subtract">
-                                                    <i class="icon-btn fas fa-chevron-down"></i>
-                                                </button>
-                                                <div class="btn-padding number">5</div>
-                                                <button class="btn-padding btn-add">
-                                                    <i class="icon-btn fas fa-chevron-up"></i>
-                                                </button>
-                                            </div>
-                                            <div class="price">
-                                                <input type="hidden" value="500000" class="origin-price">
-                                                <span class="bolder gray-text price-text">2500000</span>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                            <div class="cart-item-info">
-                                <div class="container">
-                                    <div class="item">
-                                        <div class="left-cart-item">
-                                            <div class="item-checkbox item-padding">
-                                                <input type="checkbox" class="checkItem" name="checkItem" value="">
-                                            </div>
-                                            <div class="item-thumbnail item-padding">
-                                                <img class="item-logo-thumbnail" src="${root}image/man-hinh-asus.jpg">
-                                            </div>
-                                            <div class="item-info-container item-padding">
-                                                <span class="item-info-name smaller-text">Màn hình LCD ASUS VL249HE (1920 x 1080/IPS/75Hz/5 ms)</span>
-                                                <span class=" item-info-sku smaller-text light-gray-text">Mã Laptop: 191100961</span>
-                                            </div>
-                                        </div>
-                                        <div class="right-cart-item">
-                                            <div class="btn-add-subtract">
-                                                <button class="btn-padding btn-subtract">
-                                                    <i class="icon-btn fas fa-chevron-down"></i>
-                                                </button>
-                                                <div class="btn-padding number">1</div>
-                                                <button class="btn-padding btn-add">
-                                                    <i class="icon-btn fas fa-chevron-up"></i>
-                                                </button>
-                                            </div>
-                                            <div class="price">
-                                                <input type="hidden" value="4300000" class="origin-price">
-                                                <span class="bolder gray-text price-text">4300000</span>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                            <div class="cart-item-info">
-                                <div class="container">
-                                    <div class="item">
-                                        <div class="left-cart-item">
-                                            <div class="item-checkbox item-padding">
-                                                <input type="checkbox" class="checkItem" name="checkItem" value="">
-                                            </div>
-                                            <div class="item-thumbnail item-padding">
-                                                <img class="item-logo-thumbnail" src="${root}image/man-hinh-asus.jpg">
-                                            </div>
-                                            <div class="item-info-container item-padding">
-                                                <span class="item-info-name smaller-text">Màn hình LCD ASUS VL249HE (1920 x 1080/IPS/75Hz/5 ms)</span>
-                                                <span class=" item-info-sku smaller-text light-gray-text">Mã Laptop: 191100961</span>
-                                            </div>
-                                        </div>
-                                        <div class="right-cart-item">
-                                            <div class="btn-add-subtract">
-                                                <button class="btn-padding btn-subtract">
-                                                    <i class="icon-btn fas fa-chevron-down"></i>
-                                                </button>
-                                                <div class="btn-padding number">1</div>
-                                                <button class="btn-padding btn-add">
-                                                    <i class="icon-btn fas fa-chevron-up"></i>
-                                                </button>
-                                            </div>
-                                            <div class="price">
-                                                <input type="hidden" value="8000000" class="origin-price">
-                                                <span class="bolder gray-text price-text">8000000</span>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-
-
-                        </div>
-                    </div>
                 </div>
                 <div class="right-content">
                     <div class="container">
-                        <div class="coupon">
-                            <div class="container">
-                                <div class="coupon-header">
-                                    <span class="coupon-text">Mã giảm giá</span>
-                                    <div class="coupon-input-container">
-                                        <input class="coupon-input" type="text" placeholder="Nhập mã của bạn">
-                                        <button class="confirm-btn"><span>Áp dụng ngay</span></button>
-                                    </div>
-                                </div>
-                                <div class="break">
-                                    <hr class="hr-break">
-                                </div>
-                                <div class="list-applied-coupon">
-                                    <div class="coupon container">
-                                        <div class="applied-coupon-left">
-                                            <div class="coupon-applied">
-                                                <div class="coupon-code">
-                                                    <span class="bolder larger-text">856F684856</span>
-                                                </div>
-                                                <div class="coupon-name padding-10">
-                                                    <span class="blue-text smaller-text">Giảm giá 30% dành cho đồ điện tử</span>
-                                                </div>
-                                                <div class="active-day padding-10">
-                                                    <span class="experied-day smaller-text">HSD:</span>
-                                                    <span class="red-text smaller-text">đến 30/10/2021</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="applied-coupon-right">
-                                            <div class="returned-money">
-                                                <span>-</span>
-                                                <span class="sale-with-code blue-text">3%</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="coupon container">
-                                        <div class="applied-coupon-left">
-                                            <div class="coupon-applied">
-                                                <div class="coupon-code">
-                                                    <span class="bolder larger-text">123Y681209</span>
-                                                </div>
-                                                <div class="coupon-name padding-10">
-                                                    <span class="blue-text smaller-text">Giảm giá 30% dành cho đồ điện tử</span>
-                                                </div>
-                                                <div class="active-day padding-10">
-                                                    <span class="experied-day smaller-text">HSD:</span>
-                                                    <span class="red-text smaller-text">đến 30/10/2021</span>
-                                                </div>
-
-                                            </div>
-                                        </div>
-
-                                        <div class="applied-coupon-right">
-                                            <span>-</span>
-                                            <span class="blue-text returned-money sale-with-code">3%</span>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                         <div class="cash">
                             <div class="container">
                                 <div class="cash-title">
@@ -545,7 +129,7 @@
                                 </div> -->
                                 <div class="final-price" class="padding-10 padding-bottom-20">
                                     <span class="left gray-text">Thành tiền</span>
-                                    <span class="right final-cash large-text red-text bolder">0</span>
+                                    <span class="right final-cash large-text red-text bolder"></span>
                                 </div>
                                 <!-- <div class="VAT" class="padding-10">
                                     <span class="gray-text">(Đã bao gồm VAT)</span>
@@ -579,7 +163,7 @@
         let saleByCode = document.querySelectorAll('.sale-with-code');
         console.log(final)
         for (let i = 0; i < code.length; i++) {
-            if (sale.val() == (code[i].innerText)){
+            if (sale.val() == (code[i].innerText)) {
                 final = final - (final * (saleByCode[i].innerText.match(/\d+/g).join('') / 100));
             }
         }
@@ -591,18 +175,17 @@
 </script>
 <script>
     listenCart();
+
     function listenCart() {
         let priceHTML = document.querySelectorAll('.price-text');
+
         for (let i = 0; i < priceHTML.length; i++) {
             priceHTML[i].innerHTML = parseInt(priceHTML[i].innerHTML.match(/\d+/g).join('')).toLocaleString('it-IT', {
                 style: 'currency',
                 currency: 'VND'
             })
         }
-        $('.clear').click(function () {
-            $('.cart-item').remove();
-            $('.final-cash').html("0");
-        });
+
         let total = 0;
         $('.checkAllProduct').click(function (event) {
             total = 0;
@@ -630,6 +213,7 @@
             }
             changePrice();
         });
+
         let sum = 0;
         let elementTotalPrice;
         $('.checkItem').click(function () {
@@ -656,6 +240,7 @@
             }
             changePrice();
         });
+
         $('.btn-subtract').click(function () {
             var parent = $(this).closest('.right-cart-item');
             var numberProduct = parent.find('.number');
@@ -680,6 +265,7 @@
                     }));
                 }
             }
+
             numberProduct.html(valueNumProduct);
             var price = parent.find('.price-text');
             var priceValue = originPrice * valueNumProduct
@@ -688,16 +274,36 @@
                 currency: 'VND'
             }));
             changePrice();
+
+            var leftParent = $(this).closest('.item');
+            var idElement = leftParent.find('.item-info-sku')[0].innerText.split(': ')
+            var idForSubtract = idElement[1]
+
+            $.ajax({
+                url:"subtractQuantity",
+                type:"post",
+                data:{id: idForSubtract},
+
+                success: function() {
+
+                },
+                error: function() {
+
+                },
+            })
         });
+
         $('.btn-add').click(function () {
             var parent = $(this).closest('.right-cart-item');
             var numberProduct = parent.find('.number');
+
             var valueNumProduct = parseInt(numberProduct.text().match(/\d+/g).join(''));
             let checkAll = $(this).closest('.cart-item').find("input[name='checkAllProduct']");
             var destination = $(this).closest('.cart-item');
             var originPrice = parseInt(parent.find('.origin-price').val().match(/\d+/g).join(''));
             var checkBoxItem = $(this).closest('.item').find("input[name='checkItem']");
             valueNumProduct++;
+
             if (checkAll.prop("checked")) {
                 total += originPrice;
                 $(destination).find(".total-pay").html(total.toLocaleString('it-IT', {
@@ -710,6 +316,7 @@
                     style: 'currency',
                     currency: 'VND'
                 }));
+
             }
 
             numberProduct.html(valueNumProduct);
@@ -720,16 +327,68 @@
                 currency: 'VND'
             }));
             changePrice();
+            var leftParent = $(this).closest('.item');
+            var idElement = leftParent.find('.item-info-sku')[0].innerText.split(': ');
+            var idForAdd = idElement[1];
 
-            var parentLeft =  $(this).closest('.item');
-            console.log(parentLeft.find('.item-info-sku')[0].innerText)
+            $.ajax({
+                url:"addQuantity",
+                type:"post",
+                data:{id: idForAdd},
+
+                success: function() {
+
+                },
+                error: function() {
+
+                },
+            })
         });
+
+        $('.btn-delete-product').click(function() {
+            var leftParent = $(this).closest('.item');
+
+            $(leftParent).remove();
+
+            var idElement = leftParent.find('.item-info-sku')[0].innerText.split(': ');
+            var idForDelete = idElement[1];
+            console.log(idForDelete)
+            $.ajax({
+                url:'clearAProduct',
+                type:'post',
+                data:{idForDelete: idForDelete},
+                success: function() {
+
+                }
+            })
+        })
+
+        // $('.buy').click(function() {
+        //     $.ajax({
+        //         url:'buy',
+        //         type:'post',
+        //         data:'click: 1'
+        //     })
+        // })
+        // let totalProduct
     }
+
+
 
     function changePrice() {
         let finalCash = 0
-        let totalPayPrice = document.querySelectorAll('.total-pay');
-        console.log()
+        let totalPayPrice = document.querySelectorAll('.price-text');
+        let getTotalPay = [];
+        //
+        // for (let i = 0; i < totalPayPrice.length; i++) {
+        //     getTotalPay.push(totalPayPrice[i].innerText)
+        // }
+        // for (let i = 0; i < getTotalPay.length; i++) {
+        //     console.log(getTotalPay[i].split(' VND'))
+        //
+        // }
+
+
         for (let i = 0; i < totalPayPrice.length; i++) {
             if (totalPayPrice[i].innerText != "") {
                 finalCash += parseInt(totalPayPrice[i].innerText.match(/\d+/g).join(''));
@@ -742,6 +401,7 @@
     }
 
 </script>
+
 <script src="${root}js/register.js"></script>
 <script crossorigin="anonymous" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
         src="https://code.jquery.com/jquery-3.6.0.js"></script>
@@ -752,4 +412,6 @@
 <script src="${root}js/nav-responsive.js"></script>
 <script src="${root}js/BackToTop.js"></script>
 <script src="${root}js/Scroll-Indicator.js"></script>
+<script src="${root}js/cart.js"></script>
+
 </html>
