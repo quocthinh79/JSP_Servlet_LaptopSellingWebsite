@@ -31,6 +31,10 @@ public class UserServices {
         return instance;
     }
 
+    public String getPassMD5(String username) {
+        return UserDao.getInstance().getPassMD5(username);
+    }
+
     public List<Account> getAccount(String email) {
         return UserDao.getInstance().getAccount(email);
     }

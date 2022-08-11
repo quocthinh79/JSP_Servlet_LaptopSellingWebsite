@@ -327,8 +327,6 @@
                 currency: 'VND'
             }));
             changePrice();
-
-
             var leftParent = $(this).closest('.item');
             var idElement = leftParent.find('.item-info-sku')[0].innerText.split(': ');
             var idForAdd = idElement[1];

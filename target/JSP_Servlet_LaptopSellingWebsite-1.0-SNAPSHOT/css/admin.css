@@ -542,6 +542,113 @@ div.tab button.active {
 }
 
 /**/
+#thongbaoError .register {
+    width: fit-content;
+    margin: 0px 100px;
+    height: auto;
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 16px;
+    animation: downAnimation ease 0.3s;
+}
+
+#thongbaoError .register .border {
+    align-items: center;
+    width: 100%;
+    border-bottom: 1px solid #dadde1;
+    margin: 12px 0;
+    text-align: center;
+}
+
+#thongbaoError .register-form .input-item-haft {
+    width: 48%;
+    padding: 14px 16px;
+    margin: 6px 0;
+    font-size: 16px;
+    float: left;
+}
+
+#thongbaoError .input-item-haft.left {
+    margin-right: 8px;
+}
+
+#thongbaoError .input-item-haft.right {
+    margin-left: 8px;
+}
+
+#thongbaoError .register-form .input-items {
+    width: 100%;
+    padding: 14px 16px;
+    margin: 6px 0;
+    font-size: 16px;
+}
+
+#thongbaoError .register-form .register-div {
+    margin-top: 24px;
+}
+
+#thongbaoError .register .title-register {
+    position: relative;
+}
+
+#thongbaoError .title-register .close-register {
+    padding: 2px 2px;
+    position: absolute;
+    right: 0;
+    z-index: 1;
+    font-size: 30px;
+    color: #111111;
+    cursor: pointer;
+}
+
+/*#thongbao.js-register.open {*/
+/*    display: flex;*/
+/*}*/
+
+#thongbaoError
+{
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+#thongbaoError .register-div {
+    display: flex;
+    width: 100%;
+    height: auto;
+    margin-top: 6px;
+    text-align: center;
+}
+
+#thongbaoError .input-register{
+    font-size: 33px;
+    text-align: center;
+}
+
+#thongbaoError .register-div .btn-register {
+    margin: 0 16px;
+    flex: 1;
+    text-decoration: none;
+    color: #ffffff;
+    padding: 15px 26px;
+    background-color: #42b72a;
+    border-radius: 8px;
+    cursor: pointer;
+    border: none;
+}
+
+#thongbaoError .register-div #ok:hover{
+    background-color: #28a745;
+}
+
+/**/
 #thongbaoIdEmpty .register {
     width: 432px;
     height: auto;

@@ -178,7 +178,7 @@
 
     function listenCart() {
         let priceHTML = document.querySelectorAll('.price-text');
-        
+
         for (let i = 0; i < priceHTML.length; i++) {
             priceHTML[i].innerHTML = parseInt(priceHTML[i].innerHTML.match(/\d+/g).join('')).toLocaleString('it-IT', {
                 style: 'currency',
@@ -327,8 +327,6 @@
                 currency: 'VND'
             }));
             changePrice();
-
-
             var leftParent = $(this).closest('.item');
             var idElement = leftParent.find('.item-info-sku')[0].innerText.split(': ');
             var idForAdd = idElement[1];
