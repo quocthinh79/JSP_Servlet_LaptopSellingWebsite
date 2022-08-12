@@ -384,6 +384,8 @@
                 data:{idForDelete: idForDelete},
                 success: function() {
                     alert("Xoá sản phẩm thành công")
+                    changePrice();
+
                 }
             })
         });
