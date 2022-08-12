@@ -34,7 +34,15 @@
     <link href="${root}fonts/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="${root}css/cartResponsive.css">
 </head>
+
 <body>
+<c:set var = "status" value = "${currentStatus}"/>
+<c:if test = "${status == 0}">
+<%--    <div id="return-homepage">--%>
+<%--    </div>--%>
+    <script>alert("Vui lòng đăng nhập để tiếp tục")</script>
+</c:if>
+
 <div id="cart-main">
     <%@include file="../layout/header.jsp" %>
     <div class="cart" class="bg-gray">
@@ -156,6 +164,7 @@
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>
+
     $('.confirm-btn').click(function () {
         let sale = $('.coupon-input');
         let code = document.querySelectorAll('.coupon-code');
@@ -172,6 +181,8 @@
             currency: 'VND'
         }))
     })
+<%--</c:if>--%>
+
 </script>
 <script>
     listenCart();

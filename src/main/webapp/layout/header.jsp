@@ -84,3 +84,6 @@
         <div class="progress-bar" id="myBar"></div>
     </div>
 </div>
+<script>
+
+</script>
