@@ -44,24 +44,24 @@
 <jsp:useBean id="productID" scope="request" type="java.util.List"/>
 <c:forEach var="x" items="${productID}">
 
-<div id="view-image-product">
-    <div id="close-view-image-product"><i class="fas fa-times"></i></div>
-    <div class="big-image-view-product" style="background-image: url('${root}${x.linkHinh1}')"></div>
-    <div class="items-image-view-product">
-        <div class="item-image-view-product"
-             style="background-image: url('${root}${x.linkHinh1}')"></div>
-        <div class="item-image-view-product"
-             style="background-image: url('${root}${x.linkHinh2}')"></div>
-        <div class="item-image-view-product"
-             style="background-image: url('${root}${x.linkHinh3}')"></div>
-        <div class="item-image-view-product"
-             style="background-image: url('${root}${x.linkHinh4}')"></div>
-        <div class="item-image-view-product"
-             style="background-image: url('${root}${x.linkHinh5}')"></div>
+    <div id="view-image-product">
+        <div id="close-view-image-product"><i class="fas fa-times"></i></div>
+        <div class="big-image-view-product" style="background-image: url('${root}${x.linkHinh1}')"></div>
+        <div class="items-image-view-product">
+            <div class="item-image-view-product"
+                 style="background-image: url('${root}${x.linkHinh1}')"></div>
+            <div class="item-image-view-product"
+                 style="background-image: url('${root}${x.linkHinh2}')"></div>
+            <div class="item-image-view-product"
+                 style="background-image: url('${root}${x.linkHinh3}')"></div>
+            <div class="item-image-view-product"
+                 style="background-image: url('${root}${x.linkHinh4}')"></div>
+            <div class="item-image-view-product"
+                 style="background-image: url('${root}${x.linkHinh5}')"></div>
+        </div>
     </div>
-</div>
-<div id="product-page">
-    <div id="content-product">
+    <div id="product-page">
+        <div id="content-product">
             <div class="infor-product">
                 <div class="product-details">
                     <div id="product-image" class="product-image"
@@ -102,122 +102,123 @@
                     </div>
                 </div>
             </div>
-        <div class="sale-policy">
-            <div style="display:flex;margin-bottom: 8px">
-                <div class="img-sale-policy"
-                     style="background-image: url('${root}image/icon-product/free-ship.png')"></div>
-                <!--                <img src="${root}image/icon-product/free-ship.png" style="">-->
-                <span style="margin: auto 0 auto 0">Sản phẩm được miễn phí giao hàng</span>
-            </div>
-            <div class="border-pro"></div>
-            <div class="policy" type="subtitle">Chính sách bán hàng</div>
-            <div style="display:flex;margin-bottom: 8px">
-                <!--                <img src="${root}image/icon-product/ship.png" style="margin-right: 3px;line-height:normal">-->
-                <div class="img-sale-policy" style="background-image: url('${root}image/icon-product/ship.png')"></div>
+            <div class="sale-policy">
+                <div style="display:flex;margin-bottom: 8px">
+                    <div class="img-sale-policy"
+                         style="background-image: url('${root}image/icon-product/free-ship.png')"></div>
+                    <!--                <img src="${root}image/icon-product/free-ship.png" style="">-->
+                    <span style="margin: auto 0 auto 0">Sản phẩm được miễn phí giao hàng</span>
+                </div>
+                <div class="border-pro"></div>
+                <div class="policy" type="subtitle">Chính sách bán hàng</div>
+                <div style="display:flex;margin-bottom: 8px">
+                    <!--                <img src="${root}image/icon-product/ship.png" style="margin-right: 3px;line-height:normal">-->
+                    <div class="img-sale-policy" style="background-image: url('${root}image/icon-product/ship.png')"></div>
 
-                <span style="margin: auto 0 auto 0">Miễn phí giao hàng cho đơn hàng từ 800K</span>
-            </div>
-            <div style="display:flex;margin-bottom: 8px">
-                <!--                <img src="${root}image/icon-product/camket.png" style="margin-right: 3px;line-height:normal">-->
-                <div class="img-sale-policy"
-                     style="background-image: url('${root}image/icon-product/camket.png')"></div>
+                    <span style="margin: auto 0 auto 0">Miễn phí giao hàng cho đơn hàng từ 800K</span>
+                </div>
+                <div style="display:flex;margin-bottom: 8px">
+                    <!--                <img src="${root}image/icon-product/camket.png" style="margin-right: 3px;line-height:normal">-->
+                    <div class="img-sale-policy"
+                         style="background-image: url('${root}image/icon-product/camket.png')"></div>
 
-                <span style="margin: auto 0 auto 0">Cam kết hàng chính hãng 100%</span>
-            </div>
-            <div style="display:flex;margin-bottom: 8px">
-                <!--                <img src="${root}image/icon-product/doitra.png" style="margin-right: 3px;line-height:normal">-->
-                <div class="img-sale-policy"
-                     style="background-image: url('${root}image/icon-product/doitra.png')"></div>
+                    <span style="margin: auto 0 auto 0">Cam kết hàng chính hãng 100%</span>
+                </div>
+                <div style="display:flex;margin-bottom: 8px">
+                    <!--                <img src="${root}image/icon-product/doitra.png" style="margin-right: 3px;line-height:normal">-->
+                    <div class="img-sale-policy"
+                         style="background-image: url('${root}image/icon-product/doitra.png')"></div>
 
-                <span style="margin: auto 0 auto 0">Đổi trả trong vòng 10 ngày</span>
-            </div>
-            <div class="policy" type="subtitle">Dịch vụ khác</div>
-            <div style="display:flex;margin-bottom: 8px">
-                <!--                <img src="${root}image/icon-product/suachua.png" style="margin-right: 3px;line-height:normal">-->
-                <div class="img-sale-policy"
-                     style="background-image: url('${root}image/icon-product/suachua.png')"></div>
+                    <span style="margin: auto 0 auto 0">Đổi trả trong vòng 10 ngày</span>
+                </div>
+                <div class="policy" type="subtitle">Dịch vụ khác</div>
+                <div style="display:flex;margin-bottom: 8px">
+                    <!--                <img src="${root}image/icon-product/suachua.png" style="margin-right: 3px;line-height:normal">-->
+                    <div class="img-sale-policy"
+                         style="background-image: url('${root}image/icon-product/suachua.png')"></div>
 
-                <span style="margin: auto 0 auto 0">Sửa chữa đồng giá 150.000đ.</span>
-            </div>
-            <div style="display:flex;margin-bottom: 8px">
-                <!--                <img src="${root}image/icon-product/baotri.png" style="margin-right: 3px;line-height:normal">-->
-                <div class="img-sale-policy"
-                     style="background-image: url('${root}image/icon-product/baotri.png')"></div>
+                    <span style="margin: auto 0 auto 0">Sửa chữa đồng giá 150.000đ.</span>
+                </div>
+                <div style="display:flex;margin-bottom: 8px">
+                    <!--                <img src="${root}image/icon-product/baotri.png" style="margin-right: 3px;line-height:normal">-->
+                    <div class="img-sale-policy"
+                         style="background-image: url('${root}image/icon-product/baotri.png')"></div>
 
-                <span style="margin: auto 0 auto 0">Vệ sinh máy tính, laptop.</span>
-            </div>
-            <div style="display:flex;margin-bottom: 8px">
-                <!--                <img src="${root}image/icon-product/camket.png" style="margin-right: 3px;line-height:normal">-->
-                <div class="img-sale-policy"
-                     style="background-image: url('${root}image/icon-product/camket.png')"></div>
+                    <span style="margin: auto 0 auto 0">Vệ sinh máy tính, laptop.</span>
+                </div>
+                <div style="display:flex;margin-bottom: 8px">
+                    <!--                <img src="${root}image/icon-product/camket.png" style="margin-right: 3px;line-height:normal">-->
+                    <div class="img-sale-policy"
+                         style="background-image: url('${root}image/icon-product/camket.png')"></div>
 
-                <span style="margin: auto 0 auto 0">Bảo hành tại nhà.</span>
+                    <span style="margin: auto 0 auto 0">Bảo hành tại nhà.</span>
+                </div>
             </div>
         </div>
-    </div>
-    <div id="container">
-        <div class="body-content">
-            <div>
-                <div class="tabs">
-                    <a class="tab active" href="#">Thông số kỹ thuật</a>
-                </div>
-                <div class="tab-contents">
-                    <div class="tab-content active" data-tabidx="1">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <table class="table-specs">
-                                    <tbody>
-                                    <tr>
-                                        <td class="sizeTD"> Mã laptop</td>
-                                        <td id="productID">${x.maLapTop}</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="sizeTD"> Series</td>
-                                        <td> ${x.series}</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="sizeTD"> Màu</td>
-                                        <td> ${x.mau}</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="sizeTD"> CPU</td>
-                                        <td> ${x.cpu}</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="sizeTD"> VGA</td>
-                                        <td> ${x.vga}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="sizeTD"> RAM</td>
-                                        <td> ${x.ram}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="sizeTD"> Kích thước màn hình</td>
-                                        <td> ${x.kichThuocManHinh}</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="sizeTD"> Ổ cứng</td>
-                                        <td> ${x.oCung}</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="sizeTD"> Bàn phím</td>
-                                        <td> ${x.banPhim}</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="sizeTD"> Pin</td>
-                                        <td> ${x.pin}</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="sizeTD"> Khối lượng</td>
-                                        <td> ${x.khoiLuong}
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                                <div>
-                                    <br>
+        <div id="container">
+            <div class="body-content">
+                <div>
+                    <div class="tabs">
+                        <a class="tab active" href="#">Thông số kỹ thuật</a>
+                    </div>
+                    <div class="tab-contents">
+                        <div class="tab-content active" data-tabidx="1">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <table class="table-specs">
+                                        <tbody>
+                                        <tr>
+                                            <td class="sizeTD"> Mã laptop</td>
+                                            <td id="productID">${x.maLapTop}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="sizeTD"> Series</td>
+                                            <td> ${x.series}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="sizeTD"> Màu</td>
+                                            <td> ${x.mau}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="sizeTD"> CPU</td>
+                                            <td> ${x.cpu}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="sizeTD"> VGA</td>
+                                            <td> ${x.vga}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="sizeTD"> RAM</td>
+                                            <td> ${x.ram}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="sizeTD"> Kích thước màn hình</td>
+                                            <td> ${x.kichThuocManHinh}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="sizeTD"> Ổ cứng</td>
+                                            <td> ${x.oCung}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="sizeTD"> Bàn phím</td>
+                                            <td> ${x.banPhim}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="sizeTD"> Pin</td>
+                                            <td> ${x.pin}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="sizeTD"> Khối lượng</td>
+                                            <td> ${x.khoiLuong}
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <div>
+                                        <br>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -225,14 +226,13 @@
                 </div>
             </div>
         </div>
+
+        <%@include file="../layout/product-best-seller.jsp"%>
+        <%@include file="../layout/footer.jsp" %>
+
     </div>
 
-    <%@include file="../layout/product-best-seller.jsp"%>
-    <%@include file="../layout/footer.jsp" %>
-
-</div>
-
-</div>
+    </div>
 </c:forEach>
 <%@include file="../layout/login.jsp" %>
 <%@include file="../layout/fogot.jsp" %>
@@ -272,8 +272,11 @@
             url:"addProductToCart",
             type:"post",
             data:{id: document.getElementById('productID').innerHTML.trim()},
-            success: function() {
-
+            success: function(response) {
+                let isSuccess = response;
+                console.log(response)
+                if (isSuccess == 0)
+                    alert("Không thể thêm sản phẩm do vượt quá số lượng cho phép");
             },
             error: function() {
 

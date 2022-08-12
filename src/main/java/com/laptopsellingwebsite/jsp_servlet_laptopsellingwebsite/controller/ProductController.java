@@ -13,8 +13,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.io.PrintWriter;
 
-@WebServlet(urlPatterns = {"/addProductToCart","/Product"})
+@WebServlet(urlPatterns = {"/addProductToCart", "/Product"})
 
 public class ProductController extends HttpServlet {
     @Override
@@ -28,14 +29,13 @@ public class ProductController extends HttpServlet {
 
                 request.setAttribute("url", url);
                 Multimap<String, String> map = (Multimap<String, String>) session.getAttribute("map");
-                if (map != null){
+                if (map != null) {
                     map.clear();
                 }
                 request.setAttribute("productID", ProductService.getInstance().getProductWithID(id));
                 request.setAttribute("productsProductBS", ProductService.getInstance().getTopProductBestSeller(10));
                 request.getRequestDispatcher("jsp/product-page.jsp").forward(request, response);
         }
-
 
 
     }
@@ -51,19 +51,53 @@ public class ProductController extends HttpServlet {
             case "/addProductToCart":
                 HttpSession session = request.getSession();
                 Account currentAccount = (Account) session.getAttribute("account");
+                String productIDForAdd = request.getParameter("id");
                 int userID = currentAccount.getId();
-                String productId = request.getParameter("id");
                 CartDAO cartDAO = new CartDAO();
-                if (cartDAO.getCartID(userID) == null) {
-                    cartDAO.insertCart(userID);
-                } else if(cartDAO.isProductOnCart(productId,userID) == false){
-                    cartDAO.insertProductToCart(productId,userID,1);
-                } else {
-                    cartDAO.updateProductQuantityByProductID(productId,userID, cartDAO.getProductQuantity(productId,userID) + 1);
 
-            }
+                int getProductRemainQuantity = cartDAO.getRemainNumber(productIDForAdd);
+                int productQuantityWillAdd = cartDAO.getExportNumber(productIDForAdd) + 1;
+                int getProductExportQuantity = cartDAO.getExportNumber(productIDForAdd);
+                int getProductImportQuantity = cartDAO.getImportNumber(productIDForAdd);
+
+
+                String result;
+                // xu ly truong hop so luong nhap nhieu hon ton kho
+                if ((productQuantityWillAdd) <= getProductImportQuantity) {
+                    if (cartDAO.getCurrentCartByUserID(userID) == "" || cartDAO.isPuschased(cartDAO.getCurrentCartByUserID(userID)) == true) {
+                        cartDAO.insertCart(userID);
+                        cartDAO.insertProductToCart(productIDForAdd, userID, 1);
+                        cartDAO.updateWarehouse(productIDForAdd, getProductExportQuantity + 1, getProductRemainQuantity - 1);
+                        result = "1";
+                        PrintWriter out = response.getWriter();
+                        out.println(result);
+                    } else if (cartDAO.isProductOnCart(productIDForAdd, userID) == false) {
+                        cartDAO.insertProductToCart(productIDForAdd, userID, 1);
+                        cartDAO.updateWarehouse(productIDForAdd, getProductExportQuantity + 1, getProductRemainQuantity - 1);
+                        result = "1";
+//                       request.setAttribute("result",result);
+                        PrintWriter out = response.getWriter();
+                        out.println(result);
+                    } else {
+                        result = "1";
+//                       request.setAttribute("result",result);
+                        PrintWriter out = response.getWriter();
+                        out.println(result);
+                        cartDAO.updateProductQuantityByProductID(
+                                productIDForAdd,
+                                userID,
+                                cartDAO.getProductQuantity(productIDForAdd, userID) + 1);
+                        cartDAO.updateWarehouse(productIDForAdd, getProductExportQuantity + 1, getProductRemainQuantity - 1);
+                    }
+                } else {
+                    result = "0";
+                    PrintWriter out = response.getWriter();
+                    out.println(result);
+                }
+                break;
 
         }
 
     }
+
 }
