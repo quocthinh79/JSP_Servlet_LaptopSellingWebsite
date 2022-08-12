@@ -71,26 +71,26 @@ public class CustomerController extends HttpServlet {
                         String email = exactlyData[5];
                         int dieuKien = Integer.parseInt(dieuKienUpdate);
                         String urlAPI = "https://emailvalidation.abstractapi.com/v1/?api_key=e487b294b87a42f2a093a546613cf18c&email=" + email;
-                        HttpURLConnection conn=null;
+                        HttpURLConnection conn = null;
                         String responsse = "";
-                        try{
+                        try {
                             java.net.URL url = new URL(urlAPI);
-                            conn = (HttpURLConnection)url.openConnection();
+                            conn = (HttpURLConnection) url.openConnection();
 
                             if (conn.getResponseCode() != 200) {
                                 throw new RuntimeException("HTTP GET Request Failed with Error code : "
                                         + conn.getResponseCode());
                             } else {
                                 StringBuilder strBuf = new StringBuilder();
-                                BufferedReader reader=null;
-                                reader = new BufferedReader(new InputStreamReader(conn.getInputStream(),"utf-8"));
+                                BufferedReader reader = null;
+                                reader = new BufferedReader(new InputStreamReader(conn.getInputStream(), "utf-8"));
                                 String output = null;
                                 while ((output = reader.readLine()) != null)
                                     strBuf.append(output);
                                 JSONObject json = new JSONObject(String.valueOf(strBuf));
                                 responsse = json.getString("deliverability");
                             }
-                        }catch(Exception e) {
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
                         if (responsse.equalsIgnoreCase("UNDELIVERABLE")) {
