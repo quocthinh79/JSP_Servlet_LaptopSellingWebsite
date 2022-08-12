@@ -18,7 +18,7 @@ public class AdminDao {
         return instance;
     }
 
-    public String insertLapTop(String maLapTop, String tenLaptop, String hang, int giaBan, String series, String mau, String cpu, String vga, String ram, String kichThuocManHinh, String oCung, String banPhim, String pin, String khoiLuong, String linkHinh1, String linkHinh2, String linkHinh3, String linkHinh4, String linkHinh5) {
+    public int insertLapTop(String maLapTop, String tenLaptop, String hang, int giaBan, String series, String mau, String cpu, String vga, String ram, String kichThuocManHinh, String oCung, String banPhim, String pin, String khoiLuong, String linkHinh1, String linkHinh2, String linkHinh3, String linkHinh4, String linkHinh5) {
         try {
             String query = "INSERT INTO thongtinlaptop VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement ps = DBConnect.getInstance().get(query);
@@ -41,20 +41,14 @@ public class AdminDao {
             ps.setString(17, linkHinh3);
             ps.setString(18, linkHinh4);
             ps.setString(19, linkHinh5);
-            String result = "Success";
-            try {
-                ps.executeUpdate();
-            } catch (Exception e) {
-                result = e.getMessage();
-            }
-            return result;
+            return ps.executeUpdate();
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-        return null;
+        return 0;
     }
 
-    public String updateLaptop(String maLapTop, String tenLaptop, String hang, int giaBan, String series, String mau, String cpu, String vga, String ram, String kichThuocManHinh, String oCung, String banPhim, String pin, String khoiLuong, String linkHinh1, String linkHinh2, String linkHinh3, String linkHinh4, String linkHinh5, String dieuKien) {
+    public int updateLaptop(String maLapTop, String tenLaptop, String hang, int giaBan, String series, String mau, String cpu, String vga, String ram, String kichThuocManHinh, String oCung, String banPhim, String pin, String khoiLuong, String linkHinh1, String linkHinh2, String linkHinh3, String linkHinh4, String linkHinh5, String dieuKien) {
         try {
             String query = "UPDATE `thongtinlaptop` SET `MALAPTOP`=?,`TENLAPTOP`=?,`HANG`=?,`GIABAN`=?,`SERIES`=?,`MAU`=?,`CPU`=?,`VGA`=?,`RAM`=?,`KICHTHUOCMANHINH`=?,`OCUNG`=?,`BANPHIM`=?,`PIN`=?,`KHOILUONG`=?,`LINKHINH1`=?,`LINKHINH2`=?,`LINKHINH3`=?,`LINKHINH4`=?,`LINKHINH5`=? WHERE MALAPTOP = ?";
             PreparedStatement ps = DBConnect.getInstance().get(query);
@@ -78,23 +72,15 @@ public class AdminDao {
             ps.setString(18, linkHinh4);
             ps.setString(19, linkHinh5);
             ps.setString(20, dieuKien);
-            String result = "Success";
-            try {
-                ps.executeUpdate();
-            } catch (Exception e) {
-                result = e.getMessage();
-            }
-            return result;
+            return ps.executeUpdate();
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-        return null;
+        return 0;
     }
 
     public int deleteLaptop(String dieuKien) {
         try {
-            deleteKho(dieuKien);
-            deleteCartDetail(dieuKien);
             String query = "DELETE FROM `thongtinlaptop` WHERE MALAPTOP = ?";
             PreparedStatement ps = DBConnect.getInstance().get(query);
             ps.setString(1, dieuKien);
@@ -145,7 +131,7 @@ public class AdminDao {
     }
 
     // Thêm, xóa, sửa Hãng sản xuất
-    public String insertHangSx(String tenHang, String quocGia, String poster, String logoVuong, String logoNgang, String slogan) {
+    public int insertHangSx(String tenHang, String quocGia, String poster, String logoVuong, String logoNgang, String slogan) {
         try {
             String query = "INSERT INTO hangsx VALUES (?, ?, ?, ?, ?, ?)";
             PreparedStatement ps = DBConnect.getInstance().get(query);
@@ -155,20 +141,14 @@ public class AdminDao {
             ps.setString(4, logoVuong);
             ps.setString(5, logoNgang);
             ps.setString(6, slogan);
-            String result = "Success";
-            try {
-                ps.executeUpdate();
-            } catch (Exception e) {
-                result = e.getMessage();
-            }
-            return result;
+            return ps.executeUpdate();
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-        return null;
+        return 0;
     }
 
-    public String updateHangSx(String tenHang, String quocGia, String poster, String logoVuong, String logoNgang, String slogan, String dieuKien) {
+    public int updateHangSx(String tenHang, String quocGia, String poster, String logoVuong, String logoNgang, String slogan, String dieuKien) {
         try {
             String query = "UPDATE `hangsx` SET `TENHANG`=?,`QUOCGIA`=?,`POSTER`=?,`LOGOVUONG`=?,`LOGONGANG`=?,`SLOGAN`=? WHERE `TENHANG`=?";
             PreparedStatement ps = DBConnect.getInstance().get(query);
@@ -179,22 +159,15 @@ public class AdminDao {
             ps.setString(5, logoNgang);
             ps.setString(6, slogan);
             ps.setString(7, dieuKien);
-            String result = "Success";
-            try {
-                ps.executeUpdate();
-            } catch (Exception e) {
-                result = e.getMessage();
-            }
-            return result;
+            return ps.executeUpdate();
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-        return null;
+        return 0;
     }
 
     public int deleteHangSx(String dieuKien) {
         try {
-            deleteLaptop(dieuKien);
             String query = "DELETE FROM `hangsx` WHERE TENHANG = ?";
             PreparedStatement ps = DBConnect.getInstance().get(query);
             ps.setString(1, dieuKien);
@@ -243,7 +216,7 @@ public class AdminDao {
     }
 
     // Thêm, xóa, sửa Kho hàng
-    public String insertKho(String maLaptop, int slNhap, int slXuat, int slTon) {
+    public int insertKho(String maLaptop, int slNhap, int slXuat, int slTon) {
         try {
             String query = "INSERT INTO khohang VALUES (?, ?, ?, ?)";
             PreparedStatement ps = DBConnect.getInstance().get(query);
@@ -251,20 +224,14 @@ public class AdminDao {
             ps.setInt(2, slNhap);
             ps.setInt(3, slXuat);
             ps.setInt(4, slTon);
-            String result = "Success";
-            try {
-                ps.executeUpdate();
-            } catch (Exception e) {
-                result = e.getMessage();
-            }
-            return result;
+            return ps.executeUpdate();
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-        return null;
+        return 0;
     }
 
-    public String updateKho(String maLaptop, int slNhap, int slXuat, int slTon, String dieuKien) {
+    public int updateKho(String maLaptop, int slNhap, int slXuat, int slTon, String dieuKien) {
         try {
             String query = "UPDATE `khohang` SET `MALAPTOP`=?,`SLNHAP`=?,`SLXUAT`=?,`TONKHO`=? WHERE `MALAPTOP`=?";
             PreparedStatement ps = DBConnect.getInstance().get(query);
@@ -273,17 +240,11 @@ public class AdminDao {
             ps.setInt(3, slXuat);
             ps.setInt(4, slTon);
             ps.setString(5, dieuKien);
-            String result = "Success";
-            try {
-                ps.executeUpdate();
-            } catch (Exception e) {
-                result = e.getMessage();
-            }
-            return result;
+            return ps.executeUpdate();
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-        return null;
+        return 0;
     }
 
     public int deleteKho(String dieuKien) {
@@ -338,7 +299,7 @@ public class AdminDao {
     }
 
     // Thêm, xóa, sửa tài khoản
-    public String insertAccount(String hoTen, String username, String pass, String diaChi, String email) {
+    public int insertAccount(String hoTen, String username, String pass, String diaChi, String email) {
         try {
             String query = "INSERT INTO tk VALUES (NULL, ?, ?, ?, ?, ?, NULL)";
             PreparedStatement ps = DBConnect.getInstance().get(query);
@@ -347,20 +308,14 @@ public class AdminDao {
             ps.setString(3, pass);
             ps.setString(4, diaChi);
             ps.setString(5, email);
-            String result = "Success";
-            try {
-                ps.executeUpdate();
-            } catch (Exception e) {
-                result = e.getMessage();
-            }
-            return result;
+            return ps.executeUpdate();
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-        return null;
+        return 0;
     }
 
-    public String updateAccount(String hoTen, String username, String pass, String diaChi, String email, int dieuKien) {
+    public int updateAccount(String hoTen, String username, String pass, String diaChi, String email, int dieuKien) {
         try {
             String query = "UPDATE `tk` SET `HOTEN`=?,`USERNAME`=?,`PASSWORD`=?,`DIACHI`=?,`EMAIL`=?  WHERE `ID`=?";
             PreparedStatement ps = DBConnect.getInstance().get(query);
@@ -370,22 +325,16 @@ public class AdminDao {
             ps.setString(4, diaChi);
             ps.setString(5, email);
             ps.setInt(6, dieuKien);
-            String result = "Success";
-            try {
-                ps.executeUpdate();
-            } catch (Exception e) {
-                result = e.getMessage();
-            }
-            return result;
+            System.out.println(ps.toString());
+            return ps.executeUpdate();
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-        return null;
+        return 0;
     }
 
     public int deleteAccount(int dieuKien) {
         try {
-            deletePermission(dieuKien);
             String query = "DELETE FROM `tk` WHERE ID = ?";
             PreparedStatement ps = DBConnect.getInstance().get(query);
             ps.setInt(1, dieuKien);
@@ -450,42 +399,30 @@ public class AdminDao {
     }
 
     // Thêm, xóa, sửa tài khoản
-    public String insertPermission(int id, String quyen) {
+    public int insertPermission(int id, String quyen) {
         try {
             String query = "INSERT INTO phanquyen VALUES (?, ?)";
             PreparedStatement ps = DBConnect.getInstance().get(query);
             ps.setInt(1, id);
             ps.setString(2, quyen);
-            String result = "Success";
-            try {
-                ps.executeUpdate();
-            } catch (Exception e) {
-                result = e.getMessage();
-            }
-            return result;
+            return ps.executeUpdate();
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-        return null;
+        return 0;
     }
 
-    public String updatePermission(String quyen, int dieuKien) {
+    public int updatePermission(String quyen, int dieuKien) {
         try {
             String query = "UPDATE `phanquyen` SET `QUYEN`=? WHERE `ID`=?";
             PreparedStatement ps = DBConnect.getInstance().get(query);
             ps.setString(1, quyen);
             ps.setInt(2, dieuKien);
-            String result = "Success";
-            try {
-                ps.executeUpdate();
-            } catch (Exception e) {
-                result = e.getMessage();
-            }
-            return result;
+            return ps.executeUpdate();
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-        return null;
+        return 0;
     }
 
     public int deletePermission(int dieuKien) {
@@ -538,7 +475,7 @@ public class AdminDao {
     }
 
     // Thêm, xóa, sửa giỏ hàng
-    public String insertCart(String maGioHang, int makh, String ngayXuatGioHang, long triGia) {
+    public int insertCart(String maGioHang, int makh, String ngayXuatGioHang, long triGia) {
         try {
             String query = "INSERT INTO giohang VALUES (?, ?, ?, ?)";
             PreparedStatement ps = DBConnect.getInstance().get(query);
@@ -546,20 +483,14 @@ public class AdminDao {
             ps.setInt(2, makh);
             ps.setString(3, ngayXuatGioHang);
             ps.setLong(4, triGia);
-            String result = "Success";
-            try {
-                ps.executeUpdate();
-            } catch (Exception e) {
-                result = e.getMessage();
-            }
-            return result;
+            return ps.executeUpdate();
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-        return null;
+        return 0;
     }
 
-    public String updateCart(String maGioHang, int makh, String ngayXuatGioHang, long triGia, String dieuKien) {
+    public int updateCart(String maGioHang, int makh, String ngayXuatGioHang, long triGia, String dieuKien) {
         try {
             String query = "UPDATE `giohang` SET `MAGIOHANG`=?, `MAKH`=?, `NGAYXUATGIOHANG`=?, `TRIGIA`=? WHERE `MAGIOHANG`=?";
             PreparedStatement ps = DBConnect.getInstance().get(query);
@@ -568,22 +499,15 @@ public class AdminDao {
             ps.setString(3, ngayXuatGioHang);
             ps.setLong(4, triGia);
             ps.setString(5, dieuKien);
-            String result = "Success";
-            try {
-                ps.executeUpdate();
-            } catch (Exception e) {
-                result = e.getMessage();
-            }
-            return result;
+            return ps.executeUpdate();
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-        return null;
+        return 0;
     }
 
     public int deleteCart(String dieuKien) {
         try {
-            deleteCartDetail(dieuKien);
             String query = "DELETE FROM `giohang` WHERE magiohang = ?";
             PreparedStatement ps = DBConnect.getInstance().get(query);
             ps.setString(1, dieuKien);
@@ -631,27 +555,21 @@ public class AdminDao {
     }
 
     // Thêm, xóa, sửa chi tiết giỏ hàng
-    public String insertCartDetail(String maGioHang, String maLaptop, int soLuong) {
+    public int insertCartDetail(String maGioHang, String maLaptop, int soLuong) {
         try {
             String query = "INSERT INTO ctgh VALUES (?, ?, ?)";
             PreparedStatement ps = DBConnect.getInstance().get(query);
             ps.setString(1, maGioHang);
             ps.setString(2, maLaptop);
             ps.setInt(3, soLuong);
-            String result = "Success";
-            try {
-                ps.executeUpdate();
-            } catch (Exception e) {
-                result = e.getMessage();
-            }
-            return result;
+            return ps.executeUpdate();
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-        return null;
+        return 0;
     }
 
-    public String updateCartDetail(String maGioHang, String maLaptop, int soLuong, String dieuKien) {
+    public int updateCartDetail(String maGioHang, String maLaptop, int soLuong, String dieuKien) {
         try {
             String query = "UPDATE `ctgh` SET `MAGIOHANG`=?, `MALAPTOP`=?, `SOLUONG`=? WHERE `MAGIOHANG`=?";
             PreparedStatement ps = DBConnect.getInstance().get(query);
@@ -659,17 +577,11 @@ public class AdminDao {
             ps.setString(2, maLaptop);
             ps.setInt(3, soLuong);
             ps.setString(4, dieuKien);
-            String result = "Success";
-            try {
-                ps.executeUpdate();
-            } catch (Exception e) {
-                result = e.getMessage();
-            }
-            return result;
+            return ps.executeUpdate();
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-        return null;
+        return 0;
     }
 
     public int deleteCartDetail(String dieuKien) {

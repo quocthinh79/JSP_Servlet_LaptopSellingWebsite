@@ -341,21 +341,20 @@
                 <c:forEach var="x" items="${allProduct}">
                     <div class="hover-all-product">
                         <a class="all-product-item" href="${pageContext.request.contextPath}/Product?id=${x.maLapTop}">
+                            <div class="status-sale">-11%</div>
                             <div class="img-all-product-item"
-                                 style="background-image: url('${root}${x.image}')">
+                                 style="background-image: url('${root}${x.linkHinh1}')">
                             </div>
-                            <c:if test="${x.trangThai == 0}">
-                                <div class="status">HẾT HÀNG</div>
-                            </c:if>
+                            <div class="status">HẾT HÀNG</div>
                             <div class="infor-all-product-item">
-                                    ${x.nameProduct}
+                                    ${x.tenLaptop}
                             </div>
                             <div class="price-all-product-item">
                                     ${x.giaBan}
                             </div>
-<%--                            <div class="sale-all-product-item">
+                            <div class="sale-all-product-item">
                                 <span class="origin-price">33.999.000đ</span> <span>11%</span>
-                            </div>--%>
+                            </div>
                         </a>
                     </div>
                 </c:forEach>
@@ -366,7 +365,7 @@
                 <div>Không tìm thấy bất kì sản phẩm nào</div>
             </div>
         </div>
-        <div id="pagination" class="pagination p1">
+        <div class="pagination p1">
             <ul>
                 <c:forEach var="i" begin="1" end="${totalPage}">
                     <c:if test="${i == page}">
@@ -390,31 +389,20 @@
 <%@include file="../layout/register.jsp" %>
 <!--Back to top-->
 <%@include file="../layout/back-to-top.jsp" %>
-<script>
-    let search = document.getElementById('input_search');
-    let div = document.getElementById('content1');
-    search.addEventListener('input', function () {
-        $.ajax({
-            url: '${pageContext.request.contextPath}/Search',
-            type: 'GET',
-            data: {
-                txt: search.value
-            },
-            success: function (response) {
-                $('#product').html(response)
-                let product = document.querySelectorAll('.hover-all-product');
-                let slide = document.getElementById('pagination')
-                if (search.value == '' || product.length <= 0) {
-                    slide.style.display = 'flex';
-                } else {
-                    slide.style.display = 'none';
-                }
-            },
-            error: function () {
-            }
-        });
-    })
-</script>
+<%--<div id="loading">--%>
+<%--    <div class="loadingio-spinner-eclipse-okswoys3or7">--%>
+<%--        <div class="ldio-yzbzl1tp5rn">--%>
+<%--            <div>--%>
+<%--            </div>--%>
+<%--        </div>--%>
+<%--    </div>--%>
+<%--</div>--%>
+<%--</body>--%>
+<%--<script>--%>
+<%--    fetch('${pageContext.request.contextPath}/AllProduct').then(res => document.getElementById('loading').remove());--%>
+<%--    fetch('${pageContext.request.contextPath}/SearchClick').then(res => document.getElementById('loading').remove());--%>
+<%--    fetch('${pageContext.request.contextPath}/Sort').then(res => document.getElementById('loading').remove());--%>
+<%--</script>--%>
 <script>
     let notFound = document.getElementById('not-found');
     let product = document.querySelectorAll('.hover-all-product');

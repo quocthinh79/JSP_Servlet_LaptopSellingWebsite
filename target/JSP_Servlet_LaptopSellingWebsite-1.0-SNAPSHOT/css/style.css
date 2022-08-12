@@ -425,21 +425,20 @@ body, html {
 
 #main #content .product .product-selling {
     height: 100%;
-/*    width: 217px;*/
+    width: 217px;
     /*flex: 1;*/
     background-color: #1435c3;
 }
 
 #main #content .product .product-item-cover {
     height: 100%;
-    flex: 3;
-/*    width: 425px;*/
+    width: 425px;
     display: flex;
     flex-wrap: wrap;
 }
 
 #main #content .product .product-items {
-/*    width: 212px;*/
+    width: 212px;
     height: 198px;
     padding: 16px;
     border: 1px solid #ccc;

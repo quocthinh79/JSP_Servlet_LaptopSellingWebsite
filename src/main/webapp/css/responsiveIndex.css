@@ -6,10 +6,6 @@
         justify-content: center;
     }
 
-    #main #content .product .product-selling {
-        display: none;
-    }
-
     #main #content .product .product-items {
         border: none;
     }
@@ -30,10 +26,6 @@
         border-top: 1px solid #ccc;
         border-left: 1px solid #ccc;
     }
-
-    #poster {
-        display: none;
-    }
 }
 
 @media (max-width: 740px) {
@@ -41,14 +33,6 @@
         /*width: 207px;*/
         width: calc(100vw / 2);
     }
-    #main #content .product .product-selling {
-        display: none;
-    }
-
-    #poster {
-        display: none;
-    }
-
     #main #content .product .product-item-big{
         margin: 16px 0 16px 0;
     }

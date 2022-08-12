@@ -4,7 +4,6 @@ import com.google.common.collect.Multimap;
 import com.google.common.collect.TreeMultimap;
 import com.laptopsellingwebsite.jsp_servlet_laptopsellingwebsite.beans.Manufacturer;
 import com.laptopsellingwebsite.jsp_servlet_laptopsellingwebsite.beans.Product;
-import com.laptopsellingwebsite.jsp_servlet_laptopsellingwebsite.beans.ProductWithStatus;
 import com.laptopsellingwebsite.jsp_servlet_laptopsellingwebsite.db.DBConnect;
 
 import javax.xml.transform.Result;
@@ -12,7 +11,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -75,30 +73,6 @@ public class ProductDao {
         return null;
     }
 
-    public ArrayList getAllProductWithStatus(int limit, int page) {
-        ArrayList<ProductWithStatus> listResult = new ArrayList<>();
-        try {
-            int offset = (page - 1) * limit;
-            String query = "select tt.MALAPTOP, tt.LINKHINH1, tt.TENLAPTOP, tt.GIABAN, kh.TONKHO from thongtinlaptop tt JOIN khohang kh on tt.MALAPTOP = kh.MALAPTOP LIMIT " + "?" + " OFFSET " + "?";
-            PreparedStatement ps = DBConnect.getInstance().get(query);
-            ps.setInt(1, limit);
-            ps.setInt(2, offset);
-            ResultSet resultSet = ps.executeQuery();
-            while (resultSet.next()) {
-                ProductWithStatus product = new ProductWithStatus(resultSet.getString(1),
-                        resultSet.getString(2).toLowerCase(),
-                        resultSet.getString(3),
-                        resultSet.getInt(4),
-                        resultSet.getInt(5));
-                listResult.add(product);
-            }
-            return listResult;
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
     public int getTotalPage() {
         try {
             String query = "select count(*) as total from thongtinlaptop";
@@ -110,26 +84,6 @@ public class ProductDao {
             e.printStackTrace();
         }
         return 0;
-    }
-
-    public ArrayList getAllProductWithStatus() {
-        ArrayList<ProductWithStatus> listResult = new ArrayList<>();
-        try {
-            String query = "select tt.MALAPTOP, tt.LINKHINH1, tt.TENLAPTOP, tt.GIABAN, kh.TONKHO from thongtinlaptop tt JOIN khohang kh on tt.MALAPTOP = kh.MALAPTOP";
-            PreparedStatement ps = DBConnect.getInstance().get(query);
-            ResultSet resultSet = ps.executeQuery();
-            while (resultSet.next()) {
-                ProductWithStatus product = new ProductWithStatus(resultSet.getString(1),
-                        resultSet.getString(2).toLowerCase(),
-                        resultSet.getString(3),
-                        resultSet.getInt(4),
-                        resultSet.getInt(5));
-                listResult.add(product);
-            }
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        return listResult;
     }
 
     public ArrayList getAllProduct() {
@@ -167,25 +121,39 @@ public class ProductDao {
     }
 
     public ArrayList getAllProduct(String temp, int limit, int page) {
-        ArrayList<ProductWithStatus> listResult = new ArrayList<>();
+        ArrayList<Product> listResult = new ArrayList<>();
         try {
             int offset = (page - 1) * limit;
             String query;
             if (temp != null) {
-                query = "select tt.MALAPTOP, tt.LINKHINH1, tt.TENLAPTOP, tt.GIABAN, kh.TONKHO from thongtinlaptop tt JOIN khohang kh on tt.MALAPTOP = kh.MALAPTOP" + " ORDER BY GIABAN " + temp + " LIMIT " + "?" + " OFFSET " + "?";
+                query = "select * from thongtinlaptop" + " ORDER BY GIABAN " + temp + " LIMIT " + "?" + " OFFSET " + "?";
             } else {
-                query = "select tt.MALAPTOP, tt.LINKHINH1, tt.TENLAPTOP, tt.GIABAN, kh.TONKHO from thongtinlaptop tt JOIN khohang kh on tt.MALAPTOP = kh.MALAPTOP LIMIT " + "?" + " OFFSET " + "?";
+                query = "select * from thongtinlaptop" + " LIMIT " + "?" + " OFFSET " + "?";
             }
             PreparedStatement ps = DBConnect.getInstance().get(query);
             ps.setInt(1, limit);
             ps.setInt(2, offset);
             ResultSet resultSet = ps.executeQuery();
             while (resultSet.next()) {
-                ProductWithStatus product = new ProductWithStatus(resultSet.getString(1),
-                        resultSet.getString(2).toLowerCase(),
+                Product product = new Product(resultSet.getString(1),
+                        resultSet.getString(2),
                         resultSet.getString(3),
                         resultSet.getInt(4),
-                        resultSet.getInt(5));
+                        resultSet.getString(5),
+                        resultSet.getString(6),
+                        resultSet.getString(7),
+                        resultSet.getString(8),
+                        resultSet.getString(9),
+                        resultSet.getString(10),
+                        resultSet.getString(11),
+                        resultSet.getString(12),
+                        resultSet.getString(13),
+                        resultSet.getString(14),
+                        resultSet.getString(15),
+                        resultSet.getString(16),
+                        resultSet.getString(17),
+                        resultSet.getString(18),
+                        resultSet.getString(19));
                 listResult.add(product);
             }
         } catch (SQLException | ClassNotFoundException e) {
@@ -258,20 +226,36 @@ public class ProductDao {
     }
 
     public ArrayList getTopProductBestSeller(int num) {
-        ArrayList<ProductWithStatus> listProductBestSeller = new ArrayList<>();
+        ArrayList<Product> listProductBestSeller = new ArrayList<>();
         try {
-                String query = "select tt.MALAPTOP, tt.LINKHINH1, tt.TENLAPTOP, tt.GIABAN, kh.TONKHO from thongtinlaptop tt JOIN khohang kh on tt.MALAPTOP = kh.MALAPTOP ORDER BY kh.SLXUAT DESC LIMIT ?";
+            for (Manufacturer x : listProducer) {
+                String query = "select * from thongtinlaptop ORDER BY thongtinlaptop.GIABAN DESC LIMIT ?";
                 PreparedStatement ps = DBConnect.getInstance().get(query);
                 ps.setInt(1, num);
                 ResultSet resultSet = ps.executeQuery();
                 while (resultSet.next()) {
-                    ProductWithStatus product = new ProductWithStatus(resultSet.getString(1),
-                            resultSet.getString(2).toLowerCase(),
+                    Product product = new Product(resultSet.getString(1),
+                            resultSet.getString(2),
                             resultSet.getString(3),
                             resultSet.getInt(4),
-                            resultSet.getInt(5));
+                            resultSet.getString(5),
+                            resultSet.getString(6),
+                            resultSet.getString(7),
+                            resultSet.getString(8),
+                            resultSet.getString(9),
+                            resultSet.getString(10),
+                            resultSet.getString(11),
+                            resultSet.getString(12),
+                            resultSet.getString(13),
+                            resultSet.getString(14),
+                            resultSet.getString(15),
+                            resultSet.getString(16),
+                            resultSet.getString(17),
+                            resultSet.getString(18),
+                            resultSet.getString(19));
                     listProductBestSeller.add(product);
                 }
+            }
             return listProductBestSeller;
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
@@ -317,21 +301,35 @@ public class ProductDao {
     }
 
     public ArrayList getProductManufacturer(String manufacturer, int limit, int page) {
-        ArrayList<ProductWithStatus> listProductManufacturer = new ArrayList<>();
+        ArrayList<Product> listProductManufacturer = new ArrayList<>();
         try {
             int offset = (page - 1) * limit;
-            String query = "select tt.MALAPTOP, tt.LINKHINH1, tt.TENLAPTOP, tt.GIABAN, kh.TONKHO from thongtinlaptop tt JOIN khohang kh on tt.MALAPTOP = kh.MALAPTOP WHERE HANG = ? LIMIT " + "?" + " OFFSET " + "?";
+            String query = "SELECT * FROM THONGTINLAPTOP WHERE HANG = ? LIMIT " + "?" + " OFFSET " + "?";
             PreparedStatement ps = DBConnect.getInstance().get(query);
             ps.setString(1, manufacturer);
             ps.setInt(2, limit);
             ps.setInt(3, offset);
             ResultSet resultSet = ps.executeQuery();
             while (resultSet.next()) {
-                ProductWithStatus product = new ProductWithStatus(resultSet.getString(1),
-                        resultSet.getString(2).toLowerCase(),
+                Product product = new Product(resultSet.getString(1),
+                        resultSet.getString(2),
                         resultSet.getString(3),
                         resultSet.getInt(4),
-                        resultSet.getInt(5));
+                        resultSet.getString(5),
+                        resultSet.getString(6),
+                        resultSet.getString(7),
+                        resultSet.getString(8),
+                        resultSet.getString(9),
+                        resultSet.getString(10),
+                        resultSet.getString(11),
+                        resultSet.getString(12),
+                        resultSet.getString(13),
+                        resultSet.getString(14),
+                        resultSet.getString(15),
+                        resultSet.getString(16),
+                        resultSet.getString(17),
+                        resultSet.getString(18),
+                        resultSet.getString(19));
                 listProductManufacturer.add(product);
             }
 //            }
@@ -343,14 +341,14 @@ public class ProductDao {
     }
 
     public ArrayList getProductManufacturer(String manufacturer, String temp, int limit, int page) {
-        ArrayList<ProductWithStatus> listProductManufacturer = new ArrayList<>();
+        ArrayList<Product> listProductManufacturer = new ArrayList<>();
         try {
             int offset = (page - 1) * limit;
             String query;
             if (temp != null) {
-                query = "select tt.MALAPTOP, tt.LINKHINH1, tt.TENLAPTOP, tt.GIABAN, kh.TONKHO from thongtinlaptop tt JOIN khohang kh on tt.MALAPTOP = kh.MALAPTOP WHERE HANG = ?" + " ORDER BY GIABAN " + temp + " LIMIT " + "?" + " OFFSET " + "?";
+                query = "SELECT * FROM THONGTINLAPTOP WHERE HANG = ?" + " ORDER BY GIABAN " + temp + " LIMIT " + "?" + " OFFSET " + "?";
             } else {
-                query = "select tt.MALAPTOP, tt.LINKHINH1, tt.TENLAPTOP, tt.GIABAN, kh.TONKHO from thongtinlaptop tt JOIN khohang kh on tt.MALAPTOP = kh.MALAPTOP WHERE HANG = ?" + " LIMIT " + "?" + " OFFSET " + "?";
+                query = "SELECT * FROM THONGTINLAPTOP WHERE HANG = ? " + " LIMIT " + "?" + " OFFSET " + "?";
             }
             PreparedStatement ps = DBConnect.getInstance().get(query);
             ps.setString(1, manufacturer);
@@ -358,11 +356,25 @@ public class ProductDao {
             ps.setInt(3, offset);
             ResultSet resultSet = ps.executeQuery();
             while (resultSet.next()) {
-                ProductWithStatus product = new ProductWithStatus(resultSet.getString(1),
-                        resultSet.getString(2).toLowerCase(),
+                Product product = new Product(resultSet.getString(1),
+                        resultSet.getString(2),
                         resultSet.getString(3),
                         resultSet.getInt(4),
-                        resultSet.getInt(5));
+                        resultSet.getString(5),
+                        resultSet.getString(6),
+                        resultSet.getString(7),
+                        resultSet.getString(8),
+                        resultSet.getString(9),
+                        resultSet.getString(10),
+                        resultSet.getString(11),
+                        resultSet.getString(12),
+                        resultSet.getString(13),
+                        resultSet.getString(14),
+                        resultSet.getString(15),
+                        resultSet.getString(16),
+                        resultSet.getString(17),
+                        resultSet.getString(18),
+                        resultSet.getString(19));
                 listProductManufacturer.add(product);
             }
 //            }
@@ -623,6 +635,7 @@ public class ProductDao {
             for (String x : map.values()) {
                 ps.setString(count++, x);
             }
+            System.out.println(ps.toString());
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Product product = new Product(rs.getString(1),
@@ -653,8 +666,8 @@ public class ProductDao {
         }
     }
 
-    public ArrayList<ProductWithStatus> sortProduct(Multimap<String, String> map, String temp, int limit, int page) {
-        ArrayList<ProductWithStatus> result = new ArrayList();
+    public ArrayList<Product> sortProduct(Multimap<String, String> map, String temp, int limit, int page) {
+        ArrayList<Product> result = new ArrayList();
         try {
             int offset = (page - 1) * limit;
             String queryTemp = "";
@@ -677,25 +690,26 @@ public class ProductDao {
                     .collect(Collectors.joining(" AND "));
 
             String query = "";
+            System.out.println(queryTemp);
             if (temp != null) {
                 if (!joinString.equals("") && !queryTemp.equals("")) {
-                    query = "select tt.MALAPTOP, tt.LINKHINH1, tt.TENLAPTOP, tt.GIABAN, kh.TONKHO from thongtinlaptop tt JOIN khohang kh on tt.MALAPTOP = kh.MALAPTOP " + "WHERE" + queryTemp + " AND " + " %s " + " ORDER BY GIABAN " + temp + " LIMIT " + "?" + " OFFSET " + "?";
+                    query = "select * from THONGTINLAPTOP " + "WHERE" + queryTemp + " AND " + " %s " + " ORDER BY GIABAN " + temp + " LIMIT " + "?" + " OFFSET " + "?";
                 } else if (joinString.equals("") && !queryTemp.equals("")) {
-                    query = "select tt.MALAPTOP, tt.LINKHINH1, tt.TENLAPTOP, tt.GIABAN, kh.TONKHO from thongtinlaptop tt JOIN khohang kh on tt.MALAPTOP = kh.MALAPTOP " + "WHERE" + queryTemp + " ORDER BY GIABAN " + temp + " LIMIT " + "?" + " OFFSET " + "?";
+                    query = "select * from THONGTINLAPTOP " + "WHERE" + queryTemp + " ORDER BY GIABAN " + temp + " LIMIT " + "?" + " OFFSET " + "?";
                 } else if (queryTemp.equals("") && !joinString.equals("")) {
-                    query = "select tt.MALAPTOP, tt.LINKHINH1, tt.TENLAPTOP, tt.GIABAN, kh.TONKHO from thongtinlaptop tt JOIN khohang kh on tt.MALAPTOP = kh.MALAPTOP " + "WHERE" + " %s " + " ORDER BY GIABAN " + temp + " LIMIT " + "?" + " OFFSET " + "?";
+                    query = "select * from THONGTINLAPTOP " + "WHERE" + " %s " + " ORDER BY GIABAN " + temp + " LIMIT " + "?" + " OFFSET " + "?";
                 } else {
-                    query = "select tt.MALAPTOP, tt.LINKHINH1, tt.TENLAPTOP, tt.GIABAN, kh.TONKHO from thongtinlaptop tt JOIN khohang kh on tt.MALAPTOP = kh.MALAPTOP " + " ORDER BY GIABAN " + temp + " LIMIT " + "?" + " OFFSET " + "?";
+                    query = "select * from THONGTINLAPTOP " + " ORDER BY GIABAN " + temp + " LIMIT " + "?" + " OFFSET " + "?";
                 }
             } else {
                 if (!joinString.equals("") && !queryTemp.equals("")) {
-                    query = "select tt.MALAPTOP, tt.LINKHINH1, tt.TENLAPTOP, tt.GIABAN, kh.TONKHO from thongtinlaptop tt JOIN khohang kh on tt.MALAPTOP = kh.MALAPTOP " + "WHERE" + queryTemp + " AND " + " %s " + " LIMIT " + "?" + " OFFSET " + "?";
+                    query = "select * from THONGTINLAPTOP " + "WHERE" + queryTemp + " AND " + " %s " + " LIMIT " + "?" + " OFFSET " + "?";
                 } else if (joinString.equals("") && !queryTemp.equals("")) {
-                    query = "select tt.MALAPTOP, tt.LINKHINH1, tt.TENLAPTOP, tt.GIABAN, kh.TONKHO from thongtinlaptop tt JOIN khohang kh on tt.MALAPTOP = kh.MALAPTOP " + "WHERE" + queryTemp + " LIMIT " + "?" + " OFFSET " + "?";
+                    query = "select * from THONGTINLAPTOP " + "WHERE" + queryTemp + " LIMIT " + "?" + " OFFSET " + "?";
                 } else if (queryTemp.equals("") && !joinString.equals("")) {
-                    query = "select tt.MALAPTOP, tt.LINKHINH1, tt.TENLAPTOP, tt.GIABAN, kh.TONKHO from thongtinlaptop tt JOIN khohang kh on tt.MALAPTOP = kh.MALAPTOP " + "WHERE" + " %s " + " LIMIT " + "?" + " OFFSET " + "?";
+                    query = "select * from THONGTINLAPTOP " + "WHERE" + " %s " + " LIMIT " + "?" + " OFFSET " + "?";
                 } else {
-                    query = "select tt.MALAPTOP, tt.LINKHINH1, tt.TENLAPTOP, tt.GIABAN, kh.TONKHO from thongtinlaptop tt JOIN khohang kh on tt.MALAPTOP = kh.MALAPTOP " + " LIMIT " + "?" + " OFFSET " + "?";
+                    query = "select * from THONGTINLAPTOP " + " LIMIT " + "?" + " OFFSET " + "?";
                 }
             }
             String sqlQuery = String.format(query, joinString);
@@ -758,13 +772,29 @@ public class ProductDao {
                 } else {
                 }
             }
+
+            System.out.println("ABC " + ps.toString());
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                ProductWithStatus product = new ProductWithStatus(rs.getString(1),
-                        rs.getString(2).toLowerCase(),
+                Product product = new Product(rs.getString(1),
+                        rs.getString(2),
                         rs.getString(3),
                         rs.getInt(4),
-                        rs.getInt(5));
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getString(7),
+                        rs.getString(8),
+                        rs.getString(9),
+                        rs.getString(10),
+                        rs.getString(11),
+                        rs.getString(12),
+                        rs.getString(13),
+                        rs.getString(14),
+                        rs.getString(15),
+                        rs.getString(16),
+                        rs.getString(17),
+                        rs.getString(18),
+                        rs.getString(19));
                 result.add(product);
             }
             return result;
@@ -796,6 +826,7 @@ public class ProductDao {
                     .collect(Collectors.joining(" AND "));
 
             String query = "";
+            System.out.println("BCD " + queryTemp);
             if (!joinString.equals("") && !queryTemp.equals("")) {
                 query = "select count(*) as total from THONGTINLAPTOP " + "WHERE" + " GIABAN BETWEEN ? AND ?" + " AND " + " %s ";
             } else if (!queryTemp.equals("") && joinString.equals("")) {
@@ -825,6 +856,8 @@ public class ProductDao {
                     ps.setString(count++, x);
                 }
             }
+
+            System.out.println(ps.toString());
             ResultSet rs = ps.executeQuery();
             rs.next();
             return rs.getInt("total");
@@ -860,9 +893,9 @@ public class ProductDao {
             if (!joinString.equals("") && !queryTemp.equals("")) {
                 query = "select count(*) as total from THONGTINLAPTOP " + "WHERE" + " HANG = " + "?" + " AND " + "?" + " AND " + " %s ";
             } else if (!queryTemp.equals("") && joinString.equals("")) {
-                query = "select count(*) as total from THONGTINLAPTOP " + "WHERE" + " HANG = " + "?" + " AND " + "?";
+                query = "select count(*) as total from THONGTINLAPTOP " + "WHERE" + " HANG = " + "?" + "?";
             } else {
-                query = "select count(*) as total from THONGTINLAPTOP " + "WHERE" + " HANG = " + "?" + " AND " + " %s ";
+                query = "select count(*) as total from THONGTINLAPTOP " + "WHERE" + " HANG = " + "?" + " %s ";
             }
             String sqlQuery = String.format(query, joinString);
             PreparedStatement ps = DBConnect.getInstance().get(sqlQuery);
@@ -884,6 +917,7 @@ public class ProductDao {
                     ps.setString(count++, x);
                 }
             }
+            System.out.println(ps.toString());
             ResultSet rs = ps.executeQuery();
             rs.next();
             return rs.getInt("total");
@@ -910,6 +944,7 @@ public class ProductDao {
             String sqlQuery = String.format(query, joinString);
             PreparedStatement ps = DBConnect.getInstance().get(sqlQuery);
             ps.setString(1, hangsx);
+            System.out.println(ps);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Product product = new Product(rs.getString(1),
@@ -995,6 +1030,7 @@ public class ProductDao {
             } else if (queryTemp.equals("") && !joinString.equals("")) {
                 ps.setString(count++, temp);
             }
+            System.out.println(ps);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Product product = new Product(rs.getString(1),
@@ -1025,8 +1061,8 @@ public class ProductDao {
         }
     }
 
-    public ArrayList<ProductWithStatus> sortProductWithProducer(Multimap<String, String> map, String hangsx, String temp, int limit, int page) {
-        ArrayList<ProductWithStatus> result = new ArrayList();
+    public ArrayList<Product> sortProductWithProducer(Multimap<String, String> map, String hangsx, String temp, int limit, int page) {
+        ArrayList<Product> result = new ArrayList();
         try {
             int offset = (page - 1) * limit;
             String queryTemp = "";
@@ -1051,23 +1087,23 @@ public class ProductDao {
             String query = "";
             if (temp != null) {
                 if (!joinString.equals("") && !queryTemp.equals("")) {
-                    query = "select tt.MALAPTOP, tt.LINKHINH1, tt.TENLAPTOP, tt.GIABAN, kh.TONKHO from thongtinlaptop tt JOIN khohang kh on tt.MALAPTOP = kh.MALAPTOP " + "WHERE HANG = " + " ? " + " AND " + "?" + " AND %s " + " ORDER BY GIABAN " + temp + " LIMIT " + "?" + " OFFSET " + "?";
+                    query = "select * from THONGTINLAPTOP " + "WHERE HANG = " + " ? " + " AND " + "?" + " AND %s " + " ORDER BY GIABAN " + "?" + " LIMIT " + "?" + " OFFSET " + "?";
                 } else if (!queryTemp.equals("") && joinString.equals("")) {
-                    query = "select tt.MALAPTOP, tt.LINKHINH1, tt.TENLAPTOP, tt.GIABAN, kh.TONKHO from thongtinlaptop tt JOIN khohang kh on tt.MALAPTOP = kh.MALAPTOP " + "WHERE HANG = " + " ? " + " AND " + "?" + " ORDER BY GIABAN " + temp + " LIMIT " + "?" + " OFFSET " + "?";
+                    query = "select * from THONGTINLAPTOP " + "WHERE HANG = " + " ? " + " AND " + "?" + " ORDER BY GIABAN " + "?" + " LIMIT " + "?" + " OFFSET " + "?";
                 } else if (queryTemp.equals("") && !joinString.equals("")) {
-                    query = "select tt.MALAPTOP, tt.LINKHINH1, tt.TENLAPTOP, tt.GIABAN, kh.TONKHO from thongtinlaptop tt JOIN khohang kh on tt.MALAPTOP = kh.MALAPTOP " + "WHERE HANG = " + " ? " + " AND %s " + " ORDER BY GIABAN " + temp + " LIMIT " + "?" + " OFFSET " + "?";
+                    query = "select * from THONGTINLAPTOP " + "WHERE HANG = " + " ? " + " AND %s " + " ORDER BY GIABAN " + "?" + " LIMIT " + "?" + " OFFSET " + "?";
                 } else {
-                    query = "select tt.MALAPTOP, tt.LINKHINH1, tt.TENLAPTOP, tt.GIABAN, kh.TONKHO from thongtinlaptop tt JOIN khohang kh on tt.MALAPTOP = kh.MALAPTOP " + "WHERE HANG = " + " ? " + " ORDER BY GIABAN " + temp + " LIMIT " + "?" + " OFFSET " + "?";
+                    query = "select * from THONGTINLAPTOP " + "WHERE HANG = " + " ? " + " ORDER BY GIABAN " + "?" + " LIMIT " + "?" + " OFFSET " + "?";
                 }
             } else {
                 if (!joinString.equals("") && !queryTemp.equals("")) {
-                    query = "select tt.MALAPTOP, tt.LINKHINH1, tt.TENLAPTOP, tt.GIABAN, kh.TONKHO from thongtinlaptop tt JOIN khohang kh on tt.MALAPTOP = kh.MALAPTOP " + "WHERE HANG = " + " ? " + " AND " + "?" + " AND %s " + " LIMIT " + "?" + " OFFSET " + "?";
+                    query = "select * from THONGTINLAPTOP " + "WHERE HANG = " + " ? " + " AND " + "?" + " AND %s " + " LIMIT " + "?" + " OFFSET " + "?";
                 } else if (!queryTemp.equals("") && joinString.equals("")) {
-                    query = "select tt.MALAPTOP, tt.LINKHINH1, tt.TENLAPTOP, tt.GIABAN, kh.TONKHO from thongtinlaptop tt JOIN khohang kh on tt.MALAPTOP = kh.MALAPTOP " + "WHERE HANG = " + " ? " + " AND " + "?" + " LIMIT " + "?" + " OFFSET " + "?";
+                    query = "select * from THONGTINLAPTOP " + "WHERE HANG = " + " ? " + " AND " + "?" + " LIMIT " + "?" + " OFFSET " + "?";
                 } else if (queryTemp.equals("") && !joinString.equals("")) {
-                    query = "select tt.MALAPTOP, tt.LINKHINH1, tt.TENLAPTOP, tt.GIABAN, kh.TONKHO from thongtinlaptop tt JOIN khohang kh on tt.MALAPTOP = kh.MALAPTOP " + "WHERE HANG = " + " ? " + " AND %s " + " LIMIT " + "?" + " OFFSET " + "?";
+                    query = "select * from THONGTINLAPTOP " + "WHERE HANG = " + " ? " + " AND %s " + " LIMIT " + "?" + " OFFSET " + "?";
                 } else {
-                    query = "select tt.MALAPTOP, tt.LINKHINH1, tt.TENLAPTOP, tt.GIABAN, kh.TONKHO from thongtinlaptop tt JOIN khohang kh on tt.MALAPTOP = kh.MALAPTOP " + "WHERE HANG = " + " ? " + " LIMIT " + "?" + " OFFSET " + "?";
+                    query = "select * from THONGTINLAPTOP " + "WHERE HANG = " + " ? " + " LIMIT " + "?" + " OFFSET " + "?";
                 }
             }
             String sqlQuery = String.format(query, joinString);
@@ -1082,10 +1118,11 @@ public class ProductDao {
                     ps.setString(count++, queryTemp);
                 } else if (!queryTemp.equals("") && joinString.equals("")) {
                     ps.setString(count++, queryTemp);
+                    ps.setString(count++, temp);
                     ps.setInt(count++, limit);
                     ps.setInt(count++, offset);
-                } else if (queryTemp.equals("") && !joinString.equals("")) {
                 } else {
+                    ps.setString(count++, temp);
                     ps.setInt(count++, limit);
                     ps.setInt(count++, offset);
                 }
@@ -1096,7 +1133,6 @@ public class ProductDao {
                     ps.setString(count++, queryTemp);
                     ps.setInt(count++, limit);
                     ps.setInt(count++, offset);
-                } else if (queryTemp.equals("") && !joinString.equals("")) {
                 } else {
                     ps.setInt(count++, limit);
                     ps.setInt(count++, offset);
@@ -1107,10 +1143,11 @@ public class ProductDao {
             }
             if (temp != null) {
                 if (!joinString.equals("") && !queryTemp.equals("")) {
+                    ps.setString(count++, temp);
                     ps.setInt(count++, limit);
                     ps.setInt(count++, offset);
-                } else if (joinString.equals("") && !queryTemp.equals("")) {
                 } else if (queryTemp.equals("") && !joinString.equals("")) {
+                    ps.setString(count++, temp);
                     ps.setInt(count++, limit);
                     ps.setInt(count++, offset);
                 }
@@ -1124,13 +1161,28 @@ public class ProductDao {
                     ps.setInt(count++, offset);
                 }
             }
+            System.out.println(ps);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                ProductWithStatus product = new ProductWithStatus(rs.getString(1),
-                        rs.getString(2).toLowerCase(),
+                Product product = new Product(rs.getString(1),
+                        rs.getString(2),
                         rs.getString(3),
                         rs.getInt(4),
-                        rs.getInt(5));
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getString(7),
+                        rs.getString(8),
+                        rs.getString(9),
+                        rs.getString(10),
+                        rs.getString(11),
+                        rs.getString(12),
+                        rs.getString(13),
+                        rs.getString(14),
+                        rs.getString(15),
+                        rs.getString(16),
+                        rs.getString(17),
+                        rs.getString(18),
+                        rs.getString(19));
                 result.add(product);
             }
             return result;
@@ -1154,10 +1206,10 @@ public class ProductDao {
         return 0;
     }
 
-    public ArrayList<ProductWithStatus> search(String txt) {
-        ArrayList<ProductWithStatus> result = new ArrayList();
+    public ArrayList<Product> search(String txt) {
+        ArrayList<Product> result = new ArrayList();
         try {
-            String query = "select tt.MALAPTOP, tt.LINKHINH1, tt.TENLAPTOP, tt.GIABAN, kh.TONKHO from thongtinlaptop tt JOIN khohang kh on tt.MALAPTOP = kh.MALAPTOP " + " WHERE " + " TENLAPTOP " + " LIKE ? "
+            String query = "select * from THONGTINLAPTOP " + " WHERE " + " TENLAPTOP " + " LIKE ? "
                     + " OR " + " HANG " + " LIKE ? " + " OR " + " SERIES " + " LIKE ? " +
                     " OR " + " MAU " + " LIKE ? " + " OR " + " CPU " + " LIKE ? " + " OR " + " VGA "
                     + " LIKE ? " + " OR " + " RAM " + " LIKE ? " + " OR " + " OCUNG " + " LIKE ?";
@@ -1168,11 +1220,25 @@ public class ProductDao {
             }
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                ProductWithStatus product = new ProductWithStatus(rs.getString(1),
-                        rs.getString(2).toLowerCase(),
+                Product product = new Product(rs.getString(1),
+                        rs.getString(2),
                         rs.getString(3),
                         rs.getInt(4),
-                        rs.getInt(5));
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getString(7),
+                        rs.getString(8),
+                        rs.getString(9),
+                        rs.getString(10),
+                        rs.getString(11),
+                        rs.getString(12),
+                        rs.getString(13),
+                        rs.getString(14),
+                        rs.getString(15),
+                        rs.getString(16),
+                        rs.getString(17),
+                        rs.getString(18),
+                        rs.getString(19));
                 result.add(product);
             }
             return result;

@@ -41,7 +41,7 @@ public class AllProductController extends HttpServlet {
             int totalPage = ProductService.getInstance().getTotalPage();
             int total = (int) Math.ceil((double) totalPage / (double) limit);
             request.setAttribute("totalPage", total);
-            request.setAttribute("allProduct", ProductService.getInstance().getAllProductWithStatus(limit, page));
+            request.setAttribute("allProduct", ProductService.getInstance().getAllProduct(limit, page));
             request.setAttribute("allProducer", ProductService.getInstance().getAllProducer());
             request.setAttribute("filter", ProductService.getInstance().getAllProduct());
         }

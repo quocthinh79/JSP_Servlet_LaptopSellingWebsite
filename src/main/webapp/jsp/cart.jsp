@@ -34,7 +34,15 @@
     <link href="${root}fonts/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="${root}css/cartResponsive.css">
 </head>
+
 <body>
+<c:set var = "status" value = "${currentStatus}"/>
+<c:if test = "${status == 0}">
+<%--    <div id="return-homepage">--%>
+<%--    </div>--%>
+    <script>alert("Vui lòng đăng nhập để tiếp tục")</script>
+</c:if>
+
 <div id="cart-main">
     <%@include file="../layout/header.jsp" %>
     <div class="cart" class="bg-gray">
@@ -65,11 +73,11 @@
                                         <span class="big-text bolder">Giỏ hàng của bạn</span>
                                     </span>
                                     </div>
-<%--                                    <div class="btn-clear">--%>
-<%--                                        <button class="btn-clear-all" style="background-color: #f8f8fc;color: blue;border: 1px solid #f8f8fc;cursor: pointer;">--%>
-<%--                                            <span>Xóa tất cả</span>--%>
-<%--                                        </button>--%>
-<%--                                    </div>--%>
+                                    <div class="btn-clear">
+                                        <button class="btn-clear-all" style="background-color: #f8f8fc;color: blue;border: 1px solid #f8f8fc;cursor: pointer;">
+                                            <span>Xóa tất cả</span>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -129,7 +137,7 @@
                                 </div> -->
                                 <div class="final-price" class="padding-10 padding-bottom-20">
                                     <span class="left gray-text">Thành tiền</span>
-                                    <span class="right final-cash large-text red-text bolder"></span>
+                                    <span id="final-cash" class="right final-cash large-text red-text bolder">${totalCost}</span>
                                 </div>
                                 <!-- <div class="VAT" class="padding-10">
                                     <span class="gray-text">(Đã bao gồm VAT)</span>
@@ -156,6 +164,7 @@
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>
+
     $('.confirm-btn').click(function () {
         let sale = $('.coupon-input');
         let code = document.querySelectorAll('.coupon-code');
@@ -172,9 +181,21 @@
             currency: 'VND'
         }))
     })
+<%--</c:if>--%>
+
 </script>
 <script>
     listenCart();
+
+
+    $('.final-cash').text().match(/\d+/g).join('')
+
+    var price = document.getElementById("final-cash");
+    var priceText = $('.final-cash').text();
+    price.innerText = (Number(priceText).toLocaleString('it-IT', {
+        style: 'currency',
+        currency: 'VND'
+    }));
 
     function listenCart() {
         let priceHTML = document.querySelectorAll('.price-text');
@@ -297,13 +318,15 @@
             var parent = $(this).closest('.right-cart-item');
             var numberProduct = parent.find('.number');
 
-            var valueNumProduct = parseInt(numberProduct.text().match(/\d+/g).join(''));
+            let valueNumProduct = parseInt(numberProduct.text().match(/\d+/g).join(''));
             let checkAll = $(this).closest('.cart-item').find("input[name='checkAllProduct']");
             var destination = $(this).closest('.cart-item');
             var originPrice = parseInt(parent.find('.origin-price').val().match(/\d+/g).join(''));
             var checkBoxItem = $(this).closest('.item').find("input[name='checkItem']");
-            valueNumProduct++;
 
+            var leftParent = $(this).closest('.item');
+            var idElement = leftParent.find('.item-info-sku')[0].innerText.split(': ');
+            var idForAdd = idElement[1];
             if (checkAll.prop("checked")) {
                 total += originPrice;
                 $(destination).find(".total-pay").html(total.toLocaleString('it-IT', {
@@ -318,31 +341,33 @@
                 }));
 
             }
-
-            numberProduct.html(valueNumProduct);
-            var price = parent.find('.price-text');
-            var priceValue = originPrice * valueNumProduct
-            price.html(priceValue.toLocaleString('it-IT', {
-                style: 'currency',
-                currency: 'VND'
-            }));
-            changePrice();
-            var leftParent = $(this).closest('.item');
-            var idElement = leftParent.find('.item-info-sku')[0].innerText.split(': ');
-            var idForAdd = idElement[1];
-
             $.ajax({
                 url:"addQuantity",
                 type:"post",
                 data:{id: idForAdd},
 
-                success: function() {
+                success: function(response) {
+                    let isSuccess = response;
+                    if (isSuccess == 0) {
+                        alert("Không thể thêm sản phẩm do vượt quá số lượng cho phép");
 
+                    } else {
+                        valueNumProduct++;
+                        numberProduct.html(valueNumProduct);
+                        var price = parent.find('.price-text');
+                        var priceValue = originPrice * valueNumProduct
+                        price.html(priceValue.toLocaleString('it-IT', {
+                            style: 'currency',
+                            currency: 'VND'
+                        }));
+                        changePrice();
+                    }
                 },
                 error: function() {
 
                 },
             })
+
         });
 
         $('.btn-delete-product').click(function() {
@@ -358,19 +383,49 @@
                 type:'post',
                 data:{idForDelete: idForDelete},
                 success: function() {
+                    alert("Xoá sản phẩm thành công")
+                    changePrice();
 
+                }
+            })
+        });
+
+        $('.buy').click(function() {
+            $.ajax({
+                url:'buy',
+                type:'post',
+                success: function(response) {
+                    console.log(response)
+                    var result = response;
+                    if(result == 1) {
+                        $(".cart-item-info").remove()
+                        $(".final-cash").html("0")
+                        alert("Mua hàng thành công")
+                    }  else if(result == 0 ) {
+                        alert("Mua hàng thất bại - Giỏ hàng rỗng")
+                    }
                 }
             })
         })
 
-        // $('.buy').click(function() {
-        //     $.ajax({
-        //         url:'buy',
-        //         type:'post',
-        //         data:'click: 1'
-        //     })
-        // })
-        // let totalProduct
+        $('.btn-clear').click(function() {
+            $.ajax({
+                url:'buy',
+                type:'post',
+                success: function(response) {
+                    console.log(response)
+                    var result = response;
+                    if(result == 1) {
+                        $(".cart-item-info").remove()
+                        $(".final-cash").html("0")
+                        alert("Xoá giỏ hàng thành công")
+                    }  else if(result == 0 ) {
+                        alert("Giỏ hàng rỗng")
+                    }
+                }
+            })
+        })
+
     }
 
 
@@ -399,6 +454,7 @@
             currency: 'VND'
         }));
     }
+
 
 </script>
 

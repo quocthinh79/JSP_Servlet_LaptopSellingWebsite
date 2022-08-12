@@ -22,15 +22,10 @@
             <c:forEach var="x" items="${productsProductBS}">
                 <a class="click-action" href="Product?id=${x.maLapTop}">
                     <div class="product-bestseller-items">
-                        <div class="img-product-bestseller" style="background-image: url('${x.image}')"></div>
+                        <div class="img-product-bestseller" style="background-image: url('${x.linkHinh1}')"></div>
                         <div class="product-bestseller-name">
-                            <div class="product-name">${x.nameProduct}</div>
-                            <c:if test="${x.trangThai == 0}">
-                                <div class="product-status">HẾT HÀNG</div>
-                            </c:if>
-                            <c:if test="${x.trangThai != 0}">
-                                <div class="product-status">Còn ${x.trangThai} sản phẩm</div>
-                            </c:if>
+                            <div class="product-name">${x.tenLaptop}</div>
+                            <div class="product-status">Còn 1 sản phẩm</div>
                         </div>
                         <div class="product-price">${x.giaBan}</div>
                     </div>

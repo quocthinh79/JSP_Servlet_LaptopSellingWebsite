@@ -12,7 +12,6 @@
 let command = '';
 let temp = '';
 let dieuKienUpdate = '';
-let contentBefore = '';
 
 class BSTable {
 
@@ -182,8 +181,6 @@ class BSTable {
         //Pone en modo de edición
         const arr = [];
         let numCount = 0;
-        const map = new Map();
-        let countCol = 0;
         this._modifyEachColumn(this.options.editableColumns, $cols, function ($td) {  // modify each column
             numCount++;
             let content = $td.html();             // read content
@@ -201,22 +198,10 @@ class BSTable {
             if (arr.length !== 0 && (numCount === 1 && content !== '')) {
                 command = 'UPDATE'
             }
-            map.set("Col" + countCol++, content);
             let div = '<div style="display: none;">' + content + '</div>';  // hide content (save for later use)
             let input = '<input class="form-control input-sm"  data-original-value="' + content + '" value="' + content + '">';
             $td.html(div + input);                // set content
         });
-        let dataSend = ''
-        let num = 0;
-        map.forEach(function (value, key, map) {
-            num++;
-            if (num < map.size) {
-                dataSend += value + ","
-            } else {
-                dataSend += value
-            }
-        })
-        contentBefore = dataSend;
         this._actionsModeEdit(button);
     }
 
@@ -282,8 +267,6 @@ class BSTable {
         // Accept the changes to the row
         let thongbao = document.getElementById('thongbaoIdEmpty');
         let btnOK = document.getElementById('ok');
-        let thongbaoError = document.getElementById('thongbaoError');
-        let btnOKError = document.getElementById('okError');
         let $currentRow = $(button).parents('tr');    // access the row
         let currentTable = $(button).parents('table')[0].id
         let $cols = $currentRow.find('td');              // read fields
@@ -316,10 +299,6 @@ class BSTable {
         btnOK.addEventListener('click', function () {
             thongbao.style.display = 'none';
         })
-        btnOKError.addEventListener('click', function () {
-            thongbaoError.style.display = 'none';
-            window.open(window.location.href, '_self')
-        })
         console.log(map)
         let dataSend = ''
         let num = 0;
@@ -342,9 +321,7 @@ class BSTable {
                         currentTable: currentTable
                     },
                     success: function (response) {
-                        let mess = document.getElementById('message');
-                        mess.innerHTML = response
-                        thongbaoError.style.display = 'flex';
+                        console.log(response)
                     },
                     error: function () {
                         console.log("Error")
@@ -356,15 +333,12 @@ class BSTable {
                     url: 'Edit',
                     type: 'POST',
                     data: {
-                        contentBefore: contentBefore,
                         send: dataSend,
                         currentTable: currentTable,
                         dieuKien: dieuKienUpdate
                     },
                     success: function (response) {
-                        let mess = document.getElementById('message');
-                        mess.innerHTML = response
-                        thongbaoError.style.display = 'flex';
+
                     },
                     error: function () {
                     }
