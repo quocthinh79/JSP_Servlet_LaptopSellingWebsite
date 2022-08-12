@@ -31,17 +31,22 @@ public class CartController extends HttpServlet {
         switch(URL) {
 
             case "/cart-hover":
-                ArrayList<CartInfo> listProductOnHoverCart = cartDAO.getProductList(cartDAO.getProductIDFromCartByUserID(id));
-                int Cost = cartDAO.totalCost(id);
+                ArrayList<CartInfo> listProductOnHoverCart = cartDAO.getProductList(cartDAO.getProductIDFromCartByUserID(id), cartDAO.getCurrentCartByUserID(id));
+                int cost = cartDAO.totalCost(id);
                 request.setAttribute("listProduct", listProductOnHoverCart);
+                request.setAttribute("cost", cost);
                 request.getRequestDispatcher("jsp/cart-hover.jsp").forward(request, response);
                 break;
 
             case "/Cart":
-                ArrayList<CartInfo> listProductOnCart = cartDAO.getProductList(cartDAO.getProductIDFromCartByUserID(id));
-                int totalCost = cartDAO.totalCost(id);
-                request.setAttribute("listProduct", listProductOnCart);
-                request.setAttribute("totalCost", totalCost);
+
+                if(cartDAO.isPuschased(cartDAO.getCurrentCartByUserID(id)) == false) {
+                    ArrayList<CartInfo> listProductOnCart = cartDAO.getProductList(cartDAO.getProductIDFromCartByUserID(id), cartDAO.getCurrentCartByUserID(id));
+                    int totalCost = cartDAO.totalCost(id);
+                    request.setAttribute("listProduct", listProductOnCart);
+                    request.setAttribute("totalCost", totalCost);
+                }
+
                 request.getRequestDispatcher("jsp/cart.jsp").forward(request, response);
                 break;
 
@@ -82,7 +87,7 @@ public class CartController extends HttpServlet {
                 int productQuantityWillSubtract = cartDAO.getProductQuantity(productIDForSubtract, id) - 1;
                 int getProductExportQuantityForSubtract = cartDAO.getExportNumber(productIDForSubtract);
                 int getProductImportQuantityForSubtract = cartDAO.getImportNumber(productIDForSubtract);
-                if(getProductExportQuantityForSubtract >= 0) {
+                if(getProductExportQuantityForSubtract > 1) {
                     cartDAO.updateProductQuantityByProductID(
                             productIDForSubtract,
                             id,

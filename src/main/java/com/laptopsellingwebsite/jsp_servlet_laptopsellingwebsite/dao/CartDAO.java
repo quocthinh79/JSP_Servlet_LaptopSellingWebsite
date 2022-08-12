@@ -42,7 +42,7 @@ public class CartDAO {
 
     public ArrayList<String> getProductIDFromCartByUserID(int userID) {
         ArrayList<String> idProductList = new ArrayList<String>();
-        String currentCart = CartDAO.getInstance().getCurrentCartByUserID(userID);
+        String currentCart = getCurrentCartByUserID(userID);
         try {
             String querryLayMaLaptop = "select malaptop from ctgh where MAGIOHANG = ?";
             PreparedStatement ps = DBConnect.getInstance().get(querryLayMaLaptop);
@@ -60,15 +60,15 @@ public class CartDAO {
 
     }
 
-    public ArrayList<CartInfo> getProductList (ArrayList<String> listProductID) {
+    public ArrayList<CartInfo> getProductList (ArrayList<String> listProductID, String cartID) {
         ArrayList<CartInfo> result = new ArrayList<CartInfo>();
         try {
             for (String id_product: listProductID) {
                 String querry = "SELECT thongtinlaptop.MALAPTOP, thongtinlaptop.TENLAPTOP, thongtinlaptop.LINKHINH1, ctgh.SOLUONG, thongtinlaptop.GIABAN " +
-                        "from thongtinlaptop join ctgh on thongtinlaptop.MALAPTOP = ctgh.MALAPTOP where thongtinlaptop.MALAPTOP = ?";
+                        "from thongtinlaptop join ctgh on thongtinlaptop.MALAPTOP = ctgh.MALAPTOP where thongtinlaptop.MALAPTOP = ? and ctgh.MAGIOHANG = ?";
                 PreparedStatement st = DBConnect.getInstance().get(querry);
                 st.setString(1,id_product);
-
+                st.setString(2,cartID);
                 ResultSet resultSet = st.executeQuery();
 
                 while(resultSet.next()) {
