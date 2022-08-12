@@ -2,6 +2,7 @@ package com.laptopsellingwebsite.jsp_servlet_laptopsellingwebsite.controller;
 
 import com.google.common.collect.Multimap;
 import com.laptopsellingwebsite.jsp_servlet_laptopsellingwebsite.beans.Product;
+import com.laptopsellingwebsite.jsp_servlet_laptopsellingwebsite.beans.ProductWithStatus;
 import com.laptopsellingwebsite.jsp_servlet_laptopsellingwebsite.service.ProductService;
 
 import javax.servlet.ServletException;
@@ -23,7 +24,7 @@ public class Pagination extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession();
         String idHang = (String) session.getAttribute("idHang");
-        List<Product> listProduct = null;
+        List<ProductWithStatus> listProduct = null;
         Multimap<String, String> map = (Multimap<String, String>) session.getAttribute("map");
 //        String orderBy = (String) session.getAttribute("orderBy");
         String orderBy = request.getParameter("value");
@@ -49,25 +50,37 @@ public class Pagination extends HttpServlet {
         Locale localeVN = new Locale("vi", "VN");
         NumberFormat currencyVN = NumberFormat.getCurrencyInstance(localeVN);
         PrintWriter out = response.getWriter();
-        for (Product x : listProduct) {
-            out.println("<div class=\"hover-all-product\">\n" +
-                    "                        <a class=\"all-product-item\" href=\"" + request.getContextPath() + "/Product?id=" + x.getMaLapTop() + "\">\n" +
-                    "                            <div class=\"status-sale\">-11%</div>\n" +
-                    "                            <div class=\"img-all-product-item\"\n" +
-                    "                                 style=\"background-image: url('" + x.getLinkHinh1() + "')\">\n" +
-                    "                            </div>\n" +
-                    "                            <div class=\"status\">HẾT HÀNG</div>\n" +
-                    "                            <div class=\"infor-all-product-item\">\n" +
-                    "                                    " + x.getTenLaptop() + "\n" +
-                    "                            </div>\n" +
-                    "                            <div class=\"price-all-product-item\">\n" +
-                    "                                    " + currencyVN.format(x.getGiaBan()) + "\n" +
-                    "                            </div>\n" +
-                    "                            <div class=\"sale-all-product-item\">\n" +
-                    "                                <span class=\"origin-price\">33.999.000đ</span> <span>11%</span>\n" +
-                    "                            </div>\n" +
-                    "                        </a>\n" +
-                    "                    </div>");
+        for (ProductWithStatus x : listProduct) {
+            if (x.getTrangThai() == 0) {
+                out.println("<div class=\"hover-all-product\">\n" +
+                        "                        <a class=\"all-product-item\" href=\"" + request.getContextPath() + "/Product?id=" + x.getMaLapTop() + "\">\n" +
+                        "                            <div class=\"img-all-product-item\"\n" +
+                        "                                 style=\"background-image: url('" + x.getImage() + "')\">\n" +
+                        "                            </div>\n" +
+                        "                            <div class=\"status\">HẾT HÀNG</div>\n" +
+                        "                            <div class=\"infor-all-product-item\">\n" +
+                        "                                    " + x.getNameProduct() + "\n" +
+                        "                            </div>\n" +
+                        "                            <div class=\"price-all-product-item\">\n" +
+                        "                                    " + currencyVN.format(x.getGiaBan()) + "\n" +
+                        "                            </div>\n" +
+                        "                        </a>\n" +
+                        "                    </div>");
+            } else {
+                out.println("<div class=\"hover-all-product\">\n" +
+                        "                        <a class=\"all-product-item\" href=\"" + request.getContextPath() + "/Product?id=" + x.getMaLapTop() + "\">\n" +
+                        "                            <div class=\"img-all-product-item\"\n" +
+                        "                                 style=\"background-image: url('" + x.getImage() + "')\">\n" +
+                        "                            </div>\n" +
+                        "                            <div class=\"infor-all-product-item\">\n" +
+                        "                                    " + x.getNameProduct() + "\n" +
+                        "                            </div>\n" +
+                        "                            <div class=\"price-all-product-item\">\n" +
+                        "                                    " + currencyVN.format(x.getGiaBan()) + "\n" +
+                        "                            </div>\n" +
+                        "                        </a>\n" +
+                        "                    </div>");
+            }
         }
     }
 
