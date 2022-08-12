@@ -20,7 +20,8 @@
     </a>
     <form action="${pageContext.request.contextPath}/SearchClick" method="GET" class="header_search">
         <div class="search">
-            <input name="txt" id="input_search" class="header_input-search" placeholder="Nhập từ khóa cần tìm kiếm" required type="text">
+            <input name="txt" id="input_search" class="header_input-search" placeholder="Nhập từ khóa cần tìm kiếm"
+                   required type="text">
             <button class="header_btn-search" type="submit">
                 <i class="fas fa-search"></i>
             </button>
@@ -48,6 +49,15 @@
                     </c:otherwise>
                 </c:choose>
             </li>
+            <c:choose>
+                <c:when test="${sessionScope.account != null}">
+                    <li class="header_sub-list">
+                        <a class="font-14 hover-header" href="${root}Customer">
+                            <i class="hover-header1 fa-solid fa-user-pen"></i>Tài khoản
+                        </a>
+                    </li>
+                </c:when>
+            </c:choose>
             <li class="header_sub-list">
                 <a class="font-14 hover-header" href="${root}AboutUs">
                     <i class="hover-header1 fas fa-users"></i>Thông tin
@@ -84,6 +94,3 @@
         <div class="progress-bar" id="myBar"></div>
     </div>
 </div>
-<script>
-
-</script>

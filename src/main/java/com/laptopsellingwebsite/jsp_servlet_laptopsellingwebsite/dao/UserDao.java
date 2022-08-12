@@ -2,6 +2,7 @@ package com.laptopsellingwebsite.jsp_servlet_laptopsellingwebsite.dao;
 
 import com.laptopsellingwebsite.jsp_servlet_laptopsellingwebsite.beans.Account;
 import com.laptopsellingwebsite.jsp_servlet_laptopsellingwebsite.db.DBConnect;
+import org.apache.commons.codec.digest.DigestUtils;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -32,6 +33,23 @@ public class UserDao {
         return false;
     }
 
+    public String getPassMD5(String userName) {
+        String result = null;
+        String sql = "select password from tk where username = ?";
+        try {
+            PreparedStatement preparedStatement = DBConnect.getInstance().get(sql);
+            preparedStatement.setString(1, userName);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                result = resultSet.getString(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
 
 
     public static Account getUser(String userName, String passWord) {
@@ -49,7 +67,7 @@ public class UserDao {
                 String pass = resultSet.getString(4);
                 String diaChi = resultSet.getString(5);
                 String email = resultSet.getString(6);
-                result = new Account(id, hoTen, userName, pass, diaChi, email);
+                result = new Account(id, hoTen, username, pass, diaChi, email);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -58,6 +76,7 @@ public class UserDao {
         }
         return result;
     }
+
     private static UserDao instance;
 
     public static UserDao getInstance() {
@@ -84,18 +103,29 @@ public class UserDao {
 
     public int registerCustomer(String hoTen, String username, String pass, String diaChi, String email) {
         try {
-            String query = "INSERT INTO `tk` VALUES (NULL, ?, ?, ?, ?, ?, NULL)";
-            String query2 = "INSERT INTO `phanquyen` VALUES (NULL, ?)";
+            String queryTemp = "SELECT id FROM `tk` ORDER BY ID DESC limit 1";
+            PreparedStatement ps2 = DBConnect.getInstance().get(queryTemp);
+            ResultSet resultSet = ps2.executeQuery();
+            int id = 0;
+            while (resultSet.next()) {
+                id = resultSet.getInt(1);
+            }
+            String query = "INSERT INTO `tk` VALUES (?, ?, ?, ?, ?, ?, NULL)";
             PreparedStatement ps = DBConnect.getInstance().get(query);
-            ps.setString(1, hoTen);
-            ps.setString(2, username);
-            ps.setString(3, pass);
-            ps.setString(4, diaChi);
-            ps.setString(5, email);
-            PreparedStatement ps2 = DBConnect.getInstance().get(query2);
-            ps2.setString(1, "CUSTOMER");
-            ps2.executeUpdate();
-            return ps.executeUpdate();
+            ps.setInt(1, id + 1);
+            ps.setString(2, hoTen);
+            ps.setString(3, username);
+            ps.setString(4, pass);
+            ps.setString(5, diaChi);
+            ps.setString(6, email);
+            int result = ps.executeUpdate();
+
+            String query2 = "INSERT INTO `phanquyen` VALUES (?, ?)";
+            PreparedStatement ps3 = DBConnect.getInstance().get(query2);
+            ps3.setInt(1, id + 1);
+            ps3.setString(2, "CUSTOMER");
+            ps3.executeUpdate();
+            return result;
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }

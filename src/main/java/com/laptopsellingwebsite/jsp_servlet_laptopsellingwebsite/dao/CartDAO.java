@@ -21,32 +21,12 @@ public class CartDAO {
         return instance;
     }
 
-    public String getCurrentCartByUserID(int userID) {
-        String result = "";
-        try {
-            String command = "select magiohang from giohang where makh = ? order by magiohang desc ";
-            PreparedStatement ps = DBConnect.getInstance().get(command);
-            ps.setInt(1,userID);
-            ResultSet rs = ps.executeQuery();
-            while(rs.next()) {
-                result = rs.getString(1);
-                break;
-            }
-            return result;
-        } catch (SQLException | ClassNotFoundException e ) {
-            e.printStackTrace();
-            return result;
-        }
-
-    }
-
     public ArrayList<String> getProductIDFromCartByUserID(int userID) {
         ArrayList<String> idProductList = new ArrayList<String>();
-        String currentCart = getCurrentCartByUserID(userID);
         try {
-            String querryLayMaLaptop = "select malaptop from ctgh where MAGIOHANG = ?";
+            String querryLayMaLaptop = "select malaptop from ctgh where MAGIOHANG in (select MAGIOHANG from giohang where giohang.MAKH = ?)";
             PreparedStatement ps = DBConnect.getInstance().get(querryLayMaLaptop);
-            ps.setString(1,currentCart);
+            ps.setInt(1,userID);
             ResultSet rs = ps.executeQuery();
             while(rs.next()) {
                 idProductList.add(rs.getString(1));
@@ -60,15 +40,15 @@ public class CartDAO {
 
     }
 
-    public ArrayList<CartInfo> getProductList (ArrayList<String> listProductID, String cartID) {
+    public ArrayList<CartInfo> getProductList (ArrayList<String> listProductID) {
         ArrayList<CartInfo> result = new ArrayList<CartInfo>();
         try {
             for (String id_product: listProductID) {
                 String querry = "SELECT thongtinlaptop.MALAPTOP, thongtinlaptop.TENLAPTOP, thongtinlaptop.LINKHINH1, ctgh.SOLUONG, thongtinlaptop.GIABAN " +
-                        "from thongtinlaptop join ctgh on thongtinlaptop.MALAPTOP = ctgh.MALAPTOP where thongtinlaptop.MALAPTOP = ? and ctgh.MAGIOHANG = ?";
+                        "from thongtinlaptop join ctgh on thongtinlaptop.MALAPTOP = ctgh.MALAPTOP where thongtinlaptop.MALAPTOP = ?";
                 PreparedStatement st = DBConnect.getInstance().get(querry);
                 st.setString(1,id_product);
-                st.setString(2,cartID);
+
                 ResultSet resultSet = st.executeQuery();
 
                 while(resultSet.next()) {
@@ -126,7 +106,7 @@ public class CartDAO {
         try {
             LocalDate dateNow = LocalDate.now();
             String getDateNow = "" + dateNow;
-            String cartID = getCurrentCartByUserID(userID);
+            String cartID = getCartID(userID);
             String command = "update giohang set giohang.trigia = ?, giohang.ngayxuatgiohang = ? where magiohang = ?";
             PreparedStatement ps = DBConnect.getInstance().get(command);
             ps.setInt(1,totalCost);
@@ -199,14 +179,14 @@ public class CartDAO {
         }
     }
 
-    public boolean updateWarehouse(String productID, int numOfExportInDB, int numRemainInDB) {
+    public boolean updateWarehouse(String productID, int numOfExport, int numRemain) {
         boolean result = false;
         try {
 
-            String command = "update khohang set khohang.slxuat = ?, khohang.tonkho = ? where malaptop = ?";
+            String command = "update khohang set khohang.slxuat = ?, khohang.tonkho = ?  where malaptop = ?";
             PreparedStatement ps = DBConnect.getInstance().get(command);
-            ps.setInt(1,numOfExportInDB);
-            ps.setInt(2,numRemainInDB);
+            ps.setInt(1,numOfExport);
+            ps.setInt(2,numRemain);
             ps.setString(3, productID);
             int row = ps.executeUpdate();
             if (row > 0) result = true;
@@ -260,10 +240,10 @@ public class CartDAO {
     public boolean insertProductToCart(String productID, int userID, int quantity) {
         boolean result = false;
         try {
-            String currentCard = getCurrentCartByUserID(userID);
+            String cartID = getCartID(userID);
             String command = "insert into ctgh values (?,?,?)";
             PreparedStatement ps = DBConnect.getInstance().get(command);
-            ps.setString(1,currentCard);
+            ps.setString(1,cartID);
             ps.setString(2,productID);
             ps.setInt(3, quantity);
             int row = ps.executeUpdate();
@@ -278,11 +258,10 @@ public class CartDAO {
         }
     }
 
-
     public boolean updateProductQuantityByProductID(String productID, int userID, int quantityUpdated) {
         boolean result = false;
         try {
-            String cartID = getCurrentCartByUserID(userID);
+            String cartID = getCartID(userID);
             String command = "update ctgh set soluong = ? where magiohang = ? and malaptop = ?";
             PreparedStatement ps = DBConnect.getInstance().get(command);
             ps.setInt(1,quantityUpdated);
@@ -301,7 +280,7 @@ public class CartDAO {
     public boolean removeProductFromCart(String productID, int userID) {
         boolean result = false;
         try {
-            String cartID = getCurrentCartByUserID(userID);
+            String cartID = getCartID(userID);
             String command = "DELETE FROM ctgh where magiohang = ? and malaptop = ?";
             PreparedStatement ps = DBConnect.getInstance().get(command);
             ps.setString(1,cartID);
@@ -316,16 +295,12 @@ public class CartDAO {
         }
     }
 
-    public int countCart() {
+    public int countCustomer() {
         try {
-            int result = 0;
-            String command = "select count(*) from giohang";
+            String command = "select count(*) from tk";
             PreparedStatement ps = DBConnect.getInstance().get(command);
             ResultSet rs = ps.executeQuery();
-            while(rs.next()) {
-                result =  rs.getInt(1);
-                break;
-            }
+            int result =  rs.getInt(1);
             return result;
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
@@ -336,15 +311,18 @@ public class CartDAO {
     public boolean insertCart(int userID) {
         boolean result = false;
         try {
-
-            int cartQuantity = countCart();
-            int insertedCartQuantity = cartQuantity + 1;
-            String cartID = "HD" + insertedCartQuantity;
-
-            String command = "insert into giohang values (?,?,'',0)";
+            String cartID = "";
+            int customerQuantity = countCustomer();
+            if (customerQuantity < 10) {
+                cartID = "HD0" + customerQuantity + 1;
+            } else {
+                cartID = "HD" + customerQuantity + 1;
+            }
+            String command = "insert into giohang values (?,?,'','')";
             PreparedStatement ps = DBConnect.getInstance().get(command);
             ps.setString(1,cartID);
             ps.setInt(2,userID);
+
             int rowAffected = ps.executeUpdate();
             if (rowAffected > 0)
                 result = true;
@@ -357,12 +335,11 @@ public class CartDAO {
         }
     }
 
-
     public boolean isProductOnCart(String productID, int userID) {
         boolean check = false;
         try {
             ArrayList<String> result = new ArrayList<String>();
-            String cartID = getCurrentCartByUserID(userID);
+            String cartID = getCartID(userID);
             String command = "select * FROM ctgh where magiohang = ? and malaptop = ?";
             PreparedStatement ps = DBConnect.getInstance().get(command);
             ps.setString(1,cartID);
@@ -428,40 +405,10 @@ public class CartDAO {
         }
     }
 
-    public boolean isPuschased(String cartID) {
-        try {
-            boolean result = false;
-            int cost = 0;
-            String command = "select trigia from giohang where magiohang = ?";
-            PreparedStatement ps = DBConnect.getInstance().get(command);
-            ps.setString(1,cartID);
-            ResultSet rs = ps.executeQuery();
-            while(rs.next()) {
-                cost = rs.getInt(1);
-            }
-            if (cost != 0) {
-                result = true;
-            } else result = false;
-
-            return result;
-
-        } catch (SQLException | ClassNotFoundException e ) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
     public static void main(String[] args) {
         CartDAO cartDAO = new CartDAO();
-//        System.out.println(cartDAO.getProductQuantity("450-2H0Y1PA",1));
-//        System.out.println(cartDAO.getCost("450-2H0Y1PA"));
-//        System.out.println(cartDAO.totalCost(1));
-//        System.out.println(cartDAO.getCurrentCartByUserID(1));
-//        System.out.println(cartDAO.insertCart(1));
-//        System.out.println(cartDAO.insertCart(1));
-//        System.out.println(cartDAO.isPuschased("HD1"));
-//        System.out.println(cartDAO.isPuschased("HD2"));
-        System.out.println(cartDAO.getCurrentCartByUserID(1));
-
+        System.out.println(cartDAO.getProductQuantity("450-2H0Y1PA",1));
+        System.out.println(cartDAO.getCost("450-2H0Y1PA"));
+        System.out.println(cartDAO.totalCost(1));
     }
 }

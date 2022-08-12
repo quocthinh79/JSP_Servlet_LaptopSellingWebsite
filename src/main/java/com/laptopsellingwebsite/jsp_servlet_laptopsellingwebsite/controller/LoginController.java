@@ -2,6 +2,7 @@ package com.laptopsellingwebsite.jsp_servlet_laptopsellingwebsite.controller;
 
 import com.laptopsellingwebsite.jsp_servlet_laptopsellingwebsite.beans.Account;
 import com.laptopsellingwebsite.jsp_servlet_laptopsellingwebsite.service.UserServices;
+import org.apache.commons.codec.digest.DigestUtils;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -19,10 +20,13 @@ public class LoginController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String userName = request.getParameter("username");
         String pass = request.getParameter("password");
-        String base = request.getServletContext().getContextPath();
+        String md5Hex = DigestUtils.md5Hex(pass).toUpperCase();
+        String base = "https://" + request.getServerName();
+/*        String base = request.getServletContext().getContextPath();*/
         if (UserServices.checkUser(userName)) {
-            Account account = UserServices.getUser(userName, pass);
-            if (account != null) {
+            Account account = UserServices.getUser(userName, md5Hex);
+            String passInData = UserServices.getInstance().getPassMD5(userName);
+            if (md5Hex.equals(passInData)) {
                 HttpSession session = request.getSession();
                 session.setAttribute("account", account);
                 if (UserServices.getInstance().checkPermission(userName)) {

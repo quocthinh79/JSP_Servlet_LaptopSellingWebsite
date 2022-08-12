@@ -272,11 +272,8 @@
             url:"addProductToCart",
             type:"post",
             data:{id: document.getElementById('productID').innerHTML.trim()},
-            success: function(response) {
-                let isSuccess = response;
-                console.log(response)
-                if (isSuccess == 0)
-                    alert("Không thể thêm sản phẩm do vượt quá số lượng cho phép");
+            success: function() {
+
             },
             error: function() {
 

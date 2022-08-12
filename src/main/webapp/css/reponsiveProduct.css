@@ -21,9 +21,10 @@
     }
     #product-page #content-product .infor-product{
         margin: 20px 0 20px 0;
+        flex-direction: column;
     }
     #product-page #content-product .infor-product .product-sale{
-        display: none;
+        /*display: none;*/
     }
     #product-page #content-product .sale-policy{
         display: none;
@@ -32,4 +33,11 @@
         margin: 20px 0 20px 0;
     }
 
+    #product-page .btn-pro {
+        flex-direction: column;
+    }
+
+    #product-page .them-vao-gio {
+        margin-top: 10px;
+    }
 }
