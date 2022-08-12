@@ -175,13 +175,8 @@
 </script>
 <script>
     listenCart();
-    $('.buy').click(function() {
-        $.ajax({
-            url:'buy',
-            type:'post',
-            data:{click: 1}
-        })
-    })
+
+
     $('.final-cash').text().match(/\d+/g).join('')
 
     var price = document.getElementById("final-cash");
@@ -342,7 +337,6 @@
 
                 success: function(response) {
                     let isSuccess = response;
-                    console.log(response)
                     if (isSuccess == 0) {
                         alert("Không thể thêm sản phẩm do vượt quá số lượng cho phép");
 
@@ -378,11 +372,46 @@
                 type:'post',
                 data:{idForDelete: idForDelete},
                 success: function() {
+                    alert("Xoá sản phẩm thành công")
+                }
+            })
+        });
 
+        $('.buy').click(function() {
+            $.ajax({
+                url:'buy',
+                type:'post',
+                success: function(response) {
+                    console.log(response)
+                    var result = response;
+                    if(result == 1) {
+                        $(".cart-item-info").remove()
+                        $(".final-cash").html("0")
+                        alert("Mua hàng thành công")
+                    }  else if(result == 0 ) {
+                        alert("Mua hàng thất bại - Giỏ hàng rỗng")
+                    }
                 }
             })
         })
 
+        $('.btn-clear').click(function() {
+            $.ajax({
+                url:'buy',
+                type:'post',
+                success: function(response) {
+                    console.log(response)
+                    var result = response;
+                    if(result == 1) {
+                        $(".cart-item-info").remove()
+                        $(".final-cash").html("0")
+                        alert("Xoá giỏ hàng thành công")
+                    }  else if(result == 0 ) {
+                        alert("Giỏ hàng rỗng")
+                    }
+                }
+            })
+        })
 
     }
 
@@ -412,6 +441,7 @@
             currency: 'VND'
         }));
     }
+
 
 </script>
 
