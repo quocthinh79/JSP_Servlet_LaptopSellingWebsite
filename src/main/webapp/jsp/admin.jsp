@@ -634,7 +634,7 @@
             processData: false,
             contentType: false,
             success: function (response) {
-                $(id).parent().parent().html('<input class="form-control input-sm"  data-original-value="' + response + '" value="' + response + '">')
+                $(id).parent().parent().html('<input disabled class="form-control input-sm"  data-original-value="' + response + '" value="' + response + '">')
             },
             error: function (xhr) {
             }
