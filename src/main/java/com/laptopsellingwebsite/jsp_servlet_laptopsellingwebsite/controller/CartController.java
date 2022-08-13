@@ -124,9 +124,6 @@ public class CartController extends HttpServlet {
                             int getProductQuantityForClear = cartDAO.getProductQuantity(productIdForClear,id);
                             int getProductExportQuantityForClear = cartDAO.getExportNumber(productIdForClear);
                             int getProductRemainQuantityForClear = cartDAO.getRemainNumber(productIdForClear);
-                            System.out.println(getProductQuantityForClear);
-                            System.out.println(getProductExportQuantityForClear);
-                            System.out.println(getProductRemainQuantityForClear);
                             cartDAO.updateWarehouse(productIdForClear,getProductExportQuantityForClear - getProductQuantityForClear,getProductRemainQuantityForClear + getProductQuantityForClear);
                         }
                         cartDAO.clearCart(id);

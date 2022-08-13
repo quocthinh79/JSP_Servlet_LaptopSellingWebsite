@@ -47,6 +47,7 @@ public class AdminDao {
             } catch (Exception e) {
                 result = e.getMessage();
             }
+            insertKho(maLapTop, 5, 0, 5);
             return result;
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();

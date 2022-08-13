@@ -623,6 +623,24 @@
     });
     example9.init();
 </script>
+<script>
+    function handleSubmit(id) {
+        let element = document.getElementById($(id).parent().attr('id'));
+        console.log(element)
+        $.ajax({
+            url: 'UploadImage',
+            type: 'POST',
+            data: new FormData(element),
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                $(id).parent().parent().html('<input class="form-control input-sm"  data-original-value="' + response + '" value="' + response + '">')
+            },
+            error: function (xhr) {
+            }
+        });
+    }
+</script>
 <script src="${root}js/BackToTop.js"></script>
 <script src="${root}js/tabs.js"></script>
 <!--<script src="${root}js/tabs-table.js"></script>-->
