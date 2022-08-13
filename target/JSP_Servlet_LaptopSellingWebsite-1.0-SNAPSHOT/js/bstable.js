@@ -208,7 +208,7 @@ class BSTable {
             let input = ''
             if (numCount >= 15) {
                 let idInput = 'idInput' + numCount;
-                input = '<form id="'+ idInput +'"><input onchange="handleSubmit(this)" type="file" name="file" enctype="multipart/form-data"/></form>';
+                input = '<input disabled class="form-control input-sm"  data-original-value="' + content + '" value="' + content + '"><form id="'+ idInput +'"><input onchange="handleSubmit(this)" type="file" name="file" enctype="multipart/form-data"/></form>';
             } else {
                 input = '<input class="form-control input-sm"  data-original-value="' + content + '" value="' + content + '">';
             }
@@ -261,9 +261,9 @@ class BSTable {
                 }
             } else {
                 if (num < map.size) {
-                    dataSend += value.replaceAll(".", "") + ","
+                    dataSend += value + ","
                 } else {
-                    dataSend += value.replaceAll(".", "")
+                    dataSend += value
                 }
             }
         })
@@ -311,7 +311,7 @@ class BSTable {
         let count = 1;
         let numCount = 0;
         this._modifyEachColumn(this.options.editableColumns, $cols, function ($td) {  // modify each column
-            let cont = $td.find('input').val();     // read through each input
+            let cont = $td.find('input.input-sm').val();     // read through each input
             numCount++;
             if (numCount === 1 && cont === '') {
                 // command = '';
@@ -349,9 +349,9 @@ class BSTable {
                 }
             } else {
                 if (num < map.size) {
-                    dataSend += value.replaceAll(".", "") + ","
+                    dataSend += value + ","
                 } else {
-                    dataSend += value.replaceAll(".", "")
+                    dataSend += value
                 }
             }
         })
