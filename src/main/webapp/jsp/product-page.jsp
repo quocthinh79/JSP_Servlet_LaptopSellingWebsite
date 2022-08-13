@@ -11,6 +11,7 @@
     response.setCharacterEncoding("UTF-8");
 %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
 <c:url value="/" var="root"/>
 <!DOCTYPE html>
 <html lang="en">
@@ -67,16 +68,56 @@
                     <div id="product-image" class="product-image"
                          style='background-image: url("${root}${x.linkHinh1}")'></div>
                     <div class="details-image">
-                        <div class="details-image-item"
-                             style='background-image: url("${root}${x.linkHinh1}")'></div>
-                        <div class="details-image-item"
-                             style="background-image: url('${root}${x.linkHinh2}')"></div>
-                        <div class="details-image-item"
-                             style="background-image: url('${root}${x.linkHinh3}')"></div>
-                        <div class="details-image-item"
-                             style="background-image: url('${root}${x.linkHinh4}')"></div>
-                        <div class="details-image-item"
-                             style="background-image: url('${root}${x.linkHinh5}')"></div>
+                        <c:choose>
+                            <c:when test="${fn:contains(x.linkHinh1, 'http://res.cloudinary.com')}">
+                                <div class="details-image-item"
+                                     style='background-image: url("${x.linkHinh1}")'></div>
+                            </c:when>
+                            <c:otherwise>
+                                <div class="details-image-item"
+                                     style='background-image: url("${root}${x.linkHinh1}")'></div>
+                            </c:otherwise>
+                        </c:choose>
+                        <c:choose>
+                            <c:when test="${fn:contains(x.linkHinh2, 'http://res.cloudinary.com')}">
+                                <div class="details-image-item"
+                                     style='background-image: url("${x.linkHinh2}")'></div>
+                            </c:when>
+                            <c:otherwise>
+                                <div class="details-image-item"
+                                     style='background-image: url("${root}${x.linkHinh2}")'></div>
+                            </c:otherwise>
+                        </c:choose>
+                        <c:choose>
+                            <c:when test="${fn:contains(x.linkHinh3, 'http://res.cloudinary.com')}">
+                                <div class="details-image-item"
+                                     style='background-image: url("${x.linkHinh3}")'></div>
+                            </c:when>
+                            <c:otherwise>
+                                <div class="details-image-item"
+                                     style='background-image: url("${root}${x.linkHinh3}")'></div>
+                            </c:otherwise>
+                        </c:choose>
+                        <c:choose>
+                            <c:when test="${fn:contains(x.linkHinh4, 'http://res.cloudinary.com')}">
+                                <div class="details-image-item"
+                                     style='background-image: url("${x.linkHinh4}")'></div>
+                            </c:when>
+                            <c:otherwise>
+                                <div class="details-image-item"
+                                     style='background-image: url("${root}${x.linkHinh4}")'></div>
+                            </c:otherwise>
+                        </c:choose>
+                        <c:choose>
+                            <c:when test="${fn:contains(x.linkHinh5, 'http://res.cloudinary.com')}">
+                                <div class="details-image-item"
+                                     style='background-image: url("${x.linkHinh5}")'></div>
+                            </c:when>
+                            <c:otherwise>
+                                <div class="details-image-item"
+                                     style='background-image: url("${root}${x.linkHinh5}")'></div>
+                            </c:otherwise>
+                        </c:choose>
                     </div>
                 </div>
                 <div class="product-sale">

@@ -172,6 +172,8 @@ class BSTable {
     // -- Private Event Functions
     // --------------------------------------------------
 
+
+
     _rowEdit(button) {
         // Indicate user is editing the row
         let $currentRow = $(button).parents('tr');       // access the row
@@ -203,7 +205,13 @@ class BSTable {
             }
             map.set("Col" + countCol++, content);
             let div = '<div style="display: none;">' + content + '</div>';  // hide content (save for later use)
-            let input = '<input class="form-control input-sm"  data-original-value="' + content + '" value="' + content + '">';
+            let input = ''
+            if (numCount >= 15) {
+                let idInput = 'idInput' + numCount;
+                input = '<form id="'+ idInput +'"><input onchange="handleSubmit(this)" type="file" name="file" enctype="multipart/form-data"/></form>';
+            } else {
+                input = '<input class="form-control input-sm"  data-original-value="' + content + '" value="' + content + '">';
+            }
             $td.html(div + input);                // set content
         });
         let dataSend = ''
@@ -245,10 +253,18 @@ class BSTable {
         let num = 0;
         map.forEach(function (value, key, map) {
             num++;
-            if (num < map.size) {
-                dataSend += value.replaceAll(".", "") + ","
+            if (num >= 15) {
+                if (num < map.size) {
+                    dataSend += value + ","
+                } else {
+                    dataSend += value
+                }
             } else {
-                dataSend += value.replaceAll(".", "")
+                if (num < map.size) {
+                    dataSend += value.replaceAll(".", "") + ","
+                } else {
+                    dataSend += value.replaceAll(".", "")
+                }
             }
         })
         this.options.onBeforeDelete($currentRow);
@@ -325,10 +341,18 @@ class BSTable {
         let num = 0;
         map.forEach(function (value, key, map) {
             num++;
-            if (num < map.size) {
-                dataSend += value.replaceAll(".", "") + ","
+            if (num >= 15) {
+                if (num < map.size) {
+                    dataSend += value + ","
+                } else {
+                    dataSend += value
+                }
             } else {
-                dataSend += value.replaceAll(".", "")
+                if (num < map.size) {
+                    dataSend += value.replaceAll(".", "") + ","
+                } else {
+                    dataSend += value.replaceAll(".", "")
+                }
             }
         })
         console.log(command)
