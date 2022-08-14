@@ -103,8 +103,9 @@
                                 <jsp:useBean id="productsTop" scope="request" type="java.util.List"/>
                                 <c:forEach var="z" items="${productsTop}">
                                     <c:if test="${z.hangSX == y.tenHang}">
-                                        <a class="product-hover-items" href="Product?id=${z.maLapTop}" style="width: calc(100% / 2)">
-                                            <div class="product-items  border-item-top1" >
+                                        <a class="product-hover-items" href="Product?id=${z.maLapTop}"
+                                           style="width: calc(100% / 2)">
+                                            <div class="product-items  border-item-top1">
                                                 <div class="title-product-item">
                                                         ${z.tenLaptop}
                                                 </div>
@@ -187,6 +188,20 @@
     }
     for (let i = 0; i < price1.length; i++) {
         price1[i].innerHTML = parseInt(price1[i].textContent).toLocaleString('it-IT', {
+            style: 'currency',
+            currency: 'VND'
+        });
+    }
+    let pric2 = document.querySelectorAll('.price-cart-item');
+    let pric3 = document.querySelectorAll('.total-price');
+    for (let i = 0; i < pric2.length; i++) {
+        pric2[i].innerHTML = parseInt(pric2[i].textContent).toLocaleString('it-IT', {
+            style: 'currency',
+            currency: 'VND'
+        });
+    }
+    for (let i = 0; i < pric3.length; i++) {
+        pric3[i].innerHTML = parseInt(pric3[i].textContent).toLocaleString('it-IT', {
             style: 'currency',
             currency: 'VND'
         });

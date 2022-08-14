@@ -82,5 +82,21 @@
 <script src="${root}js/Scroll-Indicator.js"></script>
 <script src="${root}js/visibleCart.js"></script>
 <script src="${root}js/clickAddCartTutorial.js"></script>
+<script>
+    let pric2 = document.querySelectorAll('.price-cart-item');
+    let pric3 = document.querySelectorAll('.total-price');
+    for (let i = 0; i < pric2.length; i++) {
+        pric2[i].innerHTML = parseInt(pric2[i].textContent).toLocaleString('it-IT', {
+            style: 'currency',
+            currency: 'VND'
+        });
+    }
+    for (let i = 0; i < pric3.length; i++) {
+        pric3[i].innerHTML = parseInt(pric3[i].textContent).toLocaleString('it-IT', {
+            style: 'currency',
+            currency: 'VND'
+        });
+    }
+</script>
 </html>
 

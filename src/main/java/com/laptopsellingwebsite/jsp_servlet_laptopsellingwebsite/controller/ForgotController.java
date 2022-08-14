@@ -103,7 +103,7 @@ public class ForgotController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String URL = request.getRequestURI().substring(request.getRequestURI().lastIndexOf("/"), request.getRequestURI().length());
-        String base = request.getServletContext().getContextPath();
+        String base = "https://" + request.getServerName();
         switch (URL) {
             case "/UpdatePass":
                 String newPass1 = request.getParameter("newPass1");

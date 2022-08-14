@@ -67,7 +67,14 @@
                 <a class="font-14 hover-header" href="${root}Cart">
                     <i class="hover-header1 fas fa-shopping-cart"></i>Giỏ hàng
                 </a>
-                <div id="icon-cart" class="icon-cart"></div>
+                <c:choose>
+                    <c:when test="${listProduct.size() > 0}">
+                        <div style="display: flex" id="icon-cart" class="icon-cart">${totalProductHover}</div>
+                    </c:when>
+                    <c:otherwise>
+                        <div style="display: none" id="icon-cart" class="icon-cart">${totalProductHover}</div>
+                    </c:otherwise>
+                </c:choose>
             </li>
             <li class="header_sub-list">
                 <c:choose>

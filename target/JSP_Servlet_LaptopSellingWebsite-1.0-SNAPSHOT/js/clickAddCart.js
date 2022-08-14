@@ -1,14 +1,16 @@
 let btnAddCart = document.getElementById('them-vao-gio');
-let iconCart = document.getElementById('icon-cart')
+var iconNum = document.getElementById('icon-cart')
 var countCart = 0
+if (iconNum === null || iconNum === undefined) {
+    countCart = 0;
+} else {
+    countCart = Number.parseInt(iconNum.innerHTML)
+}
 
 btnAddCart.onclick = function () {
     countCart++;
-    iconCart.innerHTML = countCart;
-    iconCart.style.display = 'flex'
-
-
-
+    iconNum.innerHTML = countCart;
+    iconNum.style.display = 'flex'
 }
 
 

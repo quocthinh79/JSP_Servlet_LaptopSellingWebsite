@@ -2,6 +2,7 @@ package com.laptopsellingwebsite.jsp_servlet_laptopsellingwebsite.controller;
 
 import com.google.common.collect.Multimap;
 import com.laptopsellingwebsite.jsp_servlet_laptopsellingwebsite.beans.Account;
+import com.laptopsellingwebsite.jsp_servlet_laptopsellingwebsite.beans.CartInfo;
 import com.laptopsellingwebsite.jsp_servlet_laptopsellingwebsite.dao.CartDAO;
 import com.laptopsellingwebsite.jsp_servlet_laptopsellingwebsite.service.CartServices;
 import com.laptopsellingwebsite.jsp_servlet_laptopsellingwebsite.service.ProductService;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 @WebServlet(urlPatterns = {"/addProductToCart", "/Product","/addToCartNow"})
 
@@ -34,6 +36,20 @@ public class ProductController extends HttpServlet {
                 }
                 request.setAttribute("productID", ProductService.getInstance().getProductWithID(id));
                 request.setAttribute("productsProductBS", ProductService.getInstance().getTopProductBestSeller(10));
+                CartDAO cartDAO = new CartDAO();
+                Account currentAccount = (Account) session.getAttribute("account");
+                if (currentAccount != null) {
+                    int idAccount = currentAccount.getId();
+                    ArrayList<CartInfo> listProductOnHoverCart = cartDAO.getProductList(cartDAO.getProductIDFromCartByUserID(idAccount), cartDAO.getCurrentCartByUserID(idAccount));
+                    int cost = cartDAO.totalCost(idAccount);
+                    request.setAttribute("listProduct", listProductOnHoverCart);
+                    int countProduct = 0;
+                    for (CartInfo x: listProductOnHoverCart) {
+                        countProduct += x.getSoluong();
+                    }
+                    request.setAttribute("totalProductHover", countProduct);
+                    request.setAttribute("cost", cost);
+                }
                 request.getRequestDispatcher("jsp/product-page.jsp").forward(request, response);
         }
 
@@ -124,6 +140,7 @@ public class ProductController extends HttpServlet {
                     if (productQuantityWillAdd <= getProductImportQuantity) {
                         //truong hop gio hang chua ton tai
                         if (cartDAO.getCurrentCartByUserID(currentAccountForAddNow) == "" || cartDAO.isPuschased(cartDAO.getCurrentCartByUserID(currentAccountForAddNow)) == true) {
+                            resultForAddNow = "1";
                             cartDAO.insertCart(currentAccountForAddNow);
                             cartDAO.insertProductToCart(productIDForAdd, currentAccountForAddNow, 1);
                             cartDAO.updateWarehouse(productIDForAdd, getProductExportQuantity + 1, getProductRemainQuantity - 1);
@@ -153,8 +170,6 @@ public class ProductController extends HttpServlet {
 
                         }
                         //chuyen huong sang trang cart khi thuc hien
-                        String cart = request.getServletContext().getContextPath();
-//                        response.sendRedirect(cart);
                         PrintWriter out = response.getWriter();
                         out.println(resultForAddNow);
                     } // truong hop so luong san pham khong con trong kho

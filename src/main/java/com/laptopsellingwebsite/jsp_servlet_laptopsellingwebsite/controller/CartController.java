@@ -35,15 +35,6 @@ public class CartController extends HttpServlet {
             CartDAO cartDAO = new CartDAO();
 
             switch(URL) {
-
-                case "/cart-hover":
-                    ArrayList<CartInfo> listProductOnHoverCart = cartDAO.getProductList(cartDAO.getProductIDFromCartByUserID(id), cartDAO.getCurrentCartByUserID(id));
-                    int cost = cartDAO.totalCost(id);
-                    request.setAttribute("listProduct", listProductOnHoverCart);
-                    request.setAttribute("cost", cost);
-                    request.getRequestDispatcher("jsp/cart-hover.jsp").forward(request, response);
-                    break;
-
                 case "/Cart":
                     if(cartDAO.isPuschased(cartDAO.getCurrentCartByUserID(id)) == false) {
                         ArrayList<CartInfo> listProductOnCart = cartDAO.getProductList(cartDAO.getProductIDFromCartByUserID(id), cartDAO.getCurrentCartByUserID(id));
@@ -51,6 +42,15 @@ public class CartController extends HttpServlet {
                         request.setAttribute("listProduct", listProductOnCart);
                         request.setAttribute("totalCost", totalCost);
                     }
+                    ArrayList<CartInfo> listProductOnHoverCart = cartDAO.getProductList(cartDAO.getProductIDFromCartByUserID(id), cartDAO.getCurrentCartByUserID(id));
+                    int cost = cartDAO.totalCost(id);
+                    request.setAttribute("listProduct", listProductOnHoverCart);
+                    int countProduct = 0;
+                    for (CartInfo x: listProductOnHoverCart) {
+                        countProduct += x.getSoluong();
+                    }
+                    request.setAttribute("totalProductHover", countProduct);
+                    request.setAttribute("cost", cost);
                     request.getRequestDispatcher("jsp/cart.jsp").forward(request, response);
                     break;
 

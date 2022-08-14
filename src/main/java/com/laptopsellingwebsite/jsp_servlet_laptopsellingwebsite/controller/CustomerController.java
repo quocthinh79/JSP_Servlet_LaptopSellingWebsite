@@ -2,6 +2,8 @@ package com.laptopsellingwebsite.jsp_servlet_laptopsellingwebsite.controller;
 
 import com.google.common.collect.Multimap;
 import com.laptopsellingwebsite.jsp_servlet_laptopsellingwebsite.beans.Account;
+import com.laptopsellingwebsite.jsp_servlet_laptopsellingwebsite.beans.CartInfo;
+import com.laptopsellingwebsite.jsp_servlet_laptopsellingwebsite.dao.CartDAO;
 import com.laptopsellingwebsite.jsp_servlet_laptopsellingwebsite.service.AdminServices;
 import com.laptopsellingwebsite.jsp_servlet_laptopsellingwebsite.service.CustomerServices;
 import com.laptopsellingwebsite.jsp_servlet_laptopsellingwebsite.service.ProductService;
@@ -21,6 +23,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Random;
 
 @WebServlet(urlPatterns = {"/EditCustomer", "/Customer"})
@@ -37,6 +40,17 @@ public class CustomerController extends HttpServlet {
                 }
                 Account currentAccount = (Account) session.getAttribute("account");
                 request.setAttribute("allAccount", CustomerServices.getInstance().getAccountCurrentCustomer(currentAccount.getId()));
+                CartDAO cartDAO = new CartDAO();
+                int id = currentAccount.getId();
+                ArrayList<CartInfo> listProductOnHoverCart = cartDAO.getProductList(cartDAO.getProductIDFromCartByUserID(id), cartDAO.getCurrentCartByUserID(id));
+                int cost = cartDAO.totalCost(id);
+                request.setAttribute("listProduct", listProductOnHoverCart);
+                int countProduct = 0;
+                for (CartInfo x: listProductOnHoverCart) {
+                    countProduct += x.getSoluong();
+                }
+                request.setAttribute("totalProductHover", countProduct);
+                request.setAttribute("cost", cost);
                 request.getRequestDispatcher("jsp/customer.jsp").forward(request, response);
                 break;
         }

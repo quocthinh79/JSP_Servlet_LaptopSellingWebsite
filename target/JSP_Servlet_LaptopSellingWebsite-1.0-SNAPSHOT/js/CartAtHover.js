@@ -1,6 +1,6 @@
 // Thêm vào giỏ
 var add_cart = document.getElementById('them-vao-gio')
-var numProduct = 0;
+var numProduct = Number.parseInt(document.getElementById('icon-cart').innerText);
 let regex = /\d+/g;
 add_cart.addEventListener('click', function (event) {
 
@@ -57,17 +57,19 @@ function addItemToCart(img, title, price, numProduct) {
             }
         }
     }
+    let idProduct = document.getElementById('productID').innerText
     if (count <= 0) {
-        var itemProduct = `<div class="cart-item">
+        var itemProduct = `<a href="Product?id=${idProduct}"
+           style="text-decoration: none;color: black;"><div class="cart-item">
             <div class="img-cart-item" style="background-image: url(${img})">
 
             </div>
             <div class="details-cart-item">
                 <div class="infor-cart-item">${title}</div>
                 <div class="num-cart-item">Số lượng: ${numProduct}</div>
-                <div class="price-cart-item">${price}</div>
+                <div style="color: crimson" class="price-cart-item">${price}</div>
             </div>
-        </div>`
+        </div></a>`
         cartRow.innerHTML = itemProduct
         cartItems.append(cartRow)
     }
