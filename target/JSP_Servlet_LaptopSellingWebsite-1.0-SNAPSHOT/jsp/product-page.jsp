@@ -292,6 +292,25 @@
 <script>
     fetch('${pageContext.request.contextPath}/Product').then(res => document.getElementById('loading').remove());
 </script>
+<script src="${root}js/register.js"></script>
+<script src="${root}js/register.js"></script>
+<script crossorigin="anonymous" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+        src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script crossorigin="anonymous"
+        integrity="sha512-XtmMtDEcNz2j7ekrtHvOVR4iwwaD6o/FUJe6+Zq+HgcCsk3kj4uSQQR8weQ2QVj1o0Pk6PwYLohm206ZzNfubg=="
+        referrerpolicy="no-referrer"
+        src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+<!--<script src="${root}js/slider.js"></script>-->
+<script src="${root}js/CartAtHover.js"></script>
+<script src="${root}js/ripple-button.js"></script>
+<script src="${root}js/product-bestseller.js"></script>
+<script src="${root}js/nav-responsive.js"></script>
+<script src="${root}js/BackToTop.js"></script>
+<script src="${root}js/Scroll-Indicator.js"></script>
+<script src="${root}js/visibleCart.js"></script>
+<script src="${root}js/clickAddCart.js"></script>
+<script src="${root}js/hover-product.js"></script>
+<script src="${root}js/view-image-product.js"></script>
 <script>
     let price = document.querySelectorAll('.price-product');
     let price1 = document.querySelectorAll('.product-price');
@@ -317,35 +336,38 @@
                 let isSuccess = response;
                 console.log(response)
                 if (isSuccess == 0)
-                    alert("Không thể thêm sản phẩm do vượt quá số lượng cho phép");
+                    alert("Vui lòng đăng nhập để mua hàng");
+                else if (isSuccess == 2) {
+                    alert("Không thể thêm sản phẩm do hết hàng")
+                }
             },
             error: function() {
 
             }
         })
-        console.log(document.getElementById('productID').innerHTML)
+        // console.log(document.getElementById('productID').innerHTML)
+    })
+    $(".mua-ngay").click(function(){
+        $.ajax({
+            url:"addToCartNow",
+            type:"post",
+            data:{id: document.getElementById('productID').innerHTML.trim()},
+            success: function(response) {
+                let isSuccess = response;
+                console.log(response)
+                if (isSuccess == 0)
+                    alert("Vui lòng đăng nhập để mua hàng");
+                else if (isSuccess == 2) {
+                    alert("Không thể thêm sản phẩm do hết hàng")
+                }
+            },
+            error: function() {
 
+            }
+        })
+        // console.log(document.getElementById('productID').innerHTML)
     })
 
-
 </script>
-<script src="${root}js/register.js"></script>
-<script src="${root}js/register.js"></script>
-<script crossorigin="anonymous" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
-        src="https://code.jquery.com/jquery-3.6.0.js"></script>
-<script crossorigin="anonymous"
-        integrity="sha512-XtmMtDEcNz2j7ekrtHvOVR4iwwaD6o/FUJe6+Zq+HgcCsk3kj4uSQQR8weQ2QVj1o0Pk6PwYLohm206ZzNfubg=="
-        referrerpolicy="no-referrer"
-        src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
-<!--<script src="${root}js/slider.js"></script>-->
-<script src="${root}js/CartAtHover.js"></script>
-<script src="${root}js/ripple-button.js"></script>
-<script src="${root}js/product-bestseller.js"></script>
-<script src="${root}js/nav-responsive.js"></script>
-<script src="${root}js/BackToTop.js"></script>
-<script src="${root}js/Scroll-Indicator.js"></script>
-<script src="${root}js/visibleCart.js"></script>
-<script src="${root}js/clickAddCart.js"></script>
-<script src="${root}js/hover-product.js"></script>
-<script src="${root}js/view-image-product.js"></script>
+
 </html>
