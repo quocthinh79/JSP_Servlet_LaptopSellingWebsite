@@ -137,7 +137,7 @@
                     </div>
                     <div class="border-pro"></div>
                     <div class="btn-pro">
-                        <div class="mua-ngay"><a href="" class="btn-mua ripple">MUA NGAY</a></div>
+                        <div class="mua-ngay"><a href="${root}Cart" id="mua-ngay" class="btn-mua ripple">MUA NGAY</a></div>
                         <div class="them-vao-gio"><a role="button" id="them-vao-gio" class="btn-mua ripple">THÊM VÀO GIỎ
                             HÀNG</a></div>
                     </div>
@@ -347,7 +347,8 @@
         })
         // console.log(document.getElementById('productID').innerHTML)
     })
-    $(".mua-ngay").click(function(){
+    $("#mua-ngay").click(function(){
+        console.log("Click mua ngay")
         $.ajax({
             url:"addToCartNow",
             type:"post",

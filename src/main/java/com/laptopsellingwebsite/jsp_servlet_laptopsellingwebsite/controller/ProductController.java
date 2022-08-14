@@ -43,9 +43,7 @@ public class ProductController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String URL = request.getRequestURI().substring(request.getRequestURI().lastIndexOf("/"), request.getRequestURI().length());
 
-        HttpSession session = request.getSession();
-        Account currentAccount = (Account) session.getAttribute("account");
-        int userID = currentAccount.getId();
+
 
         String productIDForAdd = request.getParameter("id");
         CartDAO cartDAO = new CartDAO();
@@ -53,33 +51,35 @@ public class ProductController extends HttpServlet {
         int productQuantityWillAdd = cartDAO.getExportNumber(productIDForAdd) + 1;
         int getProductExportQuantity = cartDAO.getExportNumber(productIDForAdd);
         int getProductImportQuantity = cartDAO.getImportNumber(productIDForAdd);
-        request.getRequestDispatcher("jsp/product-page.jsp").forward(request, response);
 
 
         switch (URL) {
-            case "/Product":
             case "/addProductToCart":
+                HttpSession session = request.getSession();
+                Account currentAccountForAdd = (Account) session.getAttribute("account");
+
                 //kiem tra trang thai dang nhap
                 String resultForAdd = "";
-                if (currentAccount == null) {
+                if (currentAccountForAdd == null) {
                     resultForAdd = "0";
                     System.out.println("Chua dang nhap");
                     PrintWriter out = response.getWriter();
                     out.println(resultForAdd);
                 } else {
+                    int userIDForAdd = currentAccountForAdd.getId();
                     // xu ly truong hop so luong nhap nhieu hon ton kho
                     if (productQuantityWillAdd <= getProductImportQuantity) {
-                        if (cartDAO.getCurrentCartByUserID(userID) == "" || cartDAO.isPuschased(cartDAO.getCurrentCartByUserID(userID)) == true) {
+                        if (cartDAO.getCurrentCartByUserID(userIDForAdd) == "" || cartDAO.isPuschased(cartDAO.getCurrentCartByUserID(userIDForAdd)) == true) {
                             System.out.println("chua co gio hang");
-                            cartDAO.insertCart(userID);
-                            cartDAO.insertProductToCart(productIDForAdd, userID, 1);
+                            cartDAO.insertCart(userIDForAdd);
+                            cartDAO.insertProductToCart(productIDForAdd, userIDForAdd, 1);
                             cartDAO.updateWarehouse(productIDForAdd, getProductExportQuantity + 1, getProductRemainQuantity - 1);
                             resultForAdd = "1";
                             PrintWriter out = response.getWriter();
                             out.println(resultForAdd);
-                        } else if (cartDAO.isProductOnCart(productIDForAdd, userID) == false) {
+                        } else if (cartDAO.isProductOnCart(productIDForAdd, userIDForAdd) == false) {
                             System.out.println("da co gio hang, chua ton tai sp se them");
-                            cartDAO.insertProductToCart(productIDForAdd, userID, 1);
+                            cartDAO.insertProductToCart(productIDForAdd, userIDForAdd, 1);
                             cartDAO.updateWarehouse(productIDForAdd, getProductExportQuantity + 1, getProductRemainQuantity - 1);
                             resultForAdd = "1";
                             PrintWriter out = response.getWriter();
@@ -91,8 +91,8 @@ public class ProductController extends HttpServlet {
                             out.println(resultForAdd);
                             cartDAO.updateProductQuantityByProductID(
                                     productIDForAdd,
-                                    userID,
-                                    cartDAO.getProductQuantity(productIDForAdd, userID) + 1);
+                                    userIDForAdd,
+                                    cartDAO.getProductQuantity(productIDForAdd, userIDForAdd) + 1);
                             cartDAO.updateWarehouse(productIDForAdd, getProductExportQuantity + 1, getProductRemainQuantity - 1);
                         }
                     } else {
@@ -105,10 +105,12 @@ public class ProductController extends HttpServlet {
                 break;
 
             case "/addToCartNow":
-                String resultForAddNow;
+                HttpSession session1 = request.getSession();
+                Account AccountForAddNow = (Account) session1.getAttribute("account");
+                String resultForAddNow = "";
                 //kiem tra trang thai dang nhap
                 //neu chua dang nhap, gui loi ve client
-                if (currentAccount == null) {
+                if (AccountForAddNow == null) {
                     resultForAddNow = "0";
                     System.out.println("Chua dang nhap");
                     PrintWriter out = response.getWriter();
@@ -116,40 +118,45 @@ public class ProductController extends HttpServlet {
                 }
                 //Login success
                 else {
+                    System.out.println("Login success");
+                    int currentAccountForAddNow = AccountForAddNow.getId();
                     // xu ly truong hop so luong nhap nhieu hon ton kho
                     if (productQuantityWillAdd <= getProductImportQuantity) {
                         //truong hop gio hang chua ton tai
-                        if (cartDAO.getCurrentCartByUserID(userID) == "" || cartDAO.isPuschased(cartDAO.getCurrentCartByUserID(userID)) == true) {
-                            cartDAO.insertCart(userID);
-                            cartDAO.insertProductToCart(productIDForAdd, userID, 1);
+                        if (cartDAO.getCurrentCartByUserID(currentAccountForAddNow) == "" || cartDAO.isPuschased(cartDAO.getCurrentCartByUserID(currentAccountForAddNow)) == true) {
+                            cartDAO.insertCart(currentAccountForAddNow);
+                            cartDAO.insertProductToCart(productIDForAdd, currentAccountForAddNow, 1);
                             cartDAO.updateWarehouse(productIDForAdd, getProductExportQuantity + 1, getProductRemainQuantity - 1);
-                            resultForAddNow = "1";
-                            System.out.println("Them vao gio hang chua ton tai");
-                            PrintWriter out = response.getWriter();
-                            out.println(resultForAddNow);
                         }
                         //truong hop gio hang chua co san pham chuan bi them vao
-                        else if (cartDAO.isProductOnCart(productIDForAdd, userID) == false) {
-                            cartDAO.insertProductToCart(productIDForAdd, userID, 1);
+                        else if (cartDAO.isProductOnCart(productIDForAdd, currentAccountForAddNow) == false) {
+                            cartDAO.insertProductToCart(productIDForAdd, currentAccountForAddNow, 1);
                             cartDAO.updateWarehouse(productIDForAdd, getProductExportQuantity + 1, getProductRemainQuantity - 1);
                             resultForAddNow = "1";
-                            PrintWriter out = response.getWriter();
-                            out.println(resultForAddNow);
-                            System.out.println("Them vao gio hang da ton tai, chua co san pham sap them vao gio" );
+//                            PrintWriter out = response.getWriter();
+//                            out.println(resultForAddNow);
+//                            System.out.println("Them vao gio hang da ton tai, chua co san pham sap them vao gio" );
+
 
                         } else {
                             // truong hop gio hang da ton tai san pham san pham
                             resultForAddNow = "1";
-                            PrintWriter out = response.getWriter();
-                            out.println(resultForAddNow);
-                            System.out.println("Them vao gio hang da ton tai, c san pham sap them  da co trong gio");
-//                          request.getRequestDispatcher("jsp/cart.jsp").forward(request,response);
+//                            PrintWriter out = response.getWriter();
+//                            out.println(resultForAddNow);
+//                            System.out.println("Them vao gio hang da ton tai, c san pham sap them  da co trong gio");
+////                          request.getRequestDispatcher("jsp/cart.jsp").forward(request,response);
                             cartDAO.updateProductQuantityByProductID(
                                     productIDForAdd,
-                                    userID,
-                                    cartDAO.getProductQuantity(productIDForAdd, userID) + 1);
+                                    currentAccountForAddNow,
+                                    cartDAO.getProductQuantity(productIDForAdd, currentAccountForAddNow) + 1);
                             cartDAO.updateWarehouse(productIDForAdd, getProductExportQuantity + 1, getProductRemainQuantity - 1);
+
                         }
+                        //chuyen huong sang trang cart khi thuc hien
+                        String cart = request.getServletContext().getContextPath();
+//                        response.sendRedirect(cart);
+                        PrintWriter out = response.getWriter();
+                        out.println(resultForAddNow);
                     } // truong hop so luong san pham khong con trong kho
                     else {
                         resultForAddNow = "2";
@@ -160,5 +167,6 @@ public class ProductController extends HttpServlet {
                 break;
 
         }
+
     }
 }
