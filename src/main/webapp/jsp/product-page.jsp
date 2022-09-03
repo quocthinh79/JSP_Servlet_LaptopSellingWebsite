@@ -47,8 +47,16 @@
 
     <div id="view-image-product">
         <div id="close-view-image-product"><i class="fas fa-times"></i></div>
-        <div class="big-image-view-product" style="background-image: url('${root}${x.linkHinh1}')"></div>
+        <c:choose>
+            <c:when test="${fn:contains(x.linkHinh1, 'http://res.cloudinary.com')}">
+                <div class="big-image-view-product" style="background-image: url('${x.linkHinh1}')"></div>
+            </c:when>
+            <c:otherwise>
+                <div class="big-image-view-product" style="background-image: url('${root}${x.linkHinh1}')"></div>
+            </c:otherwise>
+        </c:choose>
         <div class="items-image-view-product">
+
             <div class="item-image-view-product"
                  style="background-image: url('${root}${x.linkHinh1}')"></div>
             <div class="item-image-view-product"

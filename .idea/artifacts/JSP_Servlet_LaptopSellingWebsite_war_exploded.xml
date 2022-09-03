@@ -6,7 +6,6 @@
         <exploded>true</exploded>
         <module>JSP_Servlet_LaptopSellingWebsite</module>
         <packaging>war</packaging>
-        <unpackNestedArchives>false</unpackNestedArchives>
       </options>
     </properties>
     <root id="root">
@@ -18,7 +17,7 @@
           <element id="library" level="project" name="Maven: commons-codec:commons-codec:1.14" />
           <element id="library" level="project" name="Maven: javax.mail:mail:1.4.7" />
           <element id="library" level="project" name="Maven: javax.activation:activation:1.1" />
-          <element id="library" level="project" name="Maven: mysql:mysql-connector-java:8.0.29" />
+          <element id="library" level="project" name="Maven: mysql:mysql-connector-java:8.0.30" />
           <element id="library" level="project" name="Maven: com.google.protobuf:protobuf-java:3.19.4" />
           <element id="library" level="project" name="Maven: com.googlecode.json-simple:json-simple:1.1.1" />
           <element id="library" level="project" name="Maven: junit:junit:4.10" />
